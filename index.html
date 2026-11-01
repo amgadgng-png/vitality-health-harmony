@@ -3,517 +3,154 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>متجر مكملات فايتالي Wellness</title>
-  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <title>متجر مكملات فايتالي</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  
   <style>
     :root {
-      --bg-dark: #000000;
-      --card-bg: #121212;
-      --sec-bg: #1a1a1a;
-      --accent-green: #2ecc71;
-      --btn-green: #258348;
-      --btn-green-grad: linear-gradient(180deg, #389e5c 0%, #1c6b39 100%);
-      --text-main: #ffffff;
-      --text-muted: #aaaaaa;
-      --border-color: #2c2c2c;
+      --bg-color: #121212;
+      --card-bg: #1e1e1e;
+      --text-color: #ffffff;
+      --accent-green: #2e7d32;
+      --accent-light: #4caf50;
+      --border-color: #333333;
     }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: Tahoma, sans-serif; }
+    body { background-color: var(--bg-color); color: var(--text-color); padding-bottom: 70px; }
+    
+    .header-container { padding: 10px 15px; background: #181818; position: sticky; top: 0; z-index: 100; border-bottom: 1px solid var(--border-color); }
+    .search-box { display: flex; align-items: center; background: #2a2a2a; border-radius: 25px; padding: 8px 15px; border: 1px solid #444; }
+    .search-box input { background: transparent; border: none; outline: none; color: #fff; width: 100%; margin-right: 10px; font-size: 0.95rem; text-align: right; }
+    .search-box i { color: var(--accent-light); }
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: 'Tajawal', sans-serif;
-      -webkit-tap-highlight-color: transparent;
-    }
+    .banner { margin: 15px; background: #1e1e1e; border-radius: 12px; padding: 15px; text-align: center; border: 1px solid var(--border-color); }
+    .banner img { max-width: 120px; height: auto; }
 
-    body {
-      background-color: var(--bg-dark);
-      color: var(--text-main);
-      display: flex;
-      justify-content: center;
-      min-height: 100vh;
-    }
+    .categories-bar { display: flex; gap: 8px; overflow-x: auto; padding: 10px 15px; scrollbar-width: none; }
+    .categories-bar::-webkit-scrollbar { display: none; }
+    .cat-item { background: #222; color: #bbb; padding: 8px 16px; border-radius: 20px; font-size: 0.85rem; white-space: nowrap; cursor: pointer; border: 1px solid #444; transition: 0.2s; }
+    .cat-item.active { background: #333; color: #fff; border-color: var(--accent-light); font-weight: bold; }
 
-    .app-container {
-      width: 100%;
-      max-width: 480px;
-      background-color: #050505;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      position: relative;
-      padding-bottom: 75px;
-      box-shadow: 0 0 20px rgba(0,0,0,0.8);
-    }
+    .products-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; padding: 10px 15px; }
+    .product-card { background: var(--card-bg); border-radius: 10px; padding: 10px; border: 1px solid var(--border-color); display: flex; flex-direction: column; justify-content: space-between; }
+    .prod-brand { font-size: 0.75rem; color: #aaa; margin-bottom: 2px; }
+    .prod-title { font-size: 0.85rem; font-weight: bold; color: #fff; margin-bottom: 8px; height: 35px; overflow: hidden; cursor: pointer; }
+    .prod-img-box { background: #2a2a2a; border-radius: 8px; height: 110px; display: flex; align-items: center; justify-content: center; position: relative; margin-bottom: 8px; }
+    .img-actions { position: absolute; top: 6px; left: 6px; display: flex; flex-direction: column; gap: 6px; }
+    .action-icon { background: rgba(0,0,0,0.6); color: #fff; padding: 5px; border-radius: 50%; font-size: 0.75rem; cursor: pointer; }
+    .prod-price { font-size: 0.9rem; font-weight: bold; color: var(--accent-light); margin-bottom: 6px; }
+    .btn-add-cart { background: var(--accent-green); color: white; border: none; width: 100%; padding: 6px; border-radius: 6px; font-size: 0.75rem; cursor: pointer; font-weight: bold; display: flex; align-items: center; justify-content: center; gap: 4px; }
+    .more-options { font-size: 0.75rem; color: #888; text-align: center; margin-top: 6px; cursor: pointer; }
 
-    .header {
-      padding: 12px 16px 8px 16px;
-      position: sticky;
-      top: 0;
-      background-color: rgba(5, 5, 5, 0.95);
-      backdrop-filter: blur(10px);
-      z-index: 100;
-    }
+    .bottom-nav { position: fixed; bottom: 0; left: 0; width: 100%; background: #181818; display: flex; justify-content: space-around; padding: 10px 0; border-top: 1px solid var(--border-color); z-index: 100; }
+    .nav-item { display: flex; flex-direction: column; align-items: center; color: #aaa; font-size: 0.75rem; text-decoration: none; cursor: pointer; }
+    .nav-item i { font-size: 1.2rem; margin-bottom: 3px; }
+    .nav-item.active { color: var(--accent-light); }
+    .cart-badge { background: #ff5555; color: white; font-size: 0.65rem; padding: 2px 5px; border-radius: 50%; position: absolute; top: 2px; right: 35%; }
 
-    .search-box {
-      background-color: #1a1a1a;
-      border: 1px solid #333;
-      border-radius: 25px;
-      display: flex;
-      align-items: center;
-      padding: 6px 14px;
-      gap: 10px;
-    }
-
-    .search-box i.fa-search {
-      color: var(--accent-green);
-      font-size: 1.1rem;
-    }
-
-    .search-box input {
-      background: transparent;
-      border: none;
-      color: #fff;
-      width: 100%;
-      font-size: 0.95rem;
-      outline: none;
-    }
-
-    .banner-container {
-      padding: 8px 16px;
-    }
-
-    .banner {
-      background: #ffffff;
-      border-radius: 12px;
-      padding: 15px;
-      text-align: center;
-      color: #111;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .banner-logo-title {
-      color: #1e6b37;
-      font-size: 1.8rem;
-      font-weight: 800;
-      display: flex;
-      align-items: center;
-      gap: 5px;
-    }
-
-    .banner-sub {
-      color: #333;
-      font-size: 0.8rem;
-      letter-spacing: 2px;
-      font-weight: 700;
-    }
-
-    .categories-bar {
-      display: flex;
-      overflow-x: auto;
-      padding: 10px 16px;
-      gap: 8px;
-      scrollbar-width: none;
-    }
-
-    .categories-bar::-webkit-scrollbar {
-      display: none;
-    }
-
-    .cat-item {
-      background-color: #1e1e1e;
-      color: #ccc;
-      padding: 8px 16px;
-      border-radius: 8px;
-      font-size: 0.85rem;
-      white-space: nowrap;
-      cursor: pointer;
-      border: 1px solid #2a2a2a;
-      transition: all 0.2s;
-    }
-
-    .cat-item.active {
-      background-color: #2d2d2d;
-      color: #2ecc71;
-      border-color: #2ecc71;
-      font-weight: bold;
-    }
-
-    .products-container {
-      padding: 8px 16px;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-
-    .product-card {
-      background-color: #0d0d0d;
-      border: 1px solid #222;
-      border-radius: 12px;
-      padding: 12px;
-      display: grid;
-      grid-template-columns: 1fr 110px;
-      gap: 12px;
-      position: relative;
-    }
-
-    .prod-details {
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-    }
-
-    .prod-brand {
-      color: #888;
-      font-size: 0.8rem;
-    }
-
-    .prod-title {
-      font-size: 0.95rem;
-      font-weight: bold;
-      color: #fff;
-      margin-top: 2px;
-      cursor: pointer;
-    }
-
-    .prod-price {
-      font-size: 1.1rem;
-      font-weight: bold;
-      color: #fff;
-      margin: 8px 0;
-    }
-
-    .btn-add-cart {
-      background: var(--btn-green-grad);
-      color: #fff;
-      border: none;
-      padding: 8px 12px;
-      border-radius: 6px;
-      font-weight: bold;
-      font-size: 0.85rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
-      cursor: pointer;
-    }
-
-    .prod-img-box {
-      position: relative;
-      background-color: #1a1a1a;
-      border-radius: 8px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 110px;
-    }
-
-    .placeholder-text {
-      color: #555;
-      font-size: 0.75rem;
-      text-align: center;
-    }
-
-    .img-actions {
-      position: absolute;
-      top: 6px;
-      width: 100%;
-      display: flex;
-      justify-content: space-between;
-      padding: 0 6px;
-      z-index: 5;
-    }
-
-    .action-icon {
-      color: #888;
-      font-size: 0.9rem;
-      cursor: pointer;
-    }
-
-    .more-options {
-      text-align: center;
-      color: #888;
-      font-size: 0.75rem;
-      margin-top: 4px;
-      cursor: pointer;
-    }
-
-    .bottom-nav {
-      position: fixed;
-      bottom: 0;
-      width: 100%;
-      max-width: 480px;
-      background-color: #111;
-      border-top: 1px solid #222;
-      display: flex;
-      justify-content: space-around;
-      padding: 8px 0;
-      z-index: 200;
-    }
-
-    .nav-item {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      color: #888;
-      font-size: 0.75rem;
-      cursor: pointer;
-      text-decoration: none;
-      gap: 4px;
-      position: relative;
-    }
-
-    .nav-item.active {
-      color: var(--accent-green);
-    }
-
-    .nav-item i {
-      font-size: 1.2rem;
-    }
-
-    .cart-badge {
-      position: absolute;
-      top: -4px;
-      right: 12px;
-      background-color: var(--accent-green);
-      color: #000;
-      border-radius: 50%;
-      padding: 2px 6px;
-      font-size: 0.65rem;
-      font-weight: bold;
-    }
-
-    .overlay-screen {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background-color: #050505;
-      z-index: 300;
-      display: none;
-      flex-direction: column;
-      max-width: 480px;
-      margin: 0 auto;
-      overflow-y: auto;
-    }
-
-    .overlay-screen.active {
-      display: flex;
-    }
-
-    .screen-header {
-      padding: 16px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      border-bottom: 1px solid #222;
-    }
-
-    .back-btn {
-      background: #1a1a1a;
-      border: none;
-      color: #fff;
-      width: 36px;
-      height: 36px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-    }
-
-    .detail-img-box {
-      height: 220px;
-      background-color: #121212;
-      margin: 16px;
-      border-radius: 12px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #555;
-      border: 1px dashed #333;
-    }
-
-    .detail-content {
-      padding: 16px;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-
-    .stock-tag {
-      background-color: rgba(46, 204, 113, 0.15);
-      color: var(--accent-green);
-      padding: 4px 10px;
-      border-radius: 4px;
-      font-size: 0.8rem;
-      width: fit-content;
-    }
-
-    .features-list {
-      margin-top: 10px;
-      background-color: #121212;
-      padding: 12px;
-      border-radius: 8px;
-    }
-
-    .features-list li {
-      margin-right: 20px;
-      margin-bottom: 8px;
-      color: #ccc;
-      font-size: 0.85rem;
-    }
-
-    .cart-items-container {
-      padding: 16px;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      flex-grow: 1;
-    }
-
-    .cart-item-card {
-      background: #121212;
-      padding: 12px;
-      border-radius: 8px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      border: 1px solid #222;
-    }
-
-    .cart-checkout-box {
-      padding: 16px;
-      background: #111;
-      border-top: 1px solid #222;
-    }
+    .overlay-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg-color); z-index: 200; display: none; flex-direction: column; padding: 15px; overflow-y: auto; }
+    .overlay-screen.active { display: flex; }
+    .top-bar-detail { display: flex; align-items: center; justify-content: space-between; margin-bottom: 15px; border-bottom: 1px solid var(--border-color); padding-bottom: 10px; }
   </style>
 </head>
 <body>
 
-  <div class="app-container">
-    
-    <div class="header">
-      <div class="search-box">
-        <i class="fas fa-search"></i>
-        <input type="text" id="searchInput" placeholder="البحث السريع في مكملات فايتالي..." oninput="handleSearch()">
-      </div>
+  <div class="header-container">
+    <div class="search-box">
+      <i class="fas fa-search"></i>
+      <input type="text" id="searchInput" placeholder="البحث في متجر مكملات فايتالي" oninput="handleSearch()">
     </div>
+  </div>
 
-    <div class="banner-container">
-      <div class="banner">
-        <div class="banner-logo-title">
-          <i class="fas fa-leaf"></i> مكملات فايتالي
-        </div>
-        <div class="banner-sub">WELLNESS & HEALTH</div>
-      </div>
+  <div class="banner">
+    <div style="font-size: 1.1rem; font-weight: bold; color: var(--accent-light);">فايتالي للصحّة والتوازن</div>
+    <div style="font-size: 0.75rem; color: #888; margin-top: 4px;">WELLNESS HEALTH & HARMONY</div>
+  </div>
+
+  <div class="categories-bar">
+    <div class="cat-item active" onclick="filterCat('الكل', this)">الكل</div>
+    <div class="cat-item" onclick="filterCat('الجهاز الهضمي', this)">الجهاز الهضمي</div>
+    <div class="cat-item" onclick="filterCat('الفيتامينات', this)">الفيتامينات</div>
+    <div class="cat-item" onclick="filterCat('الجمال', this)">الجمال</div>
+    <div class="cat-item" onclick="filterCat('الطاقة', this)">الطاقة</div>
+    <div class="cat-item" onclick="filterCat('الصحة العامة', this)">الصحة العامة</div>
+  </div>
+
+  <div class="products-grid" id="productsList"></div>
+
+  <div class="bottom-nav">
+    <div class="nav-item active" onclick="showHome()">
+      <i class="fas fa-home"></i> الرئيسية
     </div>
-
-    <div class="categories-bar">
-      <div class="cat-item active" onclick="filterCat('الكل', this)">الكل</div>
-      <div class="cat-item" onclick="filterCat('الجهاز الهضمي', this)">الجهاز الهضمي</div>
-      <div class="cat-item" onclick="filterCat('الفيتامينات', this)">الفيتامينات</div>
-      <div class="cat-item" onclick="filterCat('الجمال', this)">الجمال</div>
-      <div class="cat-item" onclick="filterCat('الطاقة', this)">الطاقة</div>
-      <div class="cat-item" onclick="filterCat('الصحة العامة', this)">الصحة العامة</div>
+    <a class="nav-item" href="https://wa.me/96773XXXXXXXX" target="_blank">
+      <i class="fab fa-whatsapp"></i> الواتساب
+    </a>
+    <div class="nav-item" onclick="openCartScreen()" style="position: relative;">
+      <i class="fas fa-shopping-cart"></i> السلة
+      <span class="cart-badge" id="cartCount">0</span>
     </div>
+  </div>
 
-    <div class="products-container" id="productsList"></div>
-
-    <div class="bottom-nav">
-      <div class="nav-item active" onclick="showHome()">
-        <i class="fas fa-home"></i>
-        <span>الرئيسية</span>
-      </div>
-      
-      <a href="https://wa.me/96773XXXXXXXX" target="_blank" class="nav-item">
-        <i class="fab fa-whatsapp"></i>
-        <span>الواتساب</span>
-      </a>
-
-      <div class="nav-item" onclick="openCartScreen()">
-        <i class="fas fa-shopping-cart"></i>
-        <span class="cart-badge" id="cartCount">0</span>
-        <span>السلة</span>
-      </div>
+  <div class="overlay-screen" id="detailOverlay">
+    <div class="top-bar-detail">
+      <i class="fas fa-arrow-right" style="font-size: 1.2rem; cursor: pointer;" onclick="closeDetail()"></i>
+      <span style="font-weight: bold;">تفاصيل المكمل</span>
+      <i class="far fa-heart" style="font-size: 1.2rem; cursor: pointer;"></i>
     </div>
-
-    <div class="overlay-screen" id="detailOverlay">
-      <div class="screen-header">
-        <button class="back-btn" onclick="closeDetail()"><i class="fas fa-arrow-right"></i></button>
-        <h3>تفاصيل المكمل</h3>
-        <i class="far fa-heart" style="font-size: 1.2rem; color: #888;"></i>
+    <div style="text-align: center; margin: 15px 0;">
+      <h2 id="detTitle" style="font-size: 1.1rem; margin-bottom: 8px;"></h2>
+      <div id="detPrice" style="font-size: 1.2rem; color: var(--accent-light); font-weight: bold; margin-bottom: 15px;"></div>
+      <div style="background: #1e1e1e; padding: 12px; border-radius: 8px; text-align: right; border: 1px solid var(--border-color); margin-bottom: 15px;">
+        <div style="color: var(--accent-light); font-weight: bold; margin-bottom: 6px;">حالة المكمل:</div>
+        <div>✅ متوفر في المخزون</div>
       </div>
-
-      <div class="detail-img-box">
-        <i class="fas fa-image fa-2x"></i>
-        <span style="margin-right: 8px;">مساحة مخصصة لصورة المكمل</span>
+      <div style="background: #1e1e1e; padding: 12px; border-radius: 8px; text-align: right; border: 1px solid var(--border-color); margin-bottom: 20px;">
+        <div style="color: var(--accent-light); font-weight: bold; margin-bottom: 6px;">مميزات المكمل:</div>
+        <ul id="detFeatures" style="padding-right: 20px; font-size: 0.9rem; color: #ccc; line-height: 1.6;"></ul>
       </div>
-
-      <div class="detail-content">
-        <span class="stock-tag" id="detStock">✅ متوفر في المخزون</span>
-        <h2 id="detTitle" style="font-size: 1.2rem;">--</h2>
-        <div id="detPrice" style="font-size: 1.3rem; color: var(--accent-green); font-weight: bold;">--</div>
-
-        <div class="features-list">
-          <h4 style="margin-bottom: 8px; color: #fff;">مميزات المكمل:</h4>
-          <ul id="detFeatures"></ul>
-        </div>
-
-        <button class="btn-add-cart" style="padding: 12px; font-size: 1rem; margin-top: 15px;" onclick="addToCartFromDetail()">
-          <i class="fas fa-cart-plus"></i> إضافة إلى عربة التسوق
-        </button>
-      </div>
+      <button class="btn-add-cart" onclick="addToCartFromDetail()" style="padding: 10px; font-size: 0.9rem;">
+        <i class="fas fa-cart-plus"></i> إضافة إلى عربة التسوق
+      </button>
     </div>
+  </div>
 
-    <div class="overlay-screen" id="cartOverlay">
-      <div class="screen-header">
-        <button class="back-btn" onclick="closeCartScreen()"><i class="fas fa-arrow-right"></i></button>
-        <h3>عربة التسوق والطلبات</h3>
-        <i class="fas fa-trash-alt" style="font-size: 1.1rem; color: #888; cursor: pointer;" onclick="clearCart()"></i>
-      </div>
-
-      <div class="cart-items-container" id="cartItemsList"></div>
-
-      <div class="cart-checkout-box">
-        <div style="display: flex; justify-content: space-between; margin-bottom: 12px; font-weight: bold;">
-          <span>إجمالي المبلغ:</span>
-          <span id="cartTotalPrice" style="color: var(--accent-green);">0 ر.ي</span>
-        </div>
-        <button class="btn-add-cart" style="width: 100%; padding: 12px; font-size: 1rem;" onclick="checkoutToWhatsApp()">
-          <i class="fab fa-whatsapp"></i> تأكيد الطلب وإرساله إلى الواتساب
-        </button>
-      </div>
+  <div class="overlay-screen" id="cartOverlay">
+    <div class="top-bar-detail">
+      <i class="fas fa-arrow-right" style="font-size: 1.2rem; cursor: pointer;" onclick="closeCartScreen()"></i>
+      <span style="font-weight: bold;">عربة التسوق</span>
+      <i class="fas fa-trash-alt" style="font-size: 1.1rem; cursor: pointer; color: #ff5555;" onclick="clearCart()" title="إفراغ السلة"></i>
     </div>
-
+    <div id="cartItemsList" style="flex: 1; overflow-y: auto;"></div>
+    <div style="border-top: 1px solid var(--border-color); padding-top: 15px; margin-top: 10px;">
+      <div style="display: flex; justify-content: space-between; margin-bottom: 12px; font-weight: bold;">
+        <span>إجمالي المبلغ:</span>
+        <span id="cartTotalPrice" style="color: var(--accent-light);">0 ر.ي</span>
+      </div>
+      <button class="btn-add-cart" onclick="checkoutToWhatsApp()" style="background: #25d366; padding: 10px; font-size: 0.9rem;">
+        <i class="fab fa-whatsapp"></i> إرسال الطلب عبر الواتساب
+      </button>
+    </div>
   </div><script>
     const products = [
-      { id: 1, brand: 'NOW Foods', name: 'Biotin 10 mg', price: 6796, category: 'الجمال', img: 'https://i.ibb.co/3W3V3V3/placeholder.png', features: ['يدعم نمو الشعر وصحة البشرة والأظافر', 'يعزز عملية التمثيل الغذائي وإنتاج الطاقة', 'تركيبة نباتية عالية الجودة سريعة الامتصاص'] },
-      { id: 2, brand: 'NOW Foods', name: 'مكمل Repair Gold، عدد 60 كبسولة', price: 6796, category: 'الجهاز الهضمي', img: 'https://i.ibb.co/3W3V3V3/placeholder.png', features: ['يحتوي على إنزيمات هاضمة عالية القوة', 'يساعد في تخفيف وتسكين آلام العضلات والمفاصل', 'يعزز التعافي السريع للجسم بعد المجهود البدني'] },
-      { id: 3, brand: 'California Gold', name: 'Omega-3 Premium Fish Oil', price: 8500, category: 'الصحة العامة', img: 'https://i.ibb.co/3W3V3V3/placeholder.png', features: ['يدعم صحة القلب والأوعية الدموية', 'يحسن وظائف الدماغ والتركيز والذاكرة', 'زيت سمك نقي مكرر ومقطر جزيئياً'] },
-      { id: 4, brand: 'Garden of Life', name: 'Raw Probiotics Once Daily', price: 14200, category: 'الجهاز الهضمي', img: 'https://i.ibb.co/3W3V3V3/placeholder.png', features: ['يدعم صحة الجهاز الهضمي والمناعة', 'يحتوي على بكتيريا نافعة حية ومتنوعة', 'كبسولة واحدة يومياً لسهولة الاستخدام'] },
-      { id: 5, brand: 'Nature\'s Bounty', name: 'Vitamin D3 5000 IU', price: 4500, category: 'الفيتامينات', img: 'https://i.ibb.co/3W3V3V3/placeholder.png', features: ['يعزز امتصاص الكالسيوم لصحة العظام والأسنان', 'يدعم الجهاز المناعي ووظائف الأعصاب', 'سهل البلع وسريع الذوبان'] },
-      { id: 6, brand: 'Solgar', name: 'Skin, Nails & Hair Advanced', price: 11200, category: 'الجمال', img: 'https://i.ibb.co/3W3V3V3/placeholder.png', features: ['تركيبة متقدمة لتغذية الجمال الداخلي', 'يحتوي على الزنك والنحاس وفيتامين سي', 'يحفز إنتاج الكولاجين الطبيعي'] },
-      { id: 7, brand: 'Optimum Nutrition', name: 'Gold Standard BCAA Energy', price: 13500, category: 'الطاقة', img: 'https://i.ibb.co/3W3V3V3/placeholder.png', features: ['يعزز طاقة الجسم والتركيز الذهني', 'يمنع هدم العضلات أثناء التمارين', 'مزيج منعش ولذيذ الطعم'] },
-      { id: 8, brand: 'Life Extension', name: 'Two-Per-Day Multivitamin', price: 9800, category: 'الصحة العامة', img: 'https://i.ibb.co/3W3V3V3/placeholder.png', features: ['فيتامينات متعددة عالية الفعالية', 'مضادات أكسدة قوية لصحة الخلايا', 'يدعم الحيوية والنشاط اليومي العام'] },
-      { id: 9, brand: 'Doctor\'s Best', name: 'High Absorption Magnesium 100%', price: 7900, category: 'الصحة العامة', img: 'https://i.ibb.co/3W3V3V3/placeholder.png', features: ['يدعم استرخاء العضلات والجهاز العصبي', 'يحسن جودة النوم ويقلل الإجهاد', 'شكل عالي الامتصاص وغير مزعج للمعدة'] },
-      { id: 10, brand: 'NOW Foods', name: 'Super Enzymes Digest Formula', price: 6200, category: 'الجهاز الهضمي', img: 'https://i.ibb.co/3W3V3V3/placeholder.png', features: ['يحتوي على البيتين والبانكرياتين', 'يحسن هضم البروتينات والدهون والكربوهيدرات', 'يخفف الانتفاخ والغازات بعد الوجبات'] },
-      { id: 11, brand: 'California Gold', name: 'Vitamin C Gummies 250mg', price: 5500, category: 'الفيتامينات', img: 'https://i.ibb.co/3W3V3V3/placeholder.png', features: ['مضاد أكسدة قوي يدعم المناعة', 'مضغوطات هلامية بنكهة الفواكه الطبيعية', 'مناسب للكبار والصغار'] },
-      { id: 12, brand: 'Jarrow Formulas', name: 'Jarro-Dophilus EPS 5 Billion', price: 12500, category: 'الجهاز الهضمي', img: 'https://i.ibb.co/3W3V3V3/placeholder.png', features: ['بروبيوتيك مستقر في درجة حرارة الغرفة', 'يحافظ على توازن فلورا الأمعاء', 'مغلف بطبقة معوية حية لحمايتها من حمض المعدة'] },
-      { id: 13, brand: 'Source Naturals', name: 'Wellness Formula, Bio-Aligned', price: 10500, category: 'الصحة العامة', img: 'https://i.ibb.co/3W3V3V3/placeholder.png', features: ['دعم مناعي شامل متعدد الأعشاب', 'يحتوي على الفيتامينات والمعادن ومستخلصات نباتية', 'يحمي الجسم في مواسم تغير الطقس'] },
-      { id: 14, brand: 'Vital Proteins', name: 'Collagen Peptides Powder', price: 18000, category: 'الجمال', img: 'https://i.ibb.co/3W3V3V3/placeholder.png', features: ['يدعم مرونة البشرة وشبابها', 'يقوي الأظافر والشعر والمفاصل', 'سهل الذوبان في السوائل الباردة أو الساخنة'] },
-      { id: 15, brand: 'Nutricost', name: 'B-Complex 100 mg', price: 7200, category: 'الطاقة', img: 'https://i.ibb.co/3W3V3V3/placeholder.png', features: ['مجموعة فيتامينات ب الكاملة لإنتاج الطاقة', 'يدعم صحة الجهاز العصبي وخلايا الدم الحمراء', 'يقلل الشعور بالإرهاق والتعب'] },
-      { id: 16, brand: 'NOW Foods', name: 'CoQ10 100 mg with Hawthorn', price: 14900, category: 'الطاقة', img: 'https://i.ibb.co/3W3V3V3/placeholder.png', features: ['يدعم صحة عضلة القلب وإنتاج الطاقة الخلوية', 'مضاد أكسدة قوي يحارب الشيخوخة المبكرة', 'مدعم بخلاصة الزعرور لفائدة مضاعفة'] },
-      { id: 17, brand: 'MegaFood', name: 'Blood Builder Iron Supplement', price: 11900, category: 'الفيتامينات', img: 'https://i.ibb.co/3W3V3V3/placeholder.png', features: ['يعالج نقص الحديد دون الإمساك المعتاد', 'مصنوع من طعام حقيقي كامل المغذيات', 'يزيد من مستويات الطاقة والحيويّة'] },
-      { id: 18, brand: 'Sports Research', name: 'Keto Plus MCT Oil', price: 16500, category: 'الطاقة', img: 'https://i.ibb.co/3W3V3V3/placeholder.png', features: ['يعزز طاقة الكيتو والتركيز الذهني السريع', 'مستخلص من جوز الهند النقي 100%', 'يدعم حرق الدهون وصحة الأنسجة'] },
-      { id: 19, brand: 'Now Foods', name: 'L-Glutamine 500mg Powder', price: 9100, category: 'الجهاز الهضمي', img: 'https://i.ibb.co/3W3V3V3/placeholder.png', features: ['يدعم صحة بطانة الأمعاء وجدار الجهاز الهضمي', 'يساعد في استشفاء العضلات الرياضية', 'حمض أميني نقي وسريع الامتصاص'] },
-      { id: 20, brand: 'Pure Encapsulations', name: 'Zinc 30 mg Citrate', price: 8300, category: 'الفيتامينات', img: 'https://i.ibb.co/3W3V3V3/placeholder.png', features: ['يدعم وظائف المناعة وانقسام الخلايا', 'زنك عالي التوافر الحيوي', 'خالي من المواد الحافظة والمسببات للحساسية'] }
+      { id: 1, brand: 'NOW Foods', name: 'Biotin 10 mg', price: 6796, category: 'الجمال', img: '', features: ['يدعم نمو الشعر وصحة البشرة والأظافر', 'يعزز عملية التمثيل الغذائي وإنتاج الطاقة', 'تركيبة نباتية عالية الجودة سريعة الامتصاص'] },
+      { id: 2, brand: 'NOW Foods', name: 'مكمل Repair Gold، عدد 60 كبسولة', price: 6796, category: 'الجهاز الهضمي', img: '', features: ['يحتوي على إنزيمات هاضمة عالية القوة', 'يساعد في تخفيف وتسكين آلام العضلات والمفاصل', 'يعزز التعافي السريع للجسم بعد المجهود البدني'] },
+      { id: 3, brand: 'California Gold', name: 'Omega-3 Premium Fish Oil', price: 8500, category: 'الصحة العامة', img: '', features: ['يدعم صحة القلب والأوعية الدموية', 'يحسن وظائف الدماغ والتركيز والذاكرة', 'زيت سمك نقي مكرر ومقطر جزيئياً'] },
+      { id: 4, brand: 'Garden of Life', name: 'Raw Probiotics Once Daily', price: 14200, category: 'الجهاز الهضمي', img: '', features: ['يدعم صحة الجهاز الهضمي والمناعة', 'يحتوي على بكتيريا نافعة حية ومتنوعة', 'كبسولة واحدة يومياً لسهولة الاستخدام'] },
+      { id: 5, brand: 'Nature\'s Bounty', name: 'Vitamin D3 5000 IU', price: 4500, category: 'الفيتامينات', img: '', features: ['يعزز امتصاص الكالسيوم لصحة العظام والأسنان', 'يدعم الجهاز المناعي ووظائف الأعصاب', 'سهل البلع وسريع الذوبان'] },
+      { id: 6, brand: 'Solgar', name: 'Skin, Nails & Hair Advanced', price: 11200, category: 'الجمال', img: '', features: ['تركيبة متقدمة لتغذية الجمال الداخلي', 'يحتوي على الزنك والنحاس وفيتامين سي', 'يحفز إنتاج الكولاجين الطبيعي'] },
+      { id: 7, brand: 'Optimum Nutrition', name: 'Gold Standard BCAA Energy', price: 13500, category: 'الطاقة', img: '', features: ['يعزز طاقة الجسم والتركيز الذهني', 'يمنع هدم العضلات أثناء التمارين', 'مزيج منعش ولذيذ الطعم'] },
+      { id: 8, brand: 'Life Extension', name: 'Two-Per-Day Multivitamin', price: 9800, category: 'الصحة العامة', img: '', features: ['فيتامينات متعددة عالية الفعالية', 'مضادات أكسدة قوية لصحة الخلايا', 'يدعم الحيوية والنشاط اليومي العام'] },
+      { id: 9, brand: 'Doctor\'s Best', name: 'High Absorption Magnesium 100%', price: 7900, category: 'الصحة العامة', img: '', features: ['يدعم استرخاء العضلات والجهاز العصبي', 'يحسن جودة النوم ويقلل الإجهاد', 'شكل عالي الامتصاص وغير مزعج للمعدة'] },
+      { id: 10, brand: 'NOW Foods', name: 'Super Enzymes Digest Formula', price: 6200, category: 'الجهاز الهضمي', img: '', features: ['يحتوي على البيتين والبانكرياتين', 'يحسن هضم البروتينات والدهون والكربوهيدرات', 'يخفف الانتفاخ والغازات بعد الوجبات'] },
+      { id: 11, brand: 'California Gold', name: 'Vitamin C Gummies 250mg', price: 5500, category: 'الفيتامينات', img: '', features: ['مضاد أكسدة قوي يدعم المناعة', 'مضغوطات هلامية بنكهة الفواكه الطبيعية', 'مناسب للكبار والصغار'] },
+      { id: 12, brand: 'Jarrow Formulas', name: 'Jarro-Dophilus EPS 5 Billion', price: 12500, category: 'الجهاز الهضمي', img: '', features: ['بروبيوتيك مستقر في درجة حرارة الغرفة', 'يحافظ على توازن فلورا الأمعاء', 'مغلف بطبقة معوية حية لحمايتها من حمض المعدة'] },
+      { id: 13, brand: 'Source Naturals', name: 'Wellness Formula, Bio-Aligned', price: 10500, category: 'الصحة العامة', img: '', features: ['دعم مناعي شامل متعدد الأعشاب', 'يحتوي على الفيتامينات والمعادن ومستخلصات نباتية', 'يحمي الجسم في مواسم تغير الطقس'] },
+      { id: 14, brand: 'Vital Proteins', name: 'Collagen Peptides Powder', price: 18000, category: 'الجمال', img: '', features: ['يدعم مرونة البشرة وشبابها', 'يقوي الأظافر والشعر والمفاصل', 'سهل الذوبان في السوائل الباردة أو الساخنة'] },
+      { id: 15, brand: 'Nutricost', name: 'B-Complex 100 mg', price: 7200, category: 'الطاقة', img: '', features: ['مجموعة فيتامينات ب الكاملة لإنتاج الطاقة', 'يدعم صحة الجهاز العصبي وخلايا الدم الحمراء', 'يقلل الشعور بالإرهاق والتعب'] },
+      { id: 16, brand: 'NOW Foods', name: 'CoQ10 100 mg with Hawthorn', price: 14900, category: 'الطاقة', img: '', features: ['يدعم صحة عضلة القلب وإنتاج الطاقة الخلوية', 'مضاد أكسدة قوي يحارب الشيخوخة المبكرة', 'مدعم بخلاصة الزعرور لفائدة مضاعفة'] },
+      { id: 17, brand: 'MegaFood', name: 'Blood Builder Iron Supplement', price: 11900, category: 'الفيتامينات', img: '', features: ['يعالج نقص الحديد دون الإمساك المعتاد', 'مصنوع من طعام حقيقي كامل المغذيات', 'يزيد من مستويات الطاقة والحيويّة'] },
+      { id: 18, brand: 'Sports Research', name: 'Keto Plus MCT Oil', price: 16500, category: 'الطاقة', img: '', features: ['يعزز طاقة الكيتو والتركيز الذهني السريع', 'مستخلص من جوز الهند النقي 100%', 'يدعم حرق الدهون وصحة الأنسجة'] },
+      { id: 19, brand: 'Now Foods', name: 'L-Glutamine 500mg Powder', price: 9100, category: 'الجهاز الهضمي', img: '', features: ['يدعم صحة بطانة الأمعاء وجدار الجهاز الهضمي', 'يساعد في استشفاء العضلات الرياضية', 'حمض أميني نقي وسريع الامتصاص'] },
+      { id: 20, brand: 'Pure Encapsulations', name: 'Zinc 30 mg Citrate', price: 8300, category: 'الفيتامينات', img: '', features: ['يدعم وظائف المناعة وانقسام الخلايا', 'زنك عالي التوافر الحيوي', 'خالي من المواد الحافظة والمسببات للحساسية'] }
     ];
 
     let cart = [];
@@ -530,6 +167,8 @@
       }
 
       listToRender.forEach(p => {
+        let imgTag = p.img ? `<img src="${p.img}" alt="${p.name}" style="width: 100%; height: 100%; object-fit: contain; border-radius: 8px; max-height: 110px;">` : `<div style="color:#777; font-size:0.75rem; text-align:center;"><i class="fas fa-image"></i><br>مكان الصورة</div>`;
+
         container.innerHTML += `
           <div class="product-card">
             <div class="prod-details">
@@ -551,7 +190,7 @@
                   <i class="far fa-heart action-icon"></i>
                   <i class="fas fa-share-alt action-icon" onclick="shareProduct(${p.id})" title="مشاركة المكمل"></i>
                 </div>
-                <img src="${p.img}" alt="${p.name}" style="width: 100%; height: 100%; object-fit: contain; border-radius: 8px; max-height: 110px;" onerror="this.style.display='none'">
+                ${imgTag}
               </div>
               <div class="more-options" onclick="openDetail(${p.id})">+ مزيد من الخيارات</div>
             </div>
@@ -586,7 +225,7 @@
       }
 
       const searched = products.filter(p => 
-        p.name.toLowerCase().includes(query) || .
+        p.name.toLowerCase().includes(query) || 
         p.brand.toLowerCase().includes(query) || 
         p.category.toLowerCase().includes(query)
       );
@@ -662,10 +301,10 @@
       cart.forEach(item => {
         totalPrice += (item.price * item.qty);
         container.innerHTML += `
-          <div class="cart-item-card">
+          <div class="cart-item-card" style="display:flex; justify-content:space-between; align-items:center; background:#1e1e1e; padding:10px; border-radius:8px; margin-bottom:8px; border:1px solid #333;">
             <div>
               <div style="font-weight:bold; font-size:0.9rem;">${item.name}</div>
-              <div style="color:var(--accent-green); font-size:0.85rem; margin-top:4px;">${item.price.toLocaleString()} ر.ي × ${item.qty}</div>
+              <div style="color:#4caf50; font-size:0.85rem; margin-top:4px;">${item.price.toLocaleString()} ر.ي × ${item.qty}</div>
             </div>
             <i class="fas fa-times" style="color:#ff5555; cursor:pointer; padding:8px;" onclick="removeFromCart(${item.id})"></i>
           </div>
@@ -723,4 +362,4 @@
     renderProducts(products);
   </script>
 </body>
-</html>
+  </html>
