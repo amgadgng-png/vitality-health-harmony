@@ -112,6 +112,14 @@
       </button>
     </div>
   </div>
+  <div class="section-title" style="display:flex; justify-content:space-between; align-items:center; padding:10px 15px;">
+  <span>التشكيل:</span>
+  <div style="display: flex; gap: 6px;">
+    <button onclick="changeLayout(2)" style="background:var(--bg-card); border:1px solid rgba(255,255,255,0.2); color:#fff; padding:5px 10px; border-radius:6px; cursor:pointer; font-weight:bold;">2</button>
+    <button onclick="changeLayout(3)" style="background:var(--bg-card); border:1px solid rgba(255,255,255,0.2); color:#fff; padding:5px 10px; border-radius:6px; cursor:pointer; font-weight:bold;">3</button>
+    <button onclick="changeLayout(4)" style="background:var(--bg-card); border:1px solid rgba(255,255,255,0.2); color:#fff; padding:5px 10px; border-radius:6px; cursor:pointer; font-weight:bold;">4</button>
+  </div>
+  </div>
 
   <div class="overlay-screen" id="cartOverlay">
     <div class="top-bar-detail">
@@ -252,6 +260,13 @@
     { id: 119, brand: '', name: '', price: 0, category: '', img: '', features: ['', ''] },
     { id: 120, brand: '', name: '', price: 0, category: '', img: '', features: ['', ''] }
     ];
+    function changeLayout(cols) {
+  const grid = document.querySelector('.products-grid') || document.getElementById('productsGrid');
+  if (grid) {
+    grid.style.gridTemplateColumns = `repeat(${cols}, 1fr)`;
+  }
+}
+    
 
     let cart = [];
     let currentCategory = 'الكل';
