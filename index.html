@@ -1,13 +1,4 @@
 <!DOCTYPE html>
-<!-- أزرار التشكيلات في الأعلى تحت البحث -->
-<div style="display: flex; justify-content: space-between; align-items: center; background: var(--bg-card); padding: 8px 12px; margin: 10px 12px; border-radius: 8px; border: 1px solid var(--border-color);">
-  <span style="font-size: 0.85rem; color: #fff; font-weight: bold;">تشكيل العرض:</span>
-  <div style="display: flex; gap: 6px;">
-    <button onclick="changeLayout(2)" style="background: #222; border: 1px solid #444; color: #fff; padding: 4px 10px; border-radius: 4px; cursor: pointer;">2</button>
-    <button onclick="changeLayout(3)" style="background: #222; border: 1px solid #444; color: #fff; padding: 4px 10px; border-radius: 4px; cursor: pointer;">3</button>
-    <button onclick="changeLayout(4)" style="background: #222; border: 1px solid #444; color: #fff; padding: 4px 10px; border-radius: 4px; cursor: pointer;">4</button>
-  </div>
-</div>
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8">
@@ -470,16 +461,6 @@
 
     renderProducts(products);
   </script>
-  function changeLayout(cols) {
-  const grid = document.querySelector('.products-grid') || document.getElementById('productsGrid');
-  if (grid) {
-    let activeCols = cols;
-    if (window.innerWidth < 600 && cols === 4) {
-      activeCols = 3; // لتجنب تقطيع الشاشة في الموبايل وجعلها متناسقة
-    }
-    grid.style.gridTemplateColumns = `repeat(${activeCols}, 1fr)`;
-    grid.style.gap = '6px';
-  }
-}
+   
 </body>
   </html>
