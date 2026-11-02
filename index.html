@@ -1,8 +1,9 @@
 <!DOCTYPE html>
-<div style="display: flex; justify-content: flex-end; align-items: center; padding: 6px 15px;">
-  <button id="layoutToggleBtn" onclick="cycleLayout()" style="background: #1a1a1a; border: 1px solid #333; border-radius: 8px; padding: 6px 12px; color: #4ade80; display: flex; align-items: center; gap: 8px; cursor: pointer;">
-    <i id="layoutIcon" class="fas fa-th-large" style="font-size: 1.1rem;"></i>
-    <span id="layoutText" style="font-size: 0.85rem; font-weight: bold; color: #ffffff;">2 أعمدة</span>
+<<!-- زر التشكيلات الذكي والمتناسق -->
+<div style="display: flex; justify-content: flex-start; padding: 4px 12px;">
+  <button id="layoutToggleBtn" onclick="cycleLayout()" style="background: #18181b; border: 1px solid #333; border-radius: 8px; padding: 5px 12px; color: #4ade80; display: flex; align-items: center; gap: 6px; cursor: pointer;">
+    <i id="layoutIcon" class="fas fa-th-large" style="font-size: 0.9rem;"></i>
+    <span id="layoutText" style="font-size: 0.8rem; font-weight: bold; color: #ffffff;">تشكيل 1 (2 أعمدة)</span>
   </button>
 </div>
 <html lang="ar" dir="rtl">
@@ -467,11 +468,12 @@
 
     renderProducts(products);
   </script>
-<script>
+  <script>
+// تحديد التشكيلات (عرضاً وطولاً بشكل متناسق)
 const layouts = [
-  { cols: 2, icon: 'fas fa-th-large', label: '2 أعمدة' },
-  { cols: 3, icon: 'fas fa-th', label: '3 أعمدة' },
-  { cols: 4, icon: 'fas fa-grip-horizontal', label: '4 أعمدة' }
+  { cols: 2, label: 'تشكيل 1 (2 أعمدة)', icon: 'fas fa-th-large' },
+  { cols: 3, label: 'تشكيل 2 (3 أعمدة)', icon: 'fas fa-th' },
+  { cols: 4, label: 'تشكيل 3 (4 أعمدة)', icon: 'fas fa-grip-horizontal' }
 ];
 
 let currentLayoutIndex = 0;
@@ -484,20 +486,37 @@ function cycleLayout() {
   const iconElem = document.getElementById('layoutIcon');
   const textElem = document.getElementById('layoutText');
 
-  let activeCols = current.cols;
-  if (window.innerWidth < 600 && current.cols === 4) {
-    activeCols = 3;
-  }
-
   if (grid) {
-    grid.style.gridTemplateColumns = `repeat(${activeCols}, 1fr)`;
-    grid.style.gap = '8px';
+    // تطبيق عدد الأعمدة أفقياً
+    grid.style.gridTemplateColumns = `repeat(${current.cols}, 1fr)`;
+
+    // ضبط المسافات وحجم الخطوط بناءً على عدد الأعمدة لضمان مظهر فائق ومنتظم
+    if (current.cols === 4) {
+      grid.style.gap = '4px';
+      document.querySelectorAll('.product-card').forEach(card => {
+        card.style.padding = '4px';
+        card.style.fontSize = '0.7rem';
+      });
+    } else if (current.cols === 3) {
+      grid.style.gap = '6px';
+      document.querySelectorAll('.product-card').forEach(card => {
+        card.style.padding = '6px';
+        card.style.fontSize = '0.8rem';
+      });
+    } else {
+      grid.style.gap = '10px';
+      document.querySelectorAll('.product-card').forEach(card => {
+        card.style.padding = '10px';
+        card.style.fontSize = '0.9rem';
+      });
+    }
   }
 
+  // تحديث النص والأيقونة في الزر العلوي
   if (iconElem) iconElem.className = current.icon;
   if (textElem) textElem.textContent = current.label;
 }
-</script>
+  </script>
    
 </body>
   </html>
