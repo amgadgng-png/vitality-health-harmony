@@ -1,7 +1,6 @@
 <!DOCTYPE html>
-<!-- زر التشكيلات التفاعلي الأنيق -->
-<div style="display: flex; justify-content: flex-end; align-items: center; padding: 6px 15px; margin-bottom: 8px;">
-  <button id="layoutToggleBtn" onclick="cycleLayout()" style="background: #1a1a1a; border: 1px solid #333; border-radius: 8px; padding: 6px 12px; color: #4ade80; display: flex; align-items: center; gap: 8px; cursor: pointer; transition: all 0.2s ease;">
+<div style="display: flex; justify-content: flex-end; align-items: center; padding: 6px 15px;">
+  <button id="layoutToggleBtn" onclick="cycleLayout()" style="background: #1a1a1a; border: 1px solid #333; border-radius: 8px; padding: 6px 12px; color: #4ade80; display: flex; align-items: center; gap: 8px; cursor: pointer;">
     <i id="layoutIcon" class="fas fa-th-large" style="font-size: 1.1rem;"></i>
     <span id="layoutText" style="font-size: 0.85rem; font-weight: bold; color: #ffffff;">2 أعمدة</span>
   </button>
@@ -468,7 +467,7 @@
 
     renderProducts(products);
   </script>
-  // مصفوفة التشكيلات المتاحة والأيقونات الخاصة بها
+<script>
 const layouts = [
   { cols: 2, icon: 'fas fa-th-large', label: '2 أعمدة' },
   { cols: 3, icon: 'fas fa-th', label: '3 أعمدة' },
@@ -478,7 +477,6 @@ const layouts = [
 let currentLayoutIndex = 0;
 
 function cycleLayout() {
-  // الانتقال للتشكيل التالي
   currentLayoutIndex = (currentLayoutIndex + 1) % layouts.length;
   const current = layouts[currentLayoutIndex];
   
@@ -486,22 +484,20 @@ function cycleLayout() {
   const iconElem = document.getElementById('layoutIcon');
   const textElem = document.getElementById('layoutText');
 
-  // معالجة عدد الأعمدة لمنع التقطيع في الجوال
   let activeCols = current.cols;
   if (window.innerWidth < 600 && current.cols === 4) {
-    activeCols = 3; // تقييد 4 أعمدة إلى 3 في الجوال للحفاظ على تناسق الشاشة
+    activeCols = 3;
   }
 
-  // تطبيق التعديل على الشبكة
   if (grid) {
     grid.style.gridTemplateColumns = `repeat(${activeCols}, 1fr)`;
     grid.style.gap = '8px';
   }
 
-  // تحديث شكل الأيقونة والنص
   if (iconElem) iconElem.className = current.icon;
   if (textElem) textElem.textContent = current.label;
 }
+</script>
    
 </body>
   </html>
