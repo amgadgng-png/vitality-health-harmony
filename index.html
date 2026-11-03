@@ -52,6 +52,14 @@
   70% { transform: translateX(-66.666%); }
   95% { transform: translateX(-66.666%); }
   100% { transform: translateX(0); }
+  .product-item img, 
+.product-card img, 
+.product-image img {
+    width: 100% !important;
+    height: 280px !important; /* هذا هو الارتفاع الموحد لكل الصور */
+    object-fit: contain !important; /* يجعل صورة المكمل تظهر كاملة دون قص */
+    background-color: #ffffff !important; /* لون خلفية أبيض للمساحات الفارغة */
+    padding: 10px !important; /* مسافة أمان حول الصورة */
 }
 </style>
 <!-- حاوية اسم المتجر وأيقونة التخطيط في نفس السطر -->
