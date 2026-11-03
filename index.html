@@ -1,6 +1,12 @@
 <!DOCTYPE html>
-<!-- أيقونة التشكيل الذكية لمتجر فايتالي -->
-<div style="display: flex; justify-content: flex-end; padding: 4px 12px; margin-bottom: 5px;">
+<!-- حاوية اسم المتجر وأيقونة التخطيط في نفس السطر -->
+<div style="display: flex; justify-content: space-between; align-items: center; padding: 6px 15px; margin-bottom: 5px; width: 100%;">
+  <!-- اسم المتجر أو العنوان في اليمين -->
+  <div style="color: #4ade80; font-weight: bold; font-size: 0.95rem;">
+    فَايْتَالِي (Vitali)
+  </div>
+  
+  <!-- الأيقونة السادة في اليسار تماماً فوق المكملات -->
   <button id="layoutToggleBtn" onclick="cycleLayout()" style="background: #18181b; border: 1px solid #333; border-radius: 8px; padding: 6px 10px; color: #4ade80; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 5px rgba(0,0,0,0.3);">
     <i id="layoutIcon" class="fas fa-th-large" style="font-size: 1.1rem;"></i>
   </button>
@@ -467,8 +473,7 @@
 
     renderProducts(products);
   </script>
-  <script>
-// مصفوفة التشكيلات الذكية (2، 3، 4 أعمدة) مع أيقونات معبرة
+   <script>
 const layouts = [
   { cols: 2, icon: 'fas fa-th-large' },
   { cols: 3, icon: 'fas fa-th' },
@@ -485,10 +490,9 @@ function cycleLayout() {
   const iconElem = document.getElementById('layoutIcon');
 
   if (grid) {
-    // تطبيق عدد الأعمدة ديناميكياً
     grid.style.gridTemplateColumns = `repeat(${current.cols}, 1fr)`;
 
-    // تعديل ذكي للمسافات وحجم الخطوط لمنع التقطيع أو التداخل على الجوال
+    // ضبط المقاسات ديناميكياً لتجنب أي تقطيع على الجوال عند اختيار 3 أو 4 أعمدة
     if (current.cols === 4) {
       grid.style.gap = '3px';
       document.querySelectorAll('.product-card').forEach(card => {
@@ -510,12 +514,10 @@ function cycleLayout() {
     }
   }
 
-  // تحديث شكل الأيقونة تلقائياً مع كل ضغطة
   if (iconElem) {
     iconElem.className = current.icon;
   }
 }
-  </script>
-   
+   </script>
 </body>
   </html>
