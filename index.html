@@ -1,9 +1,8 @@
 <!DOCTYPE html>
-<!-- زر التشكيلات الذكي لمتجر فايتالي -->
-<div style="display: flex; justify-content: flex-end; padding: 4px 12px;">
-  <button id="layoutToggleBtn" onclick="cycleLayout()" style="background: #18181b; border: 1px solid #333; border-radius: 8px; padding: 5px 12px; color: #4ade80; display: flex; align-items: center; gap: 6px; cursor: pointer;">
-    <i id="layoutIcon" class="fas fa-th" style="font-size: 0.9rem;"></i>
-    <span id="layoutText" style="font-size: 0.8rem; font-weight: bold; color: #ffffff;">تشكيل (3 أعمدة)</span>
+<!-- أيقونة التشكيل الذكية لمتجر فايتالي -->
+<div style="display: flex; justify-content: flex-end; padding: 4px 12px; margin-bottom: 5px;">
+  <button id="layoutToggleBtn" onclick="cycleLayout()" style="background: #18181b; border: 1px solid #333; border-radius: 8px; padding: 6px 10px; color: #4ade80; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 5px rgba(0,0,0,0.3);">
+    <i id="layoutIcon" class="fas fa-th-large" style="font-size: 1.1rem;"></i>
   </button>
 </div>
 <html lang="ar" dir="rtl">
@@ -469,11 +468,11 @@
     renderProducts(products);
   </script>
   <script>
-// تعريف التشكيلات (3، 4، 5 أعمدة كما طلبت)
+// مصفوفة التشكيلات الذكية (2، 3، 4 أعمدة) مع أيقونات معبرة
 const layouts = [
-  { cols: 3, label: 'تشكيل (3 أعمدة)', icon: 'fas fa-th' },
-  { cols: 4, label: 'تشكيل (4 أعمدة)', icon: 'fas fa-grip-horizontal' },
-  { cols: 5, label: 'تشكيل (5 أعمدة)', icon: 'fas fa-th-large' }
+  { cols: 2, icon: 'fas fa-th-large' },
+  { cols: 3, icon: 'fas fa-th' },
+  { cols: 4, icon: 'fas fa-grip-horizontal' }
 ];
 
 let currentLayoutIndex = 0;
@@ -484,37 +483,37 @@ function cycleLayout() {
   
   const grid = document.querySelector('.products-grid') || document.getElementById('productsGrid');
   const iconElem = document.getElementById('layoutIcon');
-  const textElem = document.getElementById('layoutText');
 
   if (grid) {
-    // تطبيق عدد الأعمدة أفقياً
+    // تطبيق عدد الأعمدة ديناميكياً
     grid.style.gridTemplateColumns = `repeat(${current.cols}, 1fr)`;
 
-    // ضبط المسافات وحجم النصوص ديناميكياً حسب عدد الأعمدة لضمان مظهر فائق ومنتظم
-    if (current.cols === 5) {
-      grid.style.gap = '2px';
-      document.querySelectorAll('.product-card').forEach(card => {
-        card.style.padding = '2px';
-        card.style.fontSize = '0.6rem';
-      });
-    } else if (current.cols === 4) {
-      grid.style.gap = '4px';
+    // تعديل ذكي للمسافات وحجم الخطوط لمنع التقطيع أو التداخل على الجوال
+    if (current.cols === 4) {
+      grid.style.gap = '3px';
       document.querySelectorAll('.product-card').forEach(card => {
         card.style.padding = '4px';
-        card.style.fontSize = '0.7rem';
+        card.style.fontSize = '0.65rem';
+      });
+    } else if (current.cols === 3) {
+      grid.style.gap = '6px';
+      document.querySelectorAll('.product-card').forEach(card => {
+        card.style.padding = '6px';
+        card.style.fontSize = '0.75rem';
       });
     } else {
-      grid.style.gap = '8px';
+      grid.style.gap = '10px';
       document.querySelectorAll('.product-card').forEach(card => {
-        card.style.padding = '8px';
+        card.style.padding = '10px';
         card.style.fontSize = '0.85rem';
       });
     }
   }
 
-  // تحديث النص والأيقونة في الزر العلوي
-  if (iconElem) iconElem.className = current.icon;
-  if (textElem) textElem.textContent = current.label;
+  // تحديث شكل الأيقونة تلقائياً مع كل ضغطة
+  if (iconElem) {
+    iconElem.className = current.icon;
+  }
 }
   </script>
    
