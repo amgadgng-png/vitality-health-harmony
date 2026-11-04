@@ -62,11 +62,30 @@
     padding: 10px !important; /* مسافة أمان حول الصورة */
 }
 </style>
+<style>
+/* تكبير علبة المكمل لتملأ المساحة تماماً */
+.product-item img,
+.product-card img,
+.product-image img {
+  width: 100% !important;
+  height: 200px !important;
+  object-fit: contain !important;
+  background-color: #ffffff !important;
+}
+
+/* تكبير الصندوق الأسود/الرمادي الحاضن للعلبة */
+.product-image-container,
+.product-card .image-wrapper,
+.product-card > div {
+  max-height: 210px !important;
+}
+</style>
 <!-- حاوية اسم المتجر وأيقونة التخطيط في نفس السطر -->
 <div style="display: flex; justify-content: space-between; align-items: center; padding: 6px 15px; margin-bottom: 5px; width: 100%;">
   <!-- اسم المتجر أو العنوان في اليمين -->
   <div style="color: #4ade80; font-weight: bold; font-size: 0.95rem;">
     فَايْتَالِي (Vitali)
+    
   </div>
   
   <!-- الأيقونة السادة في اليسار تماماً فوق المكملات -->
