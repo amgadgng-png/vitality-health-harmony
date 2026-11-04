@@ -44,22 +44,15 @@
 
 <!-- كود الحركة التلقائية (CSS Animation) ضعه في قسم الـ <style> أو داخل الملف -->
 <style>
-/* تكبير علبة المكمل والصندوق الخاص بها لتملأ المساحة بالكامل */
-.product-item img, .product-card img, .product-image img {
+/* تكبير علبة المكمل داخل إطارها بشكل فائق ومرتب */
+.product-card img, 
+.product-item img {
   width: 100% !important;
-  height: 220px !important;
+  max-height: 180px !important;
+  height: 180px !important;
   object-fit: contain !important;
   background-color: #ffffff !important;
-  padding: 0px !important;
-}
-
-/* تكبير المربع الحاضن للصورة ليتسع للعلبة الكبيرة */
-.product-image-container, .product-card .image-wrapper, .product-card > div:has(img) {
-  height: 220px !important;
-  width: 100% !important;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
+  border-radius: 8px !important;
 }
 </style>
 <!-- حاوية اسم المتجر وأيقونة التخطيط في نفس السطر -->
