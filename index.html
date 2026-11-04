@@ -44,6 +44,25 @@
 
 <!-- كود الحركة التلقائية (CSS Animation) ضعه في قسم الـ <style> أو داخل الملف -->
 <style>
+@keyframes slideAnimation {
+  0% { transform: translateX(0); }
+  30% { transform: translateX(0); }
+  35% { transform: translateX(-33.333%); }
+  65% { transform: translateX(-33.333%); }
+  70% { transform: translateX(-66.666%); }
+  95% { transform: translateX(-66.666%); }
+  100% { transform: translateX(0); }
+  .product-item img, 
+.product-card img, 
+.product-image img {
+    width: 250% !important;
+    height: 330px !important; /* هذا هو الارتفاع الموحد لكل الصور */
+    object-fit: contain !important; /* يجعل صورة المكمل تظهر كاملة دون قص */
+    background-color: #ffffff !important; /* لون خلفية أبيض للمساحات الفارغة */
+    padding: 10px !important; /* مسافة أمان حول الصورة */
+}
+</style>
+<style>
 /* تكبير علبة المكمل داخل إطارها بشكل فائق ومرتب */
 .product-card img, 
 .product-item img {
