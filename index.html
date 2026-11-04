@@ -43,43 +43,27 @@
 </div>
 
 <!-- كود الحركة التلقائية (CSS Animation) ضعه في قسم الـ <style> أو داخل الملف -->
-<style>
-@keyframes slideAnimation {
-  0% { transform: translateX(0); }
-  30% { transform: translateX(0); }
-  35% { transform: translateX(-33.333%); }
-  65% { transform: translateX(-33.333%); }
-  70% { transform: translateX(-66.666%); }
-  95% { transform: translateX(-66.666%); }
-  100% { transform: translateX(0); }
-  .product-item img, 
-.product-card img, 
-.product-image img {
-    width: 250% !important;
-    height: 330px !important; /* هذا هو الارتفاع الموحد لكل الصور */
-    object-fit: contain !important; /* يجعل صورة المكمل تظهر كاملة دون قص */
-    background-color: #ffffff !important; /* لون خلفية أبيض للمساحات الفارغة */
-    padding: 10px !important; /* مسافة أمان حول الصورة */
-}
-</style>
-<style>
-/* تكبير علبة المكمل لتملأ المساحة تماماً */
+/* تكبير علبة المكمل والصندوق الخاص بها لتملأ المساحة بالكامل */
 .product-item img,
 .product-card img,
 .product-image img {
   width: 100% !important;
-  height: 200px !important;
+  height: 220px !important;
   object-fit: contain !important;
   background-color: #ffffff !important;
+  padding: 0px !important;
 }
 
-/* تكبير الصندوق الأسود/الرمادي الحاضن للعلبة */
+/* تكبير المربع الرمادي الحاضن للصورة ليتسع للعلبة الكبيرة */
 .product-image-container,
 .product-card .image-wrapper,
-.product-card > div {
-  max-height: 210px !important;
+.product-card > div:has(img) {
+  height: 220px !important;
+  width: 100% !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
 }
-</style>
 <!-- حاوية اسم المتجر وأيقونة التخطيط في نفس السطر -->
 <div style="display: flex; justify-content: space-between; align-items: center; padding: 6px 15px; margin-bottom: 5px; width: 100%;">
   <!-- اسم المتجر أو العنوان في اليمين -->
