@@ -43,10 +43,9 @@
 </div>
 
 <!-- كود الحركة التلقائية (CSS Animation) ضعه في قسم الـ <style> أو داخل الملف -->
+<style>
 /* تكبير علبة المكمل والصندوق الخاص بها لتملأ المساحة بالكامل */
-.product-item img,
-.product-card img,
-.product-image img {
+.product-item img, .product-card img, .product-image img {
   width: 100% !important;
   height: 220px !important;
   object-fit: contain !important;
@@ -54,16 +53,15 @@
   padding: 0px !important;
 }
 
-/* تكبير المربع الرمادي الحاضن للصورة ليتسع للعلبة الكبيرة */
-.product-image-container,
-.product-card .image-wrapper,
-.product-card > div:has(img) {
+/* تكبير المربع الحاضن للصورة ليتسع للعلبة الكبيرة */
+.product-image-container, .product-card .image-wrapper, .product-card > div:has(img) {
   height: 220px !important;
   width: 100% !important;
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
 }
+</style>
 <!-- حاوية اسم المتجر وأيقونة التخطيط في نفس السطر -->
 <div style="display: flex; justify-content: space-between; align-items: center; padding: 6px 15px; margin-bottom: 5px; width: 100%;">
   <!-- اسم المتجر أو العنوان في اليمين -->
