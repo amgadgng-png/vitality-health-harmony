@@ -44,11 +44,11 @@
 
 <!-- كود الحركة التلقائية (CSS Animation) ضعه في قسم الـ <style> أو داخل الملف -->
 <style>
-/* تكبير الصندوق الأسود الحاضن للصورة ليتسع للعلبة الكبيرة */
+/* 1. تنسيق الصندوق الأسود الحاضن لصورة المكمل */
 .product-card .image-wrapper,
 .product-card div:has(> img),
 .product-item .image-container {
-  height: 160px !important;
+  height: 220px !important;
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
@@ -57,54 +57,48 @@
   margin-bottom: 8px !important;
 }
 
-/* تكبير علبة المكمل نفسها لتملأ الصندوق بالكامل بوضوح */
+/* 2. تكبير علبة المكمل لتملأ الصندوق بوضوح وبارزة */
 .product-card img, 
 .product-item img {
   width: auto !important;
   max-width: 100% !important;
-  height: 340px !important;
-  max-height: 240px !important;
+  height: 200px !important;
+  max-height: 200px !important;
   object-fit: contain !important;
-  {
+}
 
-  <style>
-  <style>
-/* تفعيل التسريع الفيزيائي للعناصر لجعل التصفح ناعماً وسلساً */
+/* 3. أكواد السرعة والسلاسة الفائقة للتصفح والسلة */
 * {
   -webkit-tap-highlight-color: transparent;
   box-sizing: border-box;
 }
 
-/* تسريع ظهور كروت المنتجات بسلاسة فائقة */
 .product-card, .product-item {
   transform: translateZ(0);
   backface-visibility: hidden;
-  transition: transform 0.2s ease, box-shadow 0.2s ease !important;
+  transition: transform 0.2s ease !important;
 }
 
-/* جعل أزرار الإضافة للسلة تستجيب فوراً وبسرعة البرق عند اللمس */
-button, .add-to-cart, .btn-cart {
-  cursor: pointer;
+button, .add-to-cart {
   touch-action: manipulation;
-  transition: background-color 0.15s ease, transform 0.1s ease !important;
+  cursor: pointer;
 }
 
 button:active, .add-to-cart:active {
-  transform: scale(0.97); /* تأثير ضغطة سريعة ومرنة يشبه التطبيقات الأصلية */
+  transform: scale(0.97);
 }
 </style>
 
 <script>
-/* تحسين سرعة تفاعل المتجر وإضافة المنتجات للسلة بشكل فوري */
+/* تفعيل التحميل الذكي للصور لتسريع فتح المتجر */
 document.addEventListener("DOMContentLoaded", function() {
-  // تفعيل التحميل الذكي للصور لتسريع فتح المتجر
   const images = document.querySelectorAll('img');
   images.forEach(img => {
     img.setAttribute('loading', 'lazy');
   });
 });
 </script>
-</script>
+  
 
 
 <!-- حاوية اسم المتجر وأيقونة التخطيط في نفس السطر -->
