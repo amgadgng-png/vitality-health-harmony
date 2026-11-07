@@ -44,28 +44,27 @@
 
 <!-- كود الحركة التلقائية (CSS Animation) ضعه في قسم الـ <style> أو داخل الملف -->
 <style>
-@keyframes slideAnimation {
-<!-- كود العروض المتحركة -->
-<style>
-@keyframes slideAnimation {
-  0% { transform: translateX(0); }
-  30% { transform: translateX(0); }
-  35% { transform: translateX(-33.333%); }
-  65% { transform: translateX(-33.333%); }
-  70% { transform: translateX(-66.666%); }
-  95% { transform: translateX(-66.666%); }
-  100% { transform: translateX(0); }
+/* تكبير الصندوق الأسود الحاضن للصورة ليتسع للعلبة الكبيرة */
+.product-card .image-wrapper,
+.product-card div:has(> img),
+.product-item .image-container {
+  height: 180px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  background-color: #1e1e24 !important;
+  border-radius: 8px !important;
+  margin-bottom: 8px !important;
 }
 
-/* تكبير علبة المكمل فقط وبدون المساس بأي تصميم آخر في المتجر */
+/* تكبير علبة المكمل نفسها لتملأ الصندوق بالكامل بوضوح */
 .product-card img, 
 .product-item img {
-  width: 100% !important;
-  height: 220px !important;
-  max-height: 220px !important;
+  width: auto !important;
+  max-width: 100% !important;
+  height: 165px !important;
+  max-height: 165px !important;
   object-fit: contain !important;
-  background-color: #ffffff !important;
-  border-radius: 8px !important;
 }
 </style>
 
