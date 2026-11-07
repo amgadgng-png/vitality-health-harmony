@@ -65,8 +65,41 @@
   height: 340px !important;
   max-height: 240px !important;
   object-fit: contain !important;
+  
+/* تفعيل التسريع الفيزيائي للعناصر لجعل التصفح ناعماً وسلساً */
+* {
+  -webkit-tap-highlight-color: transparent;
+  box-sizing: border-box;
 }
-</style>
+
+/* تسريع ظهور كروت المنتجات بسلاسة فائقة */
+.product-card, .product-item {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  transition: transform 0.2s ease, box-shadow 0.2s ease !important;
+}
+
+/* جعل أزرار الإضافة للسلة تستجيب فوراً وبسرعة البرق عند اللمس */
+button, .add-to-cart, .btn-cart {
+  cursor: pointer;
+  touch-action: manipulation;
+  transition: background-color 0.15s ease, transform 0.1s ease !important;
+}
+
+button:active, .add-to-cart:active {
+  transform: scale(0.97); /* تأثير ضغطة سريعة ومرنة يشبه التطبيقات الأصلية */
+}
+  
+/* تحسين سرعة تفاعل المتجر وإضافة المنتجات للسلة بشكل فوري */
+document.addEventListener("DOMContentLoaded", function() {
+  // تفعيل التحميل الذكي للصور لتسريع فتح المتجر
+  const images = document.querySelectorAll('img');
+  images.forEach(img => {
+    img.setAttribute('loading', 'lazy');
+  });
+});
+</script>
+
 
 <!-- حاوية اسم المتجر وأيقونة التخطيط في نفس السطر -->
 <div style="display: flex; justify-content: space-between; align-items: center; padding: 6px 15px; margin-bottom: 5px; width: 100%;">
