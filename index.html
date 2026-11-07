@@ -45,6 +45,9 @@
 <!-- كود الحركة التلقائية (CSS Animation) ضعه في قسم الـ <style> أو داخل الملف -->
 <style>
 @keyframes slideAnimation {
+<!-- كود العروض المتحركة -->
+<style>
+@keyframes slideAnimation {
   0% { transform: translateX(0); }
   30% { transform: translateX(0); }
   35% { transform: translateX(-33.333%); }
@@ -52,12 +55,14 @@
   70% { transform: translateX(-66.666%); }
   95% { transform: translateX(-66.666%); }
   100% { transform: translateX(0); }
-/* تكبير علبة المكمل داخل إطارها بشكل فائق ومرتب */
+}
+
+/* تكبير علبة المكمل فقط وبدون المساس بأي تصميم آخر في المتجر */
 .product-card img, 
 .product-item img {
   width: 100% !important;
-  max-height: 240px !important;
-  height: 240px !important;
+  height: 220px !important;
+  max-height: 220px !important;
   object-fit: contain !important;
   background-color: #ffffff !important;
   border-radius: 8px !important;
