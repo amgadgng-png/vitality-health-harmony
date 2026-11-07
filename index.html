@@ -65,7 +65,10 @@
   height: 340px !important;
   max-height: 240px !important;
   object-fit: contain !important;
-  
+  {
+
+  <style>
+  <style>
 /* تفعيل التسريع الفيزيائي للعناصر لجعل التصفح ناعماً وسلساً */
 * {
   -webkit-tap-highlight-color: transparent;
@@ -89,7 +92,9 @@ button, .add-to-cart, .btn-cart {
 button:active, .add-to-cart:active {
   transform: scale(0.97); /* تأثير ضغطة سريعة ومرنة يشبه التطبيقات الأصلية */
 }
-  
+</style>
+
+<script>
 /* تحسين سرعة تفاعل المتجر وإضافة المنتجات للسلة بشكل فوري */
 document.addEventListener("DOMContentLoaded", function() {
   // تفعيل التحميل الذكي للصور لتسريع فتح المتجر
@@ -98,6 +103,7 @@ document.addEventListener("DOMContentLoaded", function() {
     img.setAttribute('loading', 'lazy');
   });
 });
+</script>
 </script>
 
 
