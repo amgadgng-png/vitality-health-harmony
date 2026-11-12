@@ -1,119 +1,4 @@
 <!DOCTYPE html>
-<!-- قسم العروض المتحركة وصور المكملات الترويجية -->
-<div style="width: 100%; overflow: hidden; border-radius: 12px; margin: 10px 0; background: #121214; border: 1px solid #27272a; box-shadow: 0 4px 12px rgba(0,0,0,0.5);">
-  <div class="slider-container" style="display: flex; width: 300%; animation: slideAnimation 12s infinite ease-in-out;">
-    
-    <!-- الشريحة الأولى -->
-    <div style="width: 33.333%; padding: 12px; display: flex; align-items: center; justify-content: space-between; box-sizing: border-box;">
-      <div style="flex: 1; padding-left: 10px;">
-        <span style="background: #4ade80; color: #000; font-size: 0.7rem; font-weight: bold; padding: 2px 6px; border-radius: 4px;">عروض حصرية</span>
-        <h3 style="color: #fff; font-size: 0.95rem; margin: 5px 0;">مكملات الطاقة والبناء</h3>
-        <p style="color: #a1a1aa; font-size: 0.75rem; margin: 0;">خصومات تصل إلى 30% لفترة محدودة</p>
-      </div>
-      <div style="width: 80px; height: 80px; border-radius: 8px; overflow: hidden; background: #22c55e20; display: flex; align-items: center; justify-content: center;">
-        <i class="fas fa-pills" style="font-size: 2rem; color: #4ade80;"></i>
-      </div>
-    </div>
-
-    <!-- الشريحة الثانية -->
-    <div style="width: 33.333%; padding: 12px; display: flex; align-items: center; justify-content: space-between; box-sizing: border-box;">
-      <div style="flex: 1; padding-left: 10px;">
-        <span style="background: #3b82f6; color: #fff; font-size: 0.7rem; font-weight: bold; padding: 2px 6px; border-radius: 4px;">الأكثر طلباً</span>
-        <h3 style="color: #fff; font-size: 0.95rem; margin: 5px 0;">فيتامينات الصحة العامة</h3>
-        <p style="color: #a1a1aa; font-size: 0.75rem; margin: 0;">دعم متكامل لجسمك وصحتك اليومية</p>
-      </div>
-      <div style="width: 80px; height: 80px; border-radius: 8px; overflow: hidden; background: #3b82f620; display: flex; align-items: center; justify-content: center;">
-        <i class="fas fa-capsules" style="font-size: 2rem; color: #60a5fa;"></i>
-      </div>
-    </div>
-
-    <!-- الشريحة الثالثة -->
-    <div style="width: 33.333%; padding: 12px; display: flex; align-items: center; justify-content: space-between; box-sizing: border-box;">
-      <div style="flex: 1; padding-left: 10px;">
-        <span style="background: #eab308; color: #000; font-size: 0.7rem; font-weight: bold; padding: 2px 6px; border-radius: 4px;">جديد فايتالي</span>
-        <h3 style="color: #fff; font-size: 0.95rem; margin: 5px 0;">بروتينات نقية 100%</h3>
-        <p style="color: #a1a1aa; font-size: 0.75rem; margin: 0;">ضمان الجودة والنتائج السريعة</p>
-      </div>
-      <div style="width: 80px; height: 100px; border-radius: 8px; overflow: hidden; background: #eab30820; display: flex; align-items: center; justify-content: center;">
-        <i class="fas fa-dumbbell" style="font-size: 2rem; color: #facc15;"></i>
-      </div>
-    </div>
-
-  </div>
-</div>
-
-<!-- كود الحركة التلقائية (CSS Animation) ضعه في قسم الـ <style> أو داخل الملف -->
-<style>
-/* 1. تنسيق الصندوق الأسود الحاضن لصورة المكمل */
-.product-card .image-wrapper,
-.product-card div:has(> img),
-.product-item .image-container {
-  height: 220px !important;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  background-color: #1e1e24 !important;
-  border-radius: 8px !important;
-  margin-bottom: 8px !important;
-}
-
-/* 2. تكبير علبة المكمل لتملأ الصندوق بوضوح وبارزة */
-.product-card img, 
-.product-item img {
-  width: auto !important;
-  max-width: 100% !important;
-  height: 200px !important;
-  max-height: 200px !important;
-  object-fit: contain !important;
-}
-
-/* 3. أكواد السرعة والسلاسة الفائقة للتصفح والسلة */
-* {
-  -webkit-tap-highlight-color: transparent;
-  box-sizing: border-box;
-}
-
-.product-card, .product-item {
-  transform: translateZ(0);
-  backface-visibility: hidden;
-  transition: transform 0.2s ease !important;
-}
-
-button, .add-to-cart {
-  touch-action: manipulation;
-  cursor: pointer;
-}
-
-button:active, .add-to-cart:active {
-  transform: scale(0.97);
-}
-</style>
-
-<script>
-/* تفعيل التحميل الذكي للصور لتسريع فتح المتجر */
-document.addEventListener("DOMContentLoaded", function() {
-  const images = document.querySelectorAll('img');
-  images.forEach(img => {
-    img.setAttribute('loading', 'lazy');
-  });
-});
-</script>
-  
-
-
-<!-- حاوية اسم المتجر وأيقونة التخطيط في نفس السطر -->
-<div style="display: flex; justify-content: space-between; align-items: center; padding: 6px 15px; margin-bottom: 5px; width: 100%;">
-  <!-- اسم المتجر أو العنوان في اليمين -->
-  <div style="color: #4ade80; font-weight: bold; font-size: 0.95rem;">
-    فَايْتَالِي (Vitali)
-    
-  </div>
-  
-  <!-- الأيقونة السادة في اليسار تماماً فوق المكملات -->
-  <button id="layoutToggleBtn" onclick="cycleLayout()" style="background: #18181b; border: 1px solid #333; border-radius: 8px; padding: 6px 10px; color: #4ade80; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 5px rgba(0,0,0,0.3);">
-    <i id="layoutIcon" class="fas fa-th-large" style="font-size: 1.1rem;"></i>
-  </button>
-</div>
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8">
@@ -129,46 +14,268 @@ document.addEventListener("DOMContentLoaded", function() {
       --accent-light: #4caf50;
       --border-color: #333333;
     }
-    * { box-sizing: border-box; margin: 100; padding: 100; font-family: Tahoma, sans-serif; }
-    body { background-color: var(--bg-color); color: var(--text-color); padding-bottom: 70px; }
-    
-    .header-container { padding: 10px 15px; background: #181818; position: sticky; top: 0; z-index: 100; border-bottom: 1px solid var(--border-color); }
-    .search-box { display: flex; align-items: center; background: #2a2a2a; border-radius: 25px; padding: 8px 15px; border: 1px solid #444; }
-    .search-box input { background: transparent; border: none; outline: none; color: #fff; width: 100%; margin-right: 10px; font-size: 0.95rem; text-align: right; }
-    .search-box i { color: var(--accent-light); }
 
-    .banner { margin: 15px; background: #1e1e1e; border-radius: 12px; padding: 15px; text-align: center; border: 1px solid var(--border-color); }
-    .banner img { max-width: 250px; height: auto; }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Tahoma, sans-serif;
+      -webkit-tap-highlight-color: transparent;
+    }
 
-    .categories-bar { display: flex; gap: 8px; overflow-x: auto; padding: 10px 15px; scrollbar-width: none; }
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      padding-bottom: 75px;
+    }
+
+    /* حركة العروض الترويجية */
+    @keyframes slideAnimation {
+      0%, 28% { transform: translateX(0%); }
+      33%, 61% { transform: translateX(33.333%); }
+      66%, 95% { transform: translateX(66.666%); }
+      100% { transform: translateX(0%); }
+    }
+
+    .header-container {
+      padding: 10px 15px;
+      background: #181818;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .search-box {
+      display: flex;
+      align-items: center;
+      background: #2a2a2a;
+      border-radius: 25px;
+      padding: 8px 15px;
+      border: 1px solid #444;
+    }
+
+    .search-box input {
+      background: transparent;
+      border: none;
+      outline: none;
+      color: #fff;
+      width: 100%;
+      margin-right: 10px;
+      font-size: 0.95rem;
+      text-align: right;
+    }
+
+    .search-box i {
+      color: var(--accent-light);
+    }
+
+    .categories-bar {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding: 10px 15px;
+      scrollbar-width: none;
+    }
     .categories-bar::-webkit-scrollbar { display: none; }
-    .cat-item { background: #222; color: #bbb; padding: 8px 16px; border-radius: 20px; font-size: 0.85rem; white-space: nowrap; cursor: pointer; border: 1px solid #444; transition: 0.2s; }
-    .cat-item.active { background: #333; color: #fff; border-color: var(--accent-light); font-weight: bold; }
 
-    .products-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; padding: 10px 15px; }
-    .product-card { background: var(--card-bg); border-radius: 10px; padding: 10px; border: 1px solid var(--border-color); display: flex; flex-direction: column; justify-content: space-between; }
-    .prod-brand { font-size: 0.75rem; color: #aaa; margin-bottom: 2px; }
-    .prod-title { font-size: 0.85rem; font-weight: bold; color: #fff; margin-bottom: 8px; height: 35px; overflow: hidden; cursor: pointer; }
-    .prod-img-box { background: #2a2a2a; border-radius: 8px; height: 110px; display: flex; align-items: center; justify-content: center; position: relative; margin-bottom: 8px; }
-    .img-actions { position: absolute; top: 6px; left: 6px; display: flex; flex-direction: column; gap: 6px; }
-    .action-icon { background: rgba(0,0,0,0.6); color: #fff; padding: 5px; border-radius: 50%; font-size: 0.75rem; cursor: pointer; }
-    .prod-price { font-size: 0.9rem; font-weight: bold; color: var(--accent-light); margin-bottom: 6px; }
-    .btn-add-cart { background: var(--accent-green); color: white; border: none; width: 100%; padding: 6px; border-radius: 6px; font-size: 0.75rem; cursor: pointer; font-weight: bold; display: flex; align-items: center; justify-content: center; gap: 4px; }
-    .more-options { font-size: 0.75rem; color: #888; text-align: center; margin-top: 6px; cursor: pointer; }
+    .cat-item {
+      background: #222;
+      color: #bbb;
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      white-space: nowrap;
+      cursor: pointer;
+      border: 1px solid #444;
+      transition: 0.2s;
+    }
+    .cat-item.active {
+      background: #333;
+      color: #fff;
+      border-color: var(--accent-light);
+      font-weight: bold;
+    }
 
-    .bottom-nav { position: fixed; bottom: 0; left: 0; width: 100%; background: #181818; display: flex; justify-content: space-around; padding: 10px 0; border-top: 1px solid var(--border-color); z-index: 00; }
-    .nav-item { display: flex; flex-direction: column; align-items: center; color: #aaa; font-size: 0.75rem; text-decoration: none; cursor: pointer; }
+    /* شبكة المنتجات المتساوية بدون تداخل */
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      padding: 10px 15px;
+    }
+
+    .product-card {
+      background: var(--card-bg);
+      border-radius: 10px;
+      padding: 10px;
+      border: 1px solid var(--border-color);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      overflow: hidden;
+    }
+
+    .prod-brand {
+      font-size: 0.72rem;
+      color: #aaa;
+      margin-bottom: 3px;
+    }
+
+    .prod-title {
+      font-size: 0.82rem;
+      font-weight: bold;
+      color: #fff;
+      margin-bottom: 8px;
+      height: 36px;
+      line-height: 1.3;
+      overflow: hidden;
+      cursor: pointer;
+    }
+
+    /* صندوق الصورة المتناسق */
+    .prod-img-box {
+      background: #18181d;
+      border-radius: 8px;
+      height: 165px;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      margin-bottom: 8px;
+      padding: 8px;
+      overflow: hidden;
+    }
+
+    .prod-img-box img {
+      max-width: 100%;
+      max-height: 145px;
+      width: auto;
+      height: auto;
+      object-fit: contain;
+    }
+
+    .img-actions {
+      position: absolute;
+      top: 6px;
+      left: 6px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      z-index: 2;
+    }
+
+    .action-icon {
+      background: rgba(0, 0, 0, 0.65);
+      color: #fff;
+      width: 26px;
+      height: 26px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      font-size: 0.75rem;
+      cursor: pointer;
+    }
+
+    .prod-price {
+      font-size: 0.9rem;
+      font-weight: bold;
+      color: var(--accent-light);
+      margin-bottom: 6px;
+    }
+
+    .btn-add-cart {
+      background: var(--accent-green);
+      color: white;
+      border: none;
+      width: 100%;
+      padding: 8px 6px;
+      border-radius: 6px;
+      font-size: 0.78rem;
+      cursor: pointer;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      touch-action: manipulation;
+    }
+    .btn-add-cart:active { transform: scale(0.97); }
+
+    .more-options {
+      font-size: 0.72rem;
+      color: #888;
+      text-align: center;
+      margin-top: 6px;
+      cursor: pointer;
+    }
+
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background: #181818;
+      display: flex;
+      justify-content: space-around;
+      padding: 10px 0;
+      border-top: 1px solid var(--border-color);
+      z-index: 150;
+    }
+
+    .nav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      color: #aaa;
+      font-size: 0.75rem;
+      text-decoration: none;
+      cursor: pointer;
+    }
     .nav-item i { font-size: 1.2rem; margin-bottom: 3px; }
     .nav-item.active { color: var(--accent-light); }
-    .cart-badge { background: #ff5555; color: white; font-size: 0.65rem; padding: 2px 5px; border-radius: 50%; position: absolute; top: 2px; right: 35%; }
 
-    .overlay-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg-color); z-index: 200; display: none; flex-direction: column; padding: 15px; overflow-y: auto; }
+    .cart-badge {
+      background: #ff5555;
+      color: white;
+      font-size: 0.65rem;
+      padding: 2px 5px;
+      border-radius: 50%;
+      position: absolute;
+      top: 2px;
+      right: 35%;
+    }
+
+    .overlay-screen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: var(--bg-color);
+      z-index: 200;
+      display: none;
+      flex-direction: column;
+      padding: 15px;
+      overflow-y: auto;
+    }
     .overlay-screen.active { display: flex; }
-    .top-bar-detail { display: flex; align-items: center; justify-content: space-between; margin-bottom: 15px; border-bottom: 1px solid var(--border-color); padding-bottom: 10px; }
+
+    .top-bar-detail {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 15px;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 10px;
+    }
   </style>
 </head>
 <body>
 
+  <!-- شريط البحث -->
   <div class="header-container">
     <div class="search-box">
       <i class="fas fa-search"></i>
@@ -176,11 +283,50 @@ document.addEventListener("DOMContentLoaded", function() {
     </div>
   </div>
 
-  <div class="banner">
-    <div style="font-size: 1.1rem; font-weight: bold; color: var(--accent-light);">فايتالي للصحّة والتوازن</div>
-    <div style="font-size: 0.75rem; color: #888; margin-top: 4px;">WELLNESS HEALTH & HARMONY</div>
+  <!-- قسم العروض المتحركة -->
+  <div style="margin: 10px 15px; overflow: hidden; border-radius: 12px; background: #18181b; border: 1px solid #27272a; box-shadow: 0 4px 12px rgba(0,0,0,0.4);">
+    <div class="slider-container" style="display: flex; width: 300%; animation: slideAnimation 12s infinite ease-in-out;">
+      
+      <!-- الشريحة الأولى -->
+      <div style="width: 33.333%; padding: 12px; display: flex; align-items: center; justify-content: space-between;">
+        <div style="flex: 1; padding-left: 10px;">
+          <span style="background: #4ade80; color: #000; font-size: 0.7rem; font-weight: bold; padding: 2px 6px; border-radius: 4px;">عروض حصرية</span>
+          <h3 style="color: #fff; font-size: 0.95rem; margin: 5px 0;">مكملات الطاقة والبناء</h3>
+          <p style="color: #a1a1aa; font-size: 0.75rem; margin: 0;">خصومات تصل إلى 30% لفترة محدودة</p>
+        </div>
+        <div style="width: 70px; height: 70px; border-radius: 8px; background: #22c55e20; display: flex; align-items: center; justify-content: center;">
+          <i class="fas fa-pills" style="font-size: 1.8rem; color: #4ade80;"></i>
+        </div>
+      </div>
+
+      <!-- الشريحة الثانية -->
+      <div style="width: 33.333%; padding: 12px; display: flex; align-items: center; justify-content: space-between;">
+        <div style="flex: 1; padding-left: 10px;">
+          <span style="background: #3b82f6; color: #fff; font-size: 0.7rem; font-weight: bold; padding: 2px 6px; border-radius: 4px;">الأكثر طلباً</span>
+          <h3 style="color: #fff; font-size: 0.95rem; margin: 5px 0;">فيتامينات الصحة العامة</h3>
+          <p style="color: #a1a1aa; font-size: 0.75rem; margin: 0;">دعم متكامل لجسمك وصحتك اليومية</p>
+        </div>
+        <div style="width: 70px; height: 70px; border-radius: 8px; background: #3b82f620; display: flex; align-items: center; justify-content: center;">
+          <i class="fas fa-capsules" style="font-size: 1.8rem; color: #60a5fa;"></i>
+        </div>
+      </div>
+
+      <!-- الشريحة الثالثة -->
+      <div style="width: 33.333%; padding: 12px; display: flex; align-items: center; justify-content: space-between;">
+        <div style="flex: 1; padding-left: 10px;">
+          <span style="background: #eab308; color: #000; font-size: 0.7rem; font-weight: bold; padding: 2px 6px; border-radius: 4px;">جديد فايتالي</span>
+          <h3 style="color: #fff; font-size: 0.95rem; margin: 5px 0;">بروتينات نقية 100%</h3>
+          <p style="color: #a1a1aa; font-size: 0.75rem; margin: 0;">ضمان الجودة والنتائج السريعة</p>
+        </div>
+        <div style="width: 70px; height: 70px; border-radius: 8px; background: #eab30820; display: flex; align-items: center; justify-content: center;">
+          <i class="fas fa-dumbbell" style="font-size: 1.8rem; color: #facc15;"></i>
+        </div>
+      </div>
+
+    </div>
   </div>
 
+  <!-- شريط الأقسام -->
   <div class="categories-bar">
     <div class="cat-item active" onclick="filterCat('الكل', this)">الكل</div>
     <div class="cat-item" onclick="filterCat('الجهاز الهضمي', this)">الجهاز الهضمي</div>
@@ -190,8 +336,20 @@ document.addEventListener("DOMContentLoaded", function() {
     <div class="cat-item" onclick="filterCat('الصحة العامة', this)">الصحة العامة</div>
   </div>
 
+  <!-- حاوية اسم المتجر وأيقونة التخطيط -->
+  <div style="display: flex; justify-content: space-between; align-items: center; padding: 6px 15px; margin-bottom: 2px; width: 100%;">
+    <div style="color: #4ade80; font-weight: bold; font-size: 0.95rem;">
+      فَايْتَالِي (Vitali)
+    </div>
+    <button id="layoutToggleBtn" onclick="cycleLayout()" style="background: #18181b; border: 1px solid #333; border-radius: 8px; padding: 6px 10px; color: #4ade80; cursor: pointer; display: flex; align-items: center; justify-content: center;">
+      <i id="layoutIcon" class="fas fa-th-large" style="font-size: 1.1rem;"></i>
+    </button>
+  </div>
+
+  <!-- شبكة عرض المنتجات -->
   <div class="products-grid" id="productsList"></div>
 
+  <!-- القائمة السفلية -->
   <div class="bottom-nav">
     <div class="nav-item active" onclick="showHome()">
       <i class="fas fa-home"></i> الرئيسية
@@ -205,14 +363,15 @@ document.addEventListener("DOMContentLoaded", function() {
     </div>
   </div>
 
+  <!-- شاشة تفاصيل المنتج -->
   <div class="overlay-screen" id="detailOverlay">
     <div class="top-bar-detail">
       <i class="fas fa-arrow-right" style="font-size: 1.2rem; cursor: pointer;" onclick="closeDetail()"></i>
       <span style="font-weight: bold;">تفاصيل المكمل</span>
       <i class="far fa-heart" style="font-size: 1.2rem; cursor: pointer;"></i>
     </div>
-    <div style="display: flex; gap: 8px; justify-content: center; margin-bottom: 12px;"><img src="${product.img}" style="width: 65px; height: 65px; object-fit: cover; border-radius: 6px; border: 1px solid #2ecc71;"><img src="رابط_الصورة_الثانية" style="width: 65px; height: 65px; object-fit: cover; border-radius: 6px;"><img src="رابط_الصورة_الثالثة" style="width: 65px; height: 65px; object-fit: cover; border-radius: 6px;"><img src="رابط_الصورة_الرابعة" style="width: 65px; height: 65px; object-fit: cover; border-radius: 6px;"></div>
     <div style="text-align: center; margin: 15px 0;">
+      <img id="detImg" src="" style="max-width: 200px; max-height: 200px; object-fit: contain; margin-bottom: 12px; border-radius: 8px;">
       <h2 id="detTitle" style="font-size: 1.1rem; margin-bottom: 8px;"></h2>
       <div id="detPrice" style="font-size: 1.2rem; color: var(--accent-light); font-weight: bold; margin-bottom: 15px;"></div>
       <div style="background: #1e1e1e; padding: 12px; border-radius: 8px; text-align: right; border: 1px solid var(--border-color); margin-bottom: 15px;">
@@ -223,12 +382,13 @@ document.addEventListener("DOMContentLoaded", function() {
         <div style="color: var(--accent-light); font-weight: bold; margin-bottom: 6px;">مميزات المكمل:</div>
         <ul id="detFeatures" style="padding-right: 20px; font-size: 0.9rem; color: #ccc; line-height: 1.6;"></ul>
       </div>
-      <button class="btn-add-cart" onclick="addToCartFromDetail()" style="padding: 10px; font-size: 0.9rem;">
+      <button class="btn-add-cart" onclick="addToCartFromDetail()" style="padding: 12px; font-size: 0.9rem;">
         <i class="fas fa-cart-plus"></i> إضافة إلى عربة التسوق
       </button>
     </div>
   </div>
 
+  <!-- شاشة السلة -->
   <div class="overlay-screen" id="cartOverlay">
     <div class="top-bar-detail">
       <i class="fas fa-arrow-right" style="font-size: 1.2rem; cursor: pointer;" onclick="closeCartScreen()"></i>
@@ -241,11 +401,13 @@ document.addEventListener("DOMContentLoaded", function() {
         <span>إجمالي المبلغ:</span>
         <span id="cartTotalPrice" style="color: var(--accent-light);">0 ر.ي</span>
       </div>
-      <button class="btn-add-cart" onclick="checkoutToWhatsApp()" style="background: #25d366; padding: 10px; font-size: 0.9rem;">
+      <button class="btn-add-cart" onclick="checkoutToWhatsApp()" style="background: #25d366; padding: 12px; font-size: 0.9rem;">
         <i class="fab fa-whatsapp"></i> إرسال الطلب عبر الواتساب
       </button>
     </div>
-  </div><script>
+  </div>
+
+  <script>
     const products = [
       { id: 1, brand: 'NOW Foods', name: 'Biotin 10 mg', price: 6796, category: 'الجمال', img: 'https://i.postimg.cc/HkttyrCt/Screenshot-20261101-035429-2.jpg', features: ['يدعم نمو الشعر وصحة البشرة والأظافر', 'يعزز عملية التمثيل الغذائي وإنتاج الطاقة', 'تركيبة نباتية عالية الجودة سريعة الامتصاص'] },
       { id: 2, brand: 'NOW Foods', name: 'مكمل Repair Gold، عدد 60 كبسولة', price: 6796, category: 'الجهاز الهضمي', img: 'https://i.postimg.cc/MGrMVbvN/1000019123-Photoroom.png', features: ['يحتوي على إنزيمات هاضمة عالية القوة', 'يساعد في تخفيف وتسكين آلام العضلات والمفاصل', 'يعزز التعافي السريع للجسم بعد المجهود البدني'] },
@@ -263,18 +425,17 @@ document.addEventListener("DOMContentLoaded", function() {
       { id: 14, brand: 'Vital Proteins', name: 'Collagen Peptides Powder', price: 18000, category: 'الجمال', img: 'https://i.postimg.cc/6328jFtJ/1000019614-Photoroom.png', features: ['يدعم مرونة البشرة وشبابها', 'يقوي الأظافر والشعر والمفاصل', 'سهل الذوبان في السوائل الباردة أو الساخنة'] },
       { id: 15, brand: 'Nutricost', name: 'B-Complex 100 mg', price: 7200, category: 'الطاقة', img: 'https://i.postimg.cc/rFLDjhbt/1000019617-Photoroom.png', features: ['مجموعة فيتامينات ب الكاملة لإنتاج الطاقة', 'يدعم صحة الجهاز العصبي وخلايا الدم الحمراء', 'يقلل الشعور بالإرهاق والتعب'] },
       { id: 16, brand: 'NOW Foods', name: 'CoQ10 100 mg with Hawthorn', price: 14900, category: 'الطاقة', img: 'https://i.postimg.cc/sfWBpFTb/1000019616-Photoroom.png', features: ['يدعم صحة عضلة القلب وإنتاج الطاقة الخلوية', 'مضاد أكسدة قوي يحارب الشيخوخة المبكرة', 'مدعم بخلاصة الزعرور لفائدة مضاعفة'] },
-      { id: 17, brand: 'MegaFood', name: 'Blood Builder Iron Supplement', price: 11900, category: 'الفيتامينات', img: 'https://i.postimg.cc/2Stmcy6v/1000019619-Photoroom.png', features: ['يعالج نقص الحديد دون الإمساك المعتاد', 'مصنوع من طعام حقيقي كامل المغذيات', 'يزيد من مستويات الطاقة والحيويّة'] },
+      { id: 17, brand: 'MegaFood', name: 'Blood Builder Iron Supplement', price: 11900, category: 'الفيتامينات', img: 'https://i.postimg.cc/2Stmcy6v/1000019619-Photoroom.png', features: ['يعالج نقص الحديد دون الإمساك المعتاد', 'مصنوع من طعام حقيقي كامل المغذيات', 'يزيد من مستويات الطاقة والحيوية'] },
       { id: 18, brand: 'Sports Research', name: 'Keto Plus MCT Oil', price: 16500, category: 'الطاقة', img: 'https://i.postimg.cc/zDkNm0vB/1000019618-Photoroom.png', features: ['يعزز طاقة الكيتو والتركيز الذهني السريع', 'مستخلص من جوز الهند النقي 100%', 'يدعم حرق الدهون وصحة الأنسجة'] },
       { id: 19, brand: 'Now Foods', name: 'L-Glutamine 500mg Powder', price: 9100, category: 'الجهاز الهضمي', img: 'https://i.postimg.cc/x8Q9vZCT/1000019621-Photoroom.png', features: ['يدعم صحة بطانة الأمعاء وجدار الجهاز الهضمي', 'يساعد في استشفاء العضلات الرياضية', 'حمض أميني نقي وسريع الامتصاص'] },
-      { id: 20, brand: 'Pure Encapsulations', name: 'Zinc 30 mg Citrate', price: 8300, category: 'الفيتامينات', img: 'https://i.postimg.cc/nL6Fzrft/1000019620-Photoroom.png', features: ['يدعم وظائف المناعة وانقسام الخلايا', 'زنك عالي التوافر الحيوي', 'خالي من المواد الحافظة والمسببات للحساسية'] },
-      { id: 21, brand: '', name: '', price: 0, category: '', img: '', features: ['', ''] },
-    { id: 22, brand: 'نوتريوكست', name: ' الاداء كرياتين احادي الهيدرات.بدون نكهات', price: 20000, category: 'الطاقه', img: 'https://i.postimg.cc/vHf4kB2C/1000019826-Photoroom.png', features: ['دعم الطاقه السريعة أثناء التمارين القصيره والعاليه الشده اداء وتمارين المقاومه', 'قدره التحمل'] },
-    { id: 23, brand: 'كاليفورنيا غولد نيوتريشن', name: 'خلاصه البوسويليا مسحوق الكركم', price: 15, category: 'الصحه العامة', img: 'https://i.postimg.cc/RFQ8WPty/1000020177-Photoroom.png', features: ['راحه المفاصل ووضيفه الحركه', 'توازن الاستجابه الاالتهابيه','مضادات اكسده نباتيه'] },
-    { id: 24, brand: 'ناو فودز', name:'سلسله المنتجات الرياضيه كيرياتين مونوهايدريت ', price: 11, category: 'الطاقة', img: 'https://i.postimg.cc/L58ynm2X/1000020180-Photoroom.png', features: ['دعم الطاقه القصيره المدئ', 'الاداء أثناء التدريب عالي الشده', 'قوه وكتلة عضلية خالية من الدهون'] },
-    { id: 25, brand: 'دكتورزبيست', name: 'سيرين الفوسفاتيديل،100ملجم،120كبسولة نباتية ', price: 22, category: 'الصحة العامه', img: 'https://i.postimg.cc/mrpLHbFX/1000020196-Photoroom.png', features: ['الذاكره والتركيز', 'الوضيفة الادراكية العامة', 'التكيف مع الاجهاد الذهني'] },
-    { id: 26, brand: '', name: '', price: 0, category: '', img: '', features: ['', ''] },
-    { id: 27, brand: '', name: '', price: 0, category: '', img: '', features: ['', ''] },
-    { id: 28, brand: '', name: '', price: 0, category: '', img: '', features: ['', ''] },
+      { id: 21, brand: '', name: '', price: 0, category: '', img: '', features: ['', ''] }, 
+      { id: 22, brand: 'نوتريوكست', name: ' الاداء كرياتين احادي الهيدرات.بدون نكهات', price: 20000, category: 'الطاقه', img: 'https://i.postimg.cc/vHf4kB2C/1000019826-Photoroom.png', features: ['دعم الطاقه السريعة أثناء التمارين القصيره والعاليه الشده اداء وتمارين المقاومه', 'قدره التحمل'] },
+      { id: 23, brand: 'كاليفورنيا غولد نيوتريشن', name: 'خلاصه البوسويليا مسحوق الكركم', price: 15, category: 'الصحه العامة', img: 'https://i.postimg.cc/RFQ8WPty/1000020177-Photoroom.png', features: ['راحه المفاصل ووضيفه الحركه', 'توازن الاستجابه الاالتهابيه','مضادات اكسده نباتيه'] },
+      { id: 24, brand: 'ناو فودز', name:'سلسله المنتجات الرياضيه كيرياتين مونوهايدريت ', price: 11, category: 'الطاقة', img: 'https://i.postimg.cc/L58ynm2X/1000020180-Photoroom.png', features: ['دعم الطاقه القصيره المدئ', 'الاداء أثناء التدريب عالي الشده', 'قوه وكتلة عضلية خالية من الدهون'] },
+      { id: 25, brand: 'دكتورزبيست', name: 'سيرين الفوسفاتيديل،100ملجم،120كبسولة نباتية ', price: 22, category: 'الصحة العامه', img: 'https://i.postimg.cc/mrpLHbFX/1000020196-Photoroom.png', features: ['الذاكره والتركيز', 'الوضيفة الادراكية العامة', 'التكيف مع الاجهاد الذهني'] },
+      { id: 26, brand: '', name: '', price: 0, category: '', img: '', features: ['', ''] },
+      { id: 27, brand: '', name: '', price: 0, category: '', img: '', features: ['', ''] },
+      { id: 28, brand: '', name: '', price: 0, category: '', img: '', features: ['', ''] },
     { id: 29, brand: '', name: '', price: 0, category: '', img: '', features: ['', ''] },
     { id: 30, brand: '', name: '', price: 0, category: '', img: '', features: ['', ''] },
     { id: 31, brand: '', name: '', price: 0, category: '', img: '', features: ['', ''] },
