@@ -1,0 +1,1083 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>متجر مكملات فايتالي</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --bg-color: #121212;
+      --card-bg: #1e1e1e;
+      --text-color: #ffffff;
+      --accent-green: #2e7d32;
+      --accent-light: #4caf50;
+      --border-color: #333333;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Tahoma, sans-serif;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      padding-bottom: 80px;
+      scroll-behavior: smooth;
+    }
+
+    @keyframes slideAnimation {
+      0%, 28% { transform: translateX(0%); }
+      33%, 61% { transform: translateX(33.333%); }
+      66%, 95% { transform: translateX(66.666%); }
+      100% { transform: translateX(0%); }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .header-container {
+      padding: 10px 15px;
+      background: rgba(24, 24, 24, 0.95);
+      backdrop-filter: blur(8px);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .search-box {
+      display: flex;
+      align-items: center;
+      background: #2a2a2a;
+      border-radius: 25px;
+      padding: 9px 15px;
+      border: 1px solid #444;
+      transition: border-color 0.2s;
+    }
+
+    .search-box:focus-within {
+      border-color: var(--accent-light);
+    }
+
+    .search-box input {
+      background: transparent;
+      border: none;
+      outline: none;
+      color: #fff;
+      width: 100%;
+      margin-right: 10px;
+      font-size: 0.95rem;
+      text-align: right;
+    }
+
+    .search-box i {
+      color: var(--accent-light);
+    }
+
+    .categories-bar {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding: 10px 15px;
+      scrollbar-width: none;
+    }
+    .categories-bar::-webkit-scrollbar { display: none; }
+
+    .cat-item {
+      background: #222;
+      color: #bbb;
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      white-space: nowrap;
+      cursor: pointer;
+      border: 1px solid #444;
+      transition: all 0.25s ease;
+    }
+    .cat-item.active {
+      background: #2e7d3233;
+      color: #fff;
+      border-color: var(--accent-light);
+      font-weight: bold;
+    }
+
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      padding: 10px 15px;
+    }
+
+    .product-card {
+      background: var(--card-bg);
+      border-radius: 12px;
+      padding: 10px;
+      border: 1px solid var(--border-color);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      overflow: hidden;
+      animation: fadeIn 0.25s ease;
+      transition: transform 0.2s, border-color 0.2s;
+    }
+
+    .product-card:hover {
+      border-color: #4caf5066;
+    }
+
+    .prod-brand {
+      font-size: 0.72rem;
+      color: #aaa;
+      margin-bottom: 3px;
+    }
+
+    .prod-title {
+      font-size: 0.82rem;
+      font-weight: bold;
+      color: #fff;
+      margin-bottom: 8px;
+      height: 36px;
+      line-height: 1.3;
+      overflow: hidden;
+      cursor: pointer;
+    }
+
+    .prod-img-box {
+      background: #18181d;
+      border-radius: 8px;
+      height: 155px;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      margin-bottom: 8px;
+      padding: 8px;
+      overflow: hidden;
+      cursor: pointer;
+    }
+
+    .prod-img-box img {
+      max-width: 100%;
+      max-height: 135px;
+      width: auto;
+      height: auto;
+      object-fit: contain;
+      transition: transform 0.25s ease;
+    }
+
+    .prod-img-box:hover img {
+      transform: scale(1.04);
+    }
+
+    .img-actions {
+      position: absolute;
+      top: 6px;
+      left: 6px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      z-index: 2;
+    }
+
+    .action-icon {
+      background: rgba(0, 0, 0, 0.65);
+      color: #fff;
+      width: 26px;
+      height: 26px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      font-size: 0.75rem;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .price-row {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      margin-bottom: 6px;
+      gap: 4px;
+    }
+
+    .prod-price {
+      font-size: 0.9rem;
+      font-weight: bold;
+      color: var(--accent-light);
+    }
+
+    .price-from-tag {
+      font-size: 0.68rem;
+      color: #9ca3af;
+      background: #27272a;
+      padding: 2px 6px;
+      border-radius: 6px;
+    }
+
+    .btn-add-cart {
+      background: var(--accent-green);
+      color: white;
+      border: none;
+      width: 100%;
+      padding: 8px 6px;
+      border-radius: 8px;
+      font-size: 0.78rem;
+      cursor: pointer;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      touch-action: manipulation;
+      transition: background 0.2s, transform 0.15s;
+    }
+    .btn-add-cart:hover { background: #388e3c; }
+    .btn-add-cart:active { transform: scale(0.96); }
+
+    .more-options {
+      font-size: 0.72rem;
+      color: #4ade80;
+      text-align: center;
+      margin-top: 6px;
+      cursor: pointer;
+      background: #22c55e14;
+      padding: 4px;
+      border-radius: 6px;
+    }
+
+    /* تصميم بطاقات المقاسات الثلاثة الشبيه بـ iHerb */
+    .sizes-section {
+      background: #18181b;
+      padding: 12px;
+      border-radius: 12px;
+      text-align: right;
+      border: 1px solid #2e2e32;
+      margin-bottom: 15px;
+    }
+
+    .sizes-header {
+      font-size: 0.85rem;
+      color: #d4d4d8;
+      margin-bottom: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .sizes-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+    }
+
+    .size-card {
+      background: #232327;
+      border: 1.5px solid #3f3f46;
+      border-radius: 10px;
+      padding: 10px 6px;
+      text-align: center;
+      cursor: pointer;
+      position: relative;
+      transition: all 0.2s ease;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .size-card.selected {
+      background: #14532d44;
+      border-color: #4ade80;
+      box-shadow: 0 0 0 1px #4ade80;
+    }
+
+    .size-badge-best {
+      position: absolute;
+      top: -8px;
+      background: #4ade80;
+      color: #052e16;
+      font-size: 0.62rem;
+      font-weight: bold;
+      padding: 1px 6px;
+      border-radius: 10px;
+    }
+
+    .size-label {
+      font-size: 0.78rem;
+      font-weight: bold;
+      color: #fff;
+      margin-bottom: 4px;
+    }
+
+    .size-price {
+      font-size: 0.78rem;
+      color: #4ade80;
+      font-weight: bold;
+    }
+
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background: rgba(24, 24, 24, 0.96);
+      backdrop-filter: blur(8px);
+      display: flex;
+      justify-content: space-around;
+      padding: 10px 0;
+      border-top: 1px solid var(--border-color);
+      z-index: 150;
+    }
+
+    .nav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      color: #aaa;
+      font-size: 0.75rem;
+      text-decoration: none;
+      cursor: pointer;
+    }
+    .nav-item i { font-size: 1.2rem; margin-bottom: 3px; }
+    .nav-item.active { color: var(--accent-light); }
+
+    .cart-badge {
+      background: #ff5555;
+      color: white;
+      font-size: 0.65rem;
+      padding: 2px 6px;
+      border-radius: 50%;
+      position: absolute;
+      top: -4px;
+      right: -8px;
+      font-weight: bold;
+    }
+
+    .overlay-screen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: var(--bg-color);
+      z-index: 200;
+      display: none;
+      flex-direction: column;
+      padding: 15px;
+      overflow-y: auto;
+      animation: fadeIn 0.2s ease;
+    }
+    .overlay-screen.active { display: flex; }
+
+    .top-bar-detail {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 15px;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 10px;
+    }
+
+    .toast-msg {
+      position: fixed;
+      bottom: 75px;
+      left: 50%;
+      transform: translateX(-50%) translateY(20px);
+      background: #2e7d32;
+      color: #fff;
+      padding: 10px 18px;
+      border-radius: 25px;
+      font-size: 0.85rem;
+      font-weight: bold;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+      z-index: 300;
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.3s ease;
+      white-space: nowrap;
+    }
+    .toast-msg.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+  </style>
+</head>
+<body>
+
+  <div id="toastBox" class="toast-msg"></div>
+
+  <!-- شريط البحث -->
+  <div class="header-container">
+    <div class="search-box">
+      <i class="fas fa-search"></i>
+      <input type="text" id="searchInput" placeholder="البحث باسم المكمل، الشركة، أو القسم..." oninput="handleSearch()">
+    </div>
+  </div>
+
+  <!-- قسم العروض المتحركة -->
+  <div style="margin: 10px 15px; overflow: hidden; border-radius: 12px; background: #18181b; border: 1px solid #27272a; box-shadow: 0 4px 12px rgba(0,0,0,0.4);">
+    <div class="slider-container" style="display: flex; width: 300%; animation: slideAnimation 12s infinite ease-in-out;">
+      <div style="width: 33.333%; padding: 12px; display: flex; align-items: center; justify-content: space-between;">
+        <div style="flex: 1; padding-left: 10px;">
+          <span style="background: #4ade80; color: #000; font-size: 0.7rem; font-weight: bold; padding: 2px 6px; border-radius: 4px;">عروض حصرية</span>
+          <h3 style="color: #fff; font-size: 0.95rem; margin: 5px 0;">مكملات الطاقة والبناء</h3>
+          <p style="color: #a1a1aa; font-size: 0.75rem; margin: 0;">خصومات تصل إلى 30% لفترة محدودة</p>
+        </div>
+        <div style="width: 70px; height: 70px; border-radius: 8px; background: #22c55e20; display: flex; align-items: center; justify-content: center;">
+          <i class="fas fa-pills" style="font-size: 1.8rem; color: #4ade80;"></i>
+        </div>
+      </div>
+
+      <div style="width: 33.333%; padding: 12px; display: flex; align-items: center; justify-content: space-between;">
+        <div style="flex: 1; padding-left: 10px;">
+          <span style="background: #3b82f6; color: #fff; font-size: 0.7rem; font-weight: bold; padding: 2px 6px; border-radius: 4px;">الأكثر طلباً</span>
+          <h3 style="color: #fff; font-size: 0.95rem; margin: 5px 0;">فيتامينات الصحة العامة</h3>
+          <p style="color: #a1a1aa; font-size: 0.75rem; margin: 0;">اختر المقاس المناسب لك بكل سهولة</p>
+        </div>
+        <div style="width: 70px; height: 70px; border-radius: 8px; background: #3b82f620; display: flex; align-items: center; justify-content: center;">
+          <i class="fas fa-capsules" style="font-size: 1.8rem; color: #60a5fa;"></i>
+        </div>
+      </div>
+
+      <div style="width: 33.333%; padding: 12px; display: flex; align-items: center; justify-content: space-between;">
+        <div style="flex: 1; padding-left: 10px;">
+          <span style="background: #eab308; color: #000; font-size: 0.7rem; font-weight: bold; padding: 2px 6px; border-radius: 4px;">جديد فايتالي</span>
+          <h3 style="color: #fff; font-size: 0.95rem; margin: 5px 0;">أفضل المكملات العالمية</h3>
+          <p style="color: #a1a1aa; font-size: 0.75rem; margin: 0;">عبوات اقتصادية وعائلية بأسعار منافسة</p>
+        </div>
+        <div style="width: 70px; height: 70px; border-radius: 8px; background: #eab30820; display: flex; align-items: center; justify-content: center;">
+          <i class="fas fa-dumbbell" style="font-size: 1.8rem; color: #facc15;"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- شريط الأقسام -->
+  <div class="categories-bar">
+    <div class="cat-item active" onclick="filterCat('الكل', this)">الكل</div>
+    <div class="cat-item" onclick="filterCat('الجهاز الهضمي', this)">الجهاز الهضمي</div>
+    <div class="cat-item" onclick="filterCat('الفيتامينات', this)">الفيتامينات</div>
+    <div class="cat-item" onclick="filterCat('الجمال', this)">الجمال</div>
+    <div class="cat-item" onclick="filterCat('الطاقة', this)">الطاقة</div>
+    <div class="cat-item" onclick="filterCat('الصحة العامة', this)">الصحة العامة</div>
+  </div>
+
+  <!-- حاوية اسم المتجر وأيقونة التخطيط -->
+  <div style="display: flex; justify-content: space-between; align-items: center; padding: 6px 15px; margin-bottom: 2px; width: 100%;">
+    <div style="color: #4ade80; font-weight: bold; font-size: 0.95rem;">
+      فَايْتَالِي (Vitali) <span id="productsCounter" style="font-size: 0.75rem; color: #888; font-weight: normal;"></span>
+    </div>
+    <button id="layoutToggleBtn" onclick="cycleLayout()" style="background: #18181b; border: 1px solid #333; border-radius: 8px; padding: 6px 10px; color: #4ade80; cursor: pointer; display: flex; align-items: center; justify-content: center;">
+      <i id="layoutIcon" class="fas fa-th-large" style="font-size: 1.1rem;"></i>
+    </button>
+  </div>
+
+  <!-- شبكة عرض المنتجات -->
+  <div class="products-grid" id="productsList"></div>
+
+  <!-- القائمة السفلية -->
+  <div class="bottom-nav">
+    <div class="nav-item active" onclick="showHome()">
+      <i class="fas fa-home"></i> الرئيسية
+    </div>
+    <a class="nav-item" href="https://wa.me/967777502849" target="_blank">
+      <i class="fab fa-whatsapp"></i> الواتساب
+    </a>
+    <div class="nav-item" onclick="openCartScreen()">
+      <div style="position: relative; display: inline-block;">
+        <i class="fas fa-shopping-cart"></i>
+        <span class="cart-badge" id="cartCount">0</span>
+      </div>
+      السلة
+    </div>
+  </div>
+
+  <!-- شاشة تفاصيل المنتج (الصفحة الثانية بالمقاسات الثلاثة) -->
+  <div class="overlay-screen" id="detailOverlay">
+    <div class="top-bar-detail">
+      <i class="fas fa-arrow-right" style="font-size: 1.2rem; cursor: pointer; padding: 5px;" onclick="closeDetail()"></i>
+      <span style="font-weight: bold;">تفاصيل المكمل والمقاسات</span>
+      <span id="detIdBadge" style="font-size: 0.75rem; color: #777;"></span>
+    </div>
+
+    <div style="text-align: center; margin: 8px 0;">
+      <div id="detImgBox" style="background: #18181d; border-radius: 12px; padding: 15px; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 12px; min-width: 175px; min-height: 175px; border: 1px solid #27272a;">
+        <img id="detImg" src="" style="max-width: 190px; max-height: 190px; object-fit: contain; border-radius: 8px;">
+      </div>
+      <div id="detBrand" style="font-size: 0.85rem; color: #aaa; margin-bottom: 4px;"></div>
+      <h2 id="detTitle" style="font-size: 1.08rem; margin-bottom: 6px; line-height: 1.4;"></h2>
+      <div id="detPrice" style="font-size: 1.25rem; color: var(--accent-light); font-weight: bold; margin-bottom: 14px;"></div>
+
+      <!-- قسم اختيار المقاس (3 مقاسات مثل iHerb) -->
+      <div class="sizes-section" id="sizesSection">
+        <div class="sizes-header">
+          <span style="font-weight: bold; color: #fff;"><i class="fas fa-box-open" style="color: #4ade80; margin-left: 5px;"></i>اختر حجم العبوة:</span>
+          <span id="selectedSizeName" style="color: #4ade80; font-weight: bold; font-size: 0.8rem;"></span>
+        </div>
+        <div class="sizes-grid" id="detSizesGrid"></div>
+      </div>
+
+      <div style="background: #1e1e1e; padding: 12px; border-radius: 10px; text-align: right; border: 1px solid var(--border-color); margin-bottom: 12px;">
+        <div style="color: var(--accent-light); font-weight: bold; margin-bottom: 4px; font-size: 0.85rem;">حالة المكمل:</div>
+        <div style="font-size: 0.85rem;">✅ متوفر في المخزون وجاهز للطلب</div>
+      </div>
+
+      <div style="background: #1e1e1e; padding: 12px; border-radius: 10px; text-align: right; border: 1px solid var(--border-color); margin-bottom: 20px;">
+        <div style="color: var(--accent-light); font-weight: bold; margin-bottom: 6px; font-size: 0.85rem;">مميزات المكمل:</div>
+        <ul id="detFeatures" style="padding-right: 20px; font-size: 0.88rem; color: #ccc; line-height: 1.65;"></ul>
+      </div>
+
+      <button class="btn-add-cart" onclick="addToCartFromDetail()" style="padding: 13px; font-size: 0.95rem; border-radius: 10px;">
+        <i class="fas fa-cart-plus"></i> إضافة الحجم المختار إلى السلة
+      </button>
+    </div>
+  </div>
+
+  <!-- شاشة السلة -->
+  <div class="overlay-screen" id="cartOverlay">
+    <div class="top-bar-detail">
+      <i class="fas fa-arrow-right" style="font-size: 1.2rem; cursor: pointer; padding: 5px;" onclick="closeCartScreen()"></i>
+      <span style="font-weight: bold;">عربة التسوق</span>
+      <i class="fas fa-trash-alt" style="font-size: 1.1rem; cursor: pointer; color: #ff5555; padding: 5px;" onclick="clearCart()" title="إفراغ السلة"></i>
+    </div>
+    <div id="cartItemsList" style="flex: 1; overflow-y: auto;"></div>
+    <div style="border-top: 1px solid var(--border-color); padding-top: 15px; margin-top: 10px;">
+      <div style="display: flex; justify-content: space-between; margin-bottom: 12px; font-weight: bold;">
+        <span>إجمالي المبلغ:</span>
+        <span id="cartTotalPrice" style="color: var(--accent-light);">0 ر.ي</span>
+      </div>
+      <button class="btn-add-cart" onclick="checkoutToWhatsApp()" style="background: #25d366; padding: 12px; font-size: 0.9rem;">
+        <i class="fab fa-whatsapp"></i> إرسال الطلب عبر الواتساب
+      </button>
+    </div>
+  </div>
+
+  <script>
+    // =========================================================================
+    // قائمة المنتجات والمكملات (120 مكمل - كل مكمل يحتوي على 3 مقاسات وأسعار)
+    // في الصفحة الرئيسية يظهر السعر الأرخص تلقائياً، وعند الضغط تظهر المقاسات الثلاثة
+    // لإضافة صورة لأي مكمل: ابحث عن رقمه (id) وضع رابط الصورة داخل img: "هنا"
+    // =========================================================================
+    const products = [
+      {"id": 1, "brand": "NOW Foods", "name": "Biotin 10 mg", "price": 6796, "category": "الجمال", "img": "https://i.postimg.cc/HkttyrCt/Screenshot-20261101-035429-2.jpg", "features": ["يدعم نمو الشعر وصحة البشرة والأظافر", "يعزز عملية التمثيل الغذائي وإنتاج الطاقة", "تركيبة نباتية عالية الجودة سريعة الامتصاص"], "sizes": [{"label": "60 كبسولة", "price": 6796}, {"label": "120 كبسولة", "price": 11500}, {"label": "240 كبسولة", "price": 21000}]},
+      {"id": 2, "brand": "NOW Foods", "name": "مكمل Repair Gold، عدد 60 كبسولة", "price": 6796, "category": "الجهاز الهضمي", "img": "https://i.postimg.cc/MGrMVbvN/1000019123-Photoroom.png", "features": ["يحتوي على إنزيمات هاضمة عالية القوة", "يساعد في تخفيف وتسكين آلام العضلات والمفاصل", "يعزز التعافي السريع للجسم بعد المجهود البدني"], "sizes": [{"label": "60 كبسولة", "price": 6796}, {"label": "120 كبسولة", "price": 12200}, {"label": "180 كبسولة", "price": 17500}]},
+      {"id": 3, "brand": "California Gold", "name": "Omega-3 Premium Fish Oil", "price": 8500, "category": "الصحة العامة", "img": "https://i.postimg.cc/Hs4rBCJT/1000019125-Photoroom.png", "features": ["يدعم صحة القلب والأوعية الدموية", "يحسن وظائف الدماغ والتركيز والذاكرة", "زيت سمك نقي مكرر ومقطر جزيئياً"], "sizes": [{"label": "100 كبسولة", "price": 8500}, {"label": "240 كبسولة", "price": 16800}, {"label": "480 كبسولة", "price": 29500}]},
+      {"id": 4, "brand": "Garden of Life", "name": "Raw Probiotics Once Daily", "price": 14200, "category": "الجهاز الهضمي", "img": "https://i.postimg.cc/pLhBmTGm/1000019124-Photoroom.png", "features": ["يدعم صحة الجهاز الهضمي والمناعة", "يحتوي على بكتيريا نافعة حية ومتنوعة", "كبسولة واحدة يومياً لسهولة الاستخدام"], "sizes": [{"label": "30 كبسولة", "price": 14200}, {"label": "60 كبسولة", "price": 26500}, {"label": "90 كبسولة", "price": 38000}]},
+      {"id": 5, "brand": "Nature's Bounty", "name": "Vitamin D3 5000 IU", "price": 4500, "category": "الفيتامينات", "img": "https://i.postimg.cc/x16S16ZY/1000019126-Photoroom.png", "features": ["يعزز امتصاص الكالسيوم لصحة العظام والأسنان", "يدعم الجهاز المناعي ووظائف الأعصاب", "سهل البلع وسريع الذوبان"], "sizes": [{"label": "90 كبسولة", "price": 4500}, {"label": "150 كبسولة", "price": 7200}, {"label": "240 كبسولة", "price": 10800}]},
+      {"id": 6, "brand": "Solgar", "name": "Skin, Nails & Hair Advanced", "price": 11200, "category": "الجمال", "img": "https://i.postimg.cc/JnfQ1H9x/1000019127-Photoroom.png", "features": ["تركيبة متقدمة لتغذية الجمال الداخلي", "يحتوي على الزنك والنحاس وفيتامين سي", "يحفز إنتاج الكولاجين الطبيعي"], "sizes": [{"label": "60 قرص", "price": 11200}, {"label": "120 قرص", "price": 19800}, {"label": "240 قرص", "price": 36000}]},
+      {"id": 7, "brand": "Optimum Nutrition", "name": "Gold Standard BCAA Energy", "price": 13500, "category": "الطاقة", "img": "https://i.postimg.cc/c4QXkbJy/1000019605-Photoroom.png", "features": ["يعزز طاقة الجسم والتركيز الذهني", "يمنع هدم العضلات أثناء التمارين", "مزيج منعش ولذيذ الطعم"], "sizes": [{"label": "28 حصة", "price": 13500}, {"label": "56 حصة", "price": 24500}, {"label": "84 حصة", "price": 34000}]},
+      {"id": 8, "brand": "Life Extension", "name": "Two-Per-Day Multivitamin", "price": 9800, "category": "الصحة العامة", "img": "https://i.postimg.cc/yxRvHfXZ/1000019606-Photoroom.png", "features": ["فيتامينات متعددة عالية الفعالية", "مضادات أكسدة قوية لصحة الخلايا", "يدعم الحيوية والنشاط اليومي العام"], "sizes": [{"label": "60 كبسولة", "price": 9800}, {"label": "120 كبسولة", "price": 17500}, {"label": "240 كبسولة", "price": 32000}]},
+      {"id": 9, "brand": "Doctor's Best", "name": "High Absorption Magnesium 100%", "price": 7900, "category": "الصحة العامة", "img": "https://i.postimg.cc/5tPPqQ2W/1000019608-Photoroom.png", "features": ["يدعم استرخاء العضلات والجهاز العصبي", "يحسن جودة النوم ويقلل الإجهاد", "شكل عالي الامتصاص وغير مزعج للمعدة"], "sizes": [{"label": "120 قرص", "price": 7900}, {"label": "240 قرص", "price": 14200}, {"label": "360 قرص", "price": 19800}]},
+      {"id": 10, "brand": "NOW Foods", "name": "Super Enzymes Digest Formula", "price": 6200, "category": "الجهاز الهضمي", "img": "https://i.postimg.cc/sfMLmmSR/1000019607-Photoroom.png", "features": ["يحتوي على البيتين والبانكرياتين", "يحسن هضم البروتينات والدهون والكربوهيدرات", "يخفف الانتفاخ والغازات بعد الوجبات"], "sizes": [{"label": "90 كبسولة", "price": 6200}, {"label": "180 كبسولة", "price": 11200}, {"label": "360 كبسولة", "price": 20500}]},
+      {"id": 11, "brand": "California Gold", "name": "Vitamin C Gummies 250mg", "price": 5500, "category": "الفيتامينات", "img": "https://i.postimg.cc/90srHbXY/1000019613-Photoroom.png", "features": ["مضاد أكسدة قوي يدعم المناعة", "مضغوطات هلامية بنكهة الفواكه الطبيعية", "مناسب للكبار والصغار"], "sizes": [{"label": "60 حبة", "price": 5500}, {"label": "90 حبة", "price": 7800}, {"label": "180 حبة", "price": 14200}]},
+      {"id": 12, "brand": "Jarrow Formulas", "name": "Jarro-Dophilus EPS 5 Billion", "price": 12500, "category": "الجهاز الهضمي", "img": "", "features": ["بروبيوتيك مستقر في درجة حرارة الغرفة", "يحافظ على توازن فلورا الأمعاء", "مغلف بطبقة معوية حية لحمايتها من حمض المعدة"], "sizes": [{"label": "60 كبسولة", "price": 12500}, {"label": "120 كبسولة", "price": 22500}, {"label": "240 كبسولة", "price": 41000}]},
+      {"id": 13, "brand": "Source Naturals", "name": "Wellness Formula, Bio-Aligned", "price": 10500, "category": "الصحة العامة", "img": "https://i.postimg.cc/VLYY52p9/1000019615-Photoroom.png", "features": ["دعم مناعي شامل متعدد الأعشاب", "يحتوي على الفيتامينات والمعادن ومستخلصات نباتية", "يحمي الجسم في مواسم تغير الطقس"], "sizes": [{"label": "60 كبسولة", "price": 10500}, {"label": "120 كبسولة", "price": 18800}, {"label": "240 كبسولة", "price": 34000}]},
+      {"id": 14, "brand": "Vital Proteins", "name": "Collagen Peptides Powder", "price": 18000, "category": "الجمال", "img": "https://i.postimg.cc/6328jFtJ/1000019614-Photoroom.png", "features": ["يدعم مرونة البشرة وشبابها", "يقوي الأظافر والشعر والمفاصل", "سهل الذوبان في السوائل الباردة أو الساخنة"], "sizes": [{"label": "284 جم", "price": 18000}, {"label": "567 جم", "price": 32500}, {"label": "933 جم", "price": 49000}]},
+      {"id": 15, "brand": "Nutricost", "name": "B-Complex 100 mg", "price": 7200, "category": "الطاقة", "img": "https://i.postimg.cc/rFLDjhbt/1000019617-Photoroom.png", "features": ["مجموعة فيتامينات ب الكاملة لإنتاج الطاقة", "يدعم صحة الجهاز العصبي وخلايا الدم الحمراء", "يقلل الشعور بالإرهاق والتعب"], "sizes": [{"label": "60 كبسولة", "price": 7200}, {"label": "120 كبسولة", "price": 12800}, {"label": "240 كبسولة", "price": 22500}]},
+      {"id": 16, "brand": "NOW Foods", "name": "CoQ10 100 mg with Hawthorn", "price": 14900, "category": "الطاقة", "img": "https://i.postimg.cc/sfWBpFTb/1000019616-Photoroom.png", "features": ["يدعم صحة عضلة القلب وإنتاج الطاقة الخلوية", "مضاد أكسدة قوي يحارب الشيخوخة المبكرة", "مدعم بخلاصة الزعرور لفائدة مضاعفة"], "sizes": [{"label": "60 كبسولة", "price": 14900}, {"label": "120 كبسولة", "price": 26500}, {"label": "180 كبسولة", "price": 37500}]},
+      {"id": 17, "brand": "MegaFood", "name": "Blood Builder Iron Supplement", "price": 11900, "category": "الفيتامينات", "img": "https://i.postimg.cc/2Stmcy6v/1000019619-Photoroom.png", "features": ["يعالج نقص الحديد دون الإمساك المعتاد", "مصنوع من طعام حقيقي كامل المغذيات", "يزيد من مستويات الطاقة والحيوية"], "sizes": [{"label": "30 قرص", "price": 11900}, {"label": "60 قرص", "price": 21500}, {"label": "90 قرص", "price": 30500}]},
+      {"id": 18, "brand": "Sports Research", "name": "Keto Plus MCT Oil", "price": 16500, "category": "الطاقة", "img": "https://i.postimg.cc/zDkNm0vB/1000019618-Photoroom.png", "features": ["يعزز طاقة الكيتو والتركيز الذهني السريع", "مستخلص من جوز الهند النقي 100%", "يدعم حرق الدهون وصحة الأنسجة"], "sizes": [{"label": "473 مل", "price": 16500}, {"label": "946 مل", "price": 29500}, {"label": "1.89 لتر", "price": 52000}]},
+      {"id": 19, "brand": "Now Foods", "name": "L-Glutamine 500mg Powder", "price": 9100, "category": "الجهاز الهضمي", "img": "https://i.postimg.cc/x8Q9vZCT/1000019621-Photoroom.png", "features": ["يدعم صحة بطانة الأمعاء وجدار الجهاز الهضمي", "يساعد في استشفاء العضلات الرياضية", "حمض أميني نقي وسريع الامتصاص"], "sizes": [{"label": "170 جم", "price": 9100}, {"label": "454 جم", "price": 19500}, {"label": "1 كجم", "price": 36000}]},
+      {"id": 22, "brand": "نوتريوكست", "name": "الاداء كرياتين احادي الهيدرات بدون نكهات", "price": 20000, "category": "الطاقة", "img": "https://i.postimg.cc/vHf4kB2C/1000019826-Photoroom.png", "features": ["دعم الطاقة السريعة أثناء التمارين القصيرة والعالية الشدة", "قدرة التحمل"], "sizes": [{"label": "250 جم", "price": 20000}, {"label": "500 جم", "price": 35000}, {"label": "1 كجم", "price": 62000}]},
+      {"id": 23, "brand": "كاليفورنيا غولد نيوتريشن", "name": "خلاصة البوسويليا مسحوق الكركم", "price": 15000, "category": "الصحة العامة", "img": "https://i.postimg.cc/RFQ8WPty/1000020177-Photoroom.png", "features": ["راحة المفاصل ووظيفة الحركة", "توازن الاستجابة الالتهابية", "مضادات أكسدة نباتية"], "sizes": [{"label": "60 كبسولة", "price": 15000}, {"label": "120 كبسولة", "price": 26500}, {"label": "240 كبسولة", "price": 47000}]},
+      {"id": 24, "brand": "ناو فودز", "name": "سلسلة المنتجات الرياضية كرياتين مونوهايدريت", "price": 11000, "category": "الطاقة", "img": "https://i.postimg.cc/L58ynm2X/1000020180-Photoroom.png", "features": ["دعم الطاقة القصيرة المدى", "الأداء أثناء التدريب عالي الشدة", "قوة وكتلة عضلية خالية من الدهون"], "sizes": [{"label": "227 جم", "price": 11000}, {"label": "600 جم", "price": 24000}, {"label": "1 كجم", "price": 37000}]},
+      {"id": 25, "brand": "دكتورزبيست", "name": "سيرين الفوسفاتيديل، 100ملجم، 120 كبسولة نباتية", "price": 22000, "category": "الصحة العامة", "img": "https://i.postimg.cc/mrpLHbFX/1000020196-Photoroom.png", "features": ["الذاكرة والتركيز", "الوظيفة الإدراكية العامة", "التكيف مع الإجهاد الذهني"], "sizes": [{"label": "60 كبسولة", "price": 13500}, {"label": "120 كبسولة", "price": 22000}, {"label": "240 كبسولة", "price": 39500}]},
+      {"id": 26, "brand": "ناو فودز", "name": "استيل-ل-كارنيتين، 500ملجم، 100 كبسولة نباتية", "price": 15000, "category": "الطاقة", "img": "https://i.postimg.cc/rp99qjyY/1000020216-cutout.png", "features": ["طاقة خلوية", "دعم إدراكي عصبي", "استقلاب الدهون"], "sizes": [{"label": "50 كبسولة", "price": 9000}, {"label": "100 كبسولة", "price": 15000}, {"label": "200 كبسولة", "price": 27000}]},
+      {"id": 27, "brand": "سورس ناتورالز", "name": "دعم المناعة المتطور، 120 كبسولة", "price": 14500, "category": "الصحة العامة", "img": "https://i.postimg.cc/SQwdmJ7b/1000020218-cutout.png", "features": ["دعم المناعة العامة", "مضادات أكسدة", "دعم الحواجز المخاطية والتناغم المناعي"], "sizes": [{"label": "60 كبسولة", "price": 8500}, {"label": "120 كبسولة", "price": 14500}, {"label": "240 كبسولة", "price": 26000}]},
+      {"id": 28, "brand": "لايف اكستانشن", "name": "يوبيكوينول فائق انزيم 100ملجم، 30 كبسولة هلامية", "price": 24000, "category": "الطاقة", "img": "https://i.postimg.cc/zftw6BGv/1000020219-cutout.png", "features": ["طاقة خلوية وميتوكندريا", "صحة القلب", "مضادات أكسدة"], "sizes": [{"label": "30 كبسولة", "price": 24000}, {"label": "60 كبسولة", "price": 43000}, {"label": "120 كبسولة", "price": 78000}]},
+      {"id": 29, "brand": "أوبتيموم نيوتريشن", "name": "جولد ستاندرد 100% واي بروتين - شوكولاتة", "price": 18000, "category": "الطاقة", "img": "", "features": ["يدعم بناء الكتلة العضلية الصافية", "سريع الامتصاص بعد التمرين", "غني بالأحماض الأمينية BCAA"], "sizes": [{"label": "1 رطل (14 حصة)", "price": 18000}, {"label": "2 رطل (29 حصة)", "price": 32000}, {"label": "5 رطل (74 حصة)", "price": 68000}]},
+      {"id": 30, "brand": "سيلوكور", "name": "سي 4 أوريجينال بري وورك أوت للطاقة", "price": 16500, "category": "الطاقة", "img": "", "features": ["يعزز الطاقة والتركيز قبل التمرين", "يزيد قوة التحمل والأداء البدني", "نكهات منعشة وخالية من السكر"], "sizes": [{"label": "30 حصة", "price": 16500}, {"label": "60 حصة", "price": 29000}, {"label": "90 حصة", "price": 41000}]},
+      {"id": 31, "brand": "ناو فودز", "name": "بيتا ألانين نقي مسحوق للتحمل العضلي", "price": 11000, "category": "الطاقة", "img": "", "features": ["يؤخر إجهاد العضلات أثناء التمارين الشاقة", "يزيد من القدرة على التحمل البدني", "نقي 100% بدون إضافات صناعية"], "sizes": [{"label": "250 جم", "price": 11000}, {"label": "500 جم", "price": 19500}, {"label": "1 كجم", "price": 34000}]},
+      {"id": 32, "brand": "إكستند", "name": "إكستند أوريجينال BCAA للتعافي العضلي", "price": 17000, "category": "الطاقة", "img": "", "features": ["7 جرام من الأحماض الأمينية المتشعبة", "يسرّع استشفاء العضلات ويعوض الأملاح", "خالي من السكر والكربوهيدرات"], "sizes": [{"label": "30 حصة", "price": 17000}, {"label": "60 حصة", "price": 31000}, {"label": "90 حصة", "price": 43000}]},
+      {"id": 33, "brand": "ناو فودز", "name": "ل-أرجينين 1000 ملجم لدعم تدفق الدم", "price": 8500, "category": "الطاقة", "img": "", "features": ["يدعم إنتاج أكسيد النيتريك وتدفق الدم", "يعزز الأداء الرياضي وصحة الأوعية", "قرص مزدوج القوة سهل الامتصاص"], "sizes": [{"label": "60 قرص", "price": 8500}, {"label": "120 قرص", "price": 14500}, {"label": "250 قرص", "price": 26000}]},
+      {"id": 34, "brand": "نوتريكوست", "name": "سيترولين مالات 2:1 مسحوق نقي", "price": 13000, "category": "الطاقة", "img": "", "features": ["يعزز الضخ العضلي والقدرة على التحمل", "يقلل التعب العضلي بعد التمارين", "بدون نكهات وسهل الخلط"], "sizes": [{"label": "300 جم", "price": 13000}, {"label": "600 جم", "price": 23000}, {"label": "1.2 كجم", "price": 40000}]},
+      {"id": 35, "brand": "ناو فودز", "name": "كافيين 200 ملجم للتركيز والنشاط", "price": 5500, "category": "الطاقة", "img": "", "features": ["يعيد النشاط الذهني واليقظة الفورية", "بديل اقتصادي وفعال لمشروبات الطاقة", "مناسب للرياضيين والعمل الشاق"], "sizes": [{"label": "100 كبسولة", "price": 5500}, {"label": "250 كبسولة", "price": 11000}, {"label": "500 كبسولة", "price": 19000}]},
+      {"id": 36, "brand": "كاليفورنيا غولد نيوتريشن", "name": "ل-كارنيتيني فومارات لحرق الدهون", "price": 9500, "category": "الطاقة", "img": "", "features": ["يحول الدهون إلى طاقة خلوية", "يدعم صحة القلب والأداء الرياضي", "نقي ومختبر معملياً"], "sizes": [{"label": "60 كبسولة", "price": 9500}, {"label": "120 كبسولة", "price": 17000}, {"label": "180 كبسولة", "price": 24000}]},
+      {"id": 37, "brand": "ماسل تك", "name": "بلاتينوم 100% كرياتين مونوهيدرات", "price": 10500, "category": "الطاقة", "img": "", "features": ["يزيد القوة العضلية والحجم الصافي", "ميكرونايزد لسرعة الذوبان والامتصاص", "خالٍ من المنبهات والمواد المالئة"], "sizes": [{"label": "200 جم", "price": 10500}, {"label": "400 جم", "price": 18500}, {"label": "800 جم", "price": 33000}]},
+      {"id": 38, "brand": "ناو فودز", "name": "تورين 1000 ملجم مزدوج القوة", "price": 7200, "category": "الطاقة", "img": "", "features": ["يدعم وظائف الجهاز العصبي والعضلات", "يحافظ على توازن السوائل والأملاح", "يعزز الطاقة والتركيز البدني"], "sizes": [{"label": "100 كبسولة", "price": 7200}, {"label": "250 كبسولة", "price": 14500}, {"label": "500 كبسولة", "price": 25000}]},
+      {"id": 39, "brand": "سولجار", "name": "فيتامين ب12 ميثيل كوبالامين 1000 مكجم", "price": 8800, "category": "الطاقة", "img": "", "features": ["الشكل النشط وسريع الامتصاص من B12", "يدعم إنتاج الطاقة وصحة الأعصاب", "أقراص تذوب تحت اللسان بنكهة الكرز"], "sizes": [{"label": "60 قرص", "price": 8800}, {"label": "100 قرص", "price": 13500}, {"label": "250 قرص", "price": 28000}]},
+      {"id": 40, "brand": "ناتشورال فاكتورز", "name": "إنزيم كيو 10 طبيعي 100 ملجم", "price": 11500, "category": "الطاقة", "img": "", "features": ["يعزز طاقة القلب والخلايا الحيوية", "مضاد أكسدة قوي يحمي من الإجهاد", "كبسولات هلامية عالية الامتصاص"], "sizes": [{"label": "60 كبسولة", "price": 11500}, {"label": "120 كبسولة", "price": 21000}, {"label": "240 كبسولة", "price": 38000}]},
+      {"id": 41, "brand": "ناو فودز", "name": "ريبوز نقي مسحوق للطاقة الخلوية", "price": 14000, "category": "الطاقة", "img": "", "features": ["يدعم تجديد مخزون الطاقة ATP في العضلات", "يقلل آلام العضلات بعد التمارين العنيفة", "مناسب للرياضيين وأصحاب المجهود العالي"], "sizes": [{"label": "227 جم", "price": 14000}, {"label": "454 جم", "price": 25000}, {"label": "908 جم", "price": 44000}]},
+      {"id": 42, "brand": "نوتريكوست", "name": "إلكتروليتات وترطيب الجسم بدون سكر", "price": 9000, "category": "الطاقة", "img": "", "features": ["يعوض الأملاح والمعادن المفقودة بالعرق", "يمنع التشنجات العضلية والجفاف", "غني بالبوتاسيوم والمغنيسيوم والصوديوم"], "sizes": [{"label": "30 حصة", "price": 9000}, {"label": "60 حصة", "price": 16000}, {"label": "120 حصة", "price": 28000}]},
+      {"id": 43, "brand": "دكتورز بيست", "name": "حمض ألفا ليبويك 600 ملجم", "price": 10200, "category": "الطاقة", "img": "", "features": ["يدعم استقلاب الجلوكوز وإنتاج الطاقة", "مضاد أكسدة شامل يجدد الفيتامينات", "يعزز صحة الأعصاب والتمثيل الغذائي"], "sizes": [{"label": "60 كبسولة", "price": 10200}, {"label": "180 كبسولة", "price": 24000}, {"label": "360 كبسولة", "price": 42000}]},
+      {"id": 44, "brand": "جارو فورميولاز", "name": "أسيتيل إل كارنيتين أرجينات", "price": 13500, "category": "الطاقة", "img": "", "features": ["يعزز التركيز الذهني والنشاط العصبي", "يدعم إنتاج الطاقة في الميتوكوندريا", "تركيبة متطورة عالية التوافر الحيوي"], "sizes": [{"label": "60 كبسولة", "price": 13500}, {"label": "120 كبسولة", "price": 24500}, {"label": "200 كبسولة", "price": 37000}]},
+      {"id": 45, "brand": "كاليفورنيا غولد نيوتريشن", "name": "سبيرولينا عضوية 500 ملجم", "price": 5200, "category": "الطاقة", "img": "", "features": ["غذاء خارق غني بالبروتين والفيتامينات", "يعزز الحيوية والمناعة وتنقية الجسم", "مزروعة عضوياً وخالية من السموم"], "sizes": [{"label": "60 قرص", "price": 5200}, {"label": "240 قرص", "price": 13000}, {"label": "720 قرص", "price": 31000}]},
+      {"id": 46, "brand": "كاليفورنيا غولد نيوتريشن", "name": "فيتامين د3 5000 وحدة دولية", "price": 4800, "category": "الفيتامينات", "img": "", "features": ["الأكثر مبيعاً واقتصادية لدعم العظام والمناعة", "كبسولات جيلاتينية صغيرة سهلة البلع", "خالية من الجلوتين والصويا"], "sizes": [{"label": "90 كبسولة", "price": 4800}, {"label": "240 كبسولة", "price": 9500}, {"label": "360 كبسولة", "price": 13500}]},
+      {"id": 47, "brand": "ناو فودز", "name": "زنك بيكولينات 50 ملجم عالي الامتصاص", "price": 5500, "category": "الفيتامينات", "img": "", "features": ["أفضل صيغة زنك امتصاصاً لدعم المناعة", "يعزز صحة البشرة والهرمونات والخصوبة", "كبسولة واحدة يومياً تكفي احتياجك"], "sizes": [{"label": "60 كبسولة", "price": 5500}, {"label": "120 كبسولة", "price": 9200}, {"label": "240 كبسولة", "price": 16500}]},
+      {"id": 48, "brand": "كاليفورنيا غولد نيوتريشن", "name": "فيتامين ج جولد سي 1000 ملجم", "price": 4500, "category": "الفيتامينات", "img": "", "features": ["دعم مناعي يومي ومضاد أكسدة قوي", "جودة صيدلانية مختبرة ثلاثياً", "سعر اقتصادي جداً للاستخدام اليومي"], "sizes": [{"label": "60 كبسولة", "price": 4500}, {"label": "240 كبسولة", "price": 12500}, {"label": "360 كبسولة", "price": 17500}]},
+      {"id": 49, "brand": "ناو فودز", "name": "فيتامين د3 5000 + ك2 100 مكجم", "price": 8200, "category": "الفيتامينات", "img": "", "features": ["يوجه الكالسيوم للعظام ويمنع ترسبه بالشرايين", "تركيبة مزدوجة لصحة القلب والعظام", "كبسولات نباتية عالية الفعالية"], "sizes": [{"label": "60 كبسولة", "price": 8200}, {"label": "120 كبسولة", "price": 14500}, {"label": "240 كبسولة", "price": 26000}]},
+      {"id": 50, "brand": "21st سنشري", "name": "كالسيوم مغنيسيوم زنك + د3", "price": 4900, "category": "الفيتامينات", "img": "", "features": ["تركيبة متكاملة لصحة العظام والأسنان", "تجمع أهم 4 عناصر بقرص اقتصادي", "يدعم وظائف العضلات والأعصاب"], "sizes": [{"label": "90 قرص", "price": 4900}, {"label": "180 قرص", "price": 8500}, {"label": "270 قرص", "price": 11800}]},
+      {"id": 51, "brand": "ناو فودز", "name": "سيلينيوم 200 مكجم خالي من الخميرة", "price": 6200, "category": "الفيتامينات", "img": "", "features": ["يدعم صحة الغدة الدرقية والمناعة", "مضاد أكسدة يحمي الخلايا من التلف", "كبسولات نباتية نقية"], "sizes": [{"label": "90 كبسولة", "price": 6200}, {"label": "180 كبسولة", "price": 11000}, {"label": "360 كبسولة", "price": 19500}]},
+      {"id": 52, "brand": "سولجار", "name": "حديد لطيف بيسجليسينات 25 ملجم", "price": 9500, "category": "الفيتامينات", "img": "", "features": ["يرفع مخزون الحديد بدون إمساك أو غثيان", "لطيف جداً على المعدة الحساسة", "مناسب للنساء والرياضيين"], "sizes": [{"label": "90 كبسولة", "price": 9500}, {"label": "180 كبسولة", "price": 17200}, {"label": "270 كبسولة", "price": 24000}]},
+      {"id": 53, "brand": "ناو فودز", "name": "فيتامين هـ الطبيعي 400 وحدة دولية", "price": 8900, "category": "الفيتامينات", "img": "", "features": ["مضاد أكسدة قوي لصحة القلب والبشرة", "مستخلص طبيعي من زيوت نباتية", "كبسولات هلامية سريعة الامتصاص"], "sizes": [{"label": "100 كبسولة", "price": 8900}, {"label": "250 كبسولة", "price": 18500}, {"label": "500 كبسولة", "price": 33000}]},
+      {"id": 54, "brand": "نيتشرز واي", "name": "ألايف! فيتامينات متعددة للرجال", "price": 11000, "category": "الفيتامينات", "img": "", "features": ["يحتوي على أكثر من 20 فيتامين ومعدن", "مدعم بخلاصة الفواكه والخضروات", "يعزز الطاقة وصحة القلب والعضلات"], "sizes": [{"label": "50 قرص", "price": 11000}, {"label": "100 قرص", "price": 19500}, {"label": "150 قرص", "price": 27000}]},
+      {"id": 55, "brand": "نيتشرز واي", "name": "ألايف! فيتامينات متعددة للنساء", "price": 11000, "category": "الفيتامينات", "img": "", "features": ["مصمم خصيصاً لصحة المرأة والشعر والأظافر", "يدعم صحة العظام والطاقة اليومية", "قرص واحد فقط يومياً"], "sizes": [{"label": "50 قرص", "price": 11000}, {"label": "100 قرص", "price": 19500}, {"label": "150 قرص", "price": 27000}]},
+      {"id": 56, "brand": "كاليفورنيا غولد نيوتريشن", "name": "فيتامينات متعددة للأطفال بالمضغ", "price": 7500, "category": "الفيتامينات", "img": "", "features": ["نكهة التوت والبرتقال اللذيذة للأطفال", "خالية من السكر المضاف والألوان الصناعية", "تدعم النمو والمناعة والتركيز"], "sizes": [{"label": "60 قرص", "price": 7500}, {"label": "120 قرص", "price": 13500}, {"label": "180 قرص", "price": 18800}]},
+      {"id": 57, "brand": "ناو فودز", "name": "حمض الفوليك 800 مكجم مع فيتامين ب12", "price": 4200, "category": "الفيتامينات", "img": "", "features": ["ضروري لصحة القلب وتكوين خلايا الدم", "يدعم صحة الجهاز العصبي والحمل", "عبوة اقتصادية تكفي لشهور"], "sizes": [{"label": "100 قرص", "price": 4200}, {"label": "250 قرص", "price": 7800}, {"label": "500 قرص", "price": 13500}]},
+      {"id": 58, "brand": "دكتورز بيست", "name": "فيتامين ك2 الطبيعي MK-7 100 مكجم", "price": 11500, "category": "الفيتامينات", "img": "", "features": ["يعزز مرونة الأوعية الدموية وكثافة العظام", "يبقى نشطاً في الجسم لفترة طويلة", "كبسولات نباتية خالية من الصويا"], "sizes": [{"label": "60 كبسولة", "price": 11500}, {"label": "120 كبسولة", "price": 20500}, {"label": "180 كبسولة", "price": 28500}]},
+      {"id": 59, "brand": "ناو فودز", "name": "بوتاسيوم سترات 99 ملجم نقي", "price": 5800, "category": "الفيتامينات", "img": "", "features": ["ينظم توازن السوائل وضغط الدم الصحي", "يدعم انقباض العضلات ونقل الإشارات العصبية", "شكل سترات سريع الامتصاص"], "sizes": [{"label": "90 كبسولة", "price": 5800}, {"label": "180 كبسولة", "price": 9900}, {"label": "360 كبسولة", "price": 17500}]},
+      {"id": 60, "brand": "كاليفورنيا غولد نيوتريشن", "name": "فيتامين ج ليبوسومال عالي الامتصاص", "price": 8500, "category": "الفيتامينات", "img": "", "features": ["تقنية الليبوسوم لامتصاص أقصى ولطف على المعدة", "يعزز المناعة وإنتاج الكولاجين بقوة", "مغلف في كبسولات فردية للحفاظ على الجودة"], "sizes": [{"label": "30 كبسولة", "price": 8500}, {"label": "60 كبسولة", "price": 15500}, {"label": "120 كبسولة", "price": 28000}]},
+      {"id": 61, "brand": "ناو فودز", "name": "نحاس جليسينات 3 ملجم", "price": 5200, "category": "الفيتامينات", "img": "", "features": ["يدعم تكوين الكولاجين والهيموجلوبين", "ضروري لموازنة مستويات الزنك في الجسم", "يعزز صحة العظام والأعصاب"], "sizes": [{"label": "60 قرص", "price": 5200}, {"label": "120 قرص", "price": 9100}, {"label": "240 قرص", "price": 16000}]},
+      {"id": 62, "brand": "21st سنشري", "name": "فيتامين ب المركب بلس فيتامين ج", "price": 4600, "category": "الفيتامينات", "img": "", "features": ["يدعم الجهاز العصبي ومقاومة التوتر", "يحول الغذاء إلى طاقة حيوية طوال اليوم", "خيار اقتصادي ممتاز للاستخدام اليومي"], "sizes": [{"label": "100 قرص", "price": 4600}, {"label": "200 قرص", "price": 8200}, {"label": "300 قرص", "price": 11500}]},
+      {"id": 63, "brand": "سوانسون", "name": "مغنيسيوم جليسينات 400 ملجم", "price": 8800, "category": "الفيتامينات", "img": "", "features": ["أفضل نوع مغنيسيوم للاسترخاء والنوم العميق", "لا يسبب أي اضطرابات في المعدة", "يهدئ الأعصاب ويقلل الشد العضلي"], "sizes": [{"label": "90 كبسولة", "price": 8800}, {"label": "180 كبسولة", "price": 15800}, {"label": "360 كبسولة", "price": 28500}]},
+      {"id": 64, "brand": "ناو فودز", "name": "فيتامين أ 10000 وحدة دولية", "price": 5100, "category": "الفيتامينات", "img": "", "features": ["يدعم صحة البصر والنظر الليلي", "يعزز صحة الأغشية المخاطية والمناعة", "كبسولات هلامية سهلة البلع"], "sizes": [{"label": "100 كبسولة", "price": 5100}, {"label": "250 كبسولة", "price": 9800}, {"label": "500 كبسولة", "price": 17200}]},
+      {"id": 65, "brand": "جارو فورميولاز", "name": "بي-رايت فيتامينات ب النشطة المتكاملة", "price": 11800, "category": "الفيتامينات", "img": "", "features": ["تحتوي على الصيغ النشطة المثيلة من B12 والفولات", "تدعم صحة الدماغ والقلب والطاقة", "منخفضة الرائحة وسهلة الامتصاص"], "sizes": [{"label": "100 كبسولة", "price": 11800}, {"label": "200 كبسولة", "price": 21500}, {"label": "300 كبسولة", "price": 29800}]},
+      {"id": 66, "brand": "كاليفورنيا غولد نيوتريشن", "name": "كولاجين أب ببتيدات بحرية + هيالورونيك + فيتامين ج", "price": 13500, "category": "الجمال", "img": "", "features": ["يرطب البشرة بعمق ويقلل التجاعيد", "يقوي الشعر والأظافر والمفاصل", "بودرة عديمة النكهة تذوب فوراً في الماء"], "sizes": [{"label": "206 جم", "price": 13500}, {"label": "464 جم", "price": 24500}, {"label": "928 جم", "price": 44000}]},
+      {"id": 67, "brand": "ناتشرز باونتي", "name": "حلوى الشعر والبشرة والأظافر بالبيوتين", "price": 9200, "category": "الجمال", "img": "", "features": ["طعم الفراولة اللذيذ وسهل المضغ", "تحتوي على البيوتين وفيتامين C و E", "تمنح الشعر لمعاناً وكثافة ملحوظة"], "sizes": [{"label": "80 حبة", "price": 9200}, {"label": "140 حبة", "price": 14800}, {"label": "220 حبة", "price": 21500}]},
+      {"id": 68, "brand": "ناو فودز", "name": "حمض الهيالورونيك 100 ملجم مع MSM", "price": 10500, "category": "الجمال", "img": "", "features": ["يحبس الرطوبة داخل خلايا البشرة لنضارة دائمة", "يدعم ليونة المفاصل والأنسجة الضامة", "كبسولات نباتية عالية النقاء"], "sizes": [{"label": "60 كبسولة", "price": 10500}, {"label": "120 كبسولة", "price": 18800}, {"label": "240 كبسولة", "price": 34000}]},
+      {"id": 69, "brand": "نيوسيل", "name": "سوبر كولاجين + فيتامين ج للبشرة والشعر", "price": 12500, "category": "الجمال", "img": "", "features": ["6000 ملجم كولاجين متحلل من النوع 1 و 3", "يعيد مرونة الجلد ويقلل علامات التقدم بالسن", "يقوي الأظافر الضعيفة والمتكسرة"], "sizes": [{"label": "120 قرص", "price": 12500}, {"label": "250 قرص", "price": 22000}, {"label": "360 قرص", "price": 29500}]},
+      {"id": 70, "brand": "ناو فودز", "name": "زيت زهرة الربيع المسائية 500 ملجم", "price": 8400, "category": "الجمال", "img": "", "features": ["يدعم توازن الهرمونات وصحة البشرة", "يخفف جفاف الجلد ويمنحه نعومة فائقة", "معصور على البارد وخالي من الهكسان"], "sizes": [{"label": "100 كبسولة", "price": 8400}, {"label": "250 كبسولة", "price": 17500}, {"label": "500 كبسولة", "price": 31000}]},
+      {"id": 71, "brand": "ناو فودز", "name": "إل-سيستين 500 ملجم لتقوية الشعر والأظافر", "price": 9100, "category": "الجمال", "img": "", "features": ["حمض أميني أساسي لبناء الكيراتين في الشعر", "مدعم بفيتامين B6 وفيتامين C", "يحمي البشرة ويدعم نضارتها"], "sizes": [{"label": "100 قرص", "price": 9100}, {"label": "250 قرص", "price": 19500}, {"label": "500 قرص", "price": 34500}]},
+      {"id": 72, "brand": "كاليفورنيا غولد نيوتريشن", "name": "أستازانتين 12 ملجم مضاد أكسدة فائق", "price": 9800, "category": "الجمال", "img": "", "features": ["أقوى من فيتامين C بـ 6000 مرة لمحاربة الشيخوخة", "يحمي البشرة من أضرار الشمس والجفاف", "يدعم صحة العينين والجلد"], "sizes": [{"label": "30 كبسولة", "price": 9800}, {"label": "120 كبسولة", "price": 28000}, {"label": "240 كبسولة", "price": 49000}]},
+      {"id": 73, "brand": "ناو فودز", "name": "سيليكا كومبلكس المستخلصة من ذيل الحصان", "price": 8200, "category": "الجمال", "img": "", "features": ["تعزز مرونة الجلد وقوة بصيلات الشعر", "تحتوي على معادن طبيعية لتقوية الأظافر", "مكمل جمالي شامل واقتصادي"], "sizes": [{"label": "90 قرص", "price": 8200}, {"label": "180 قرص", "price": 14800}, {"label": "360 قرص", "price": 26000}]},
+      {"id": 74, "brand": "سولجار", "name": "بيوتين 5000 مكجم فائق القوة", "price": 8900, "category": "الجمال", "img": "", "features": ["يغذي بصيلات الشعر ويقلل التساقط", "يعزز صحة الأظافر ويمنع تقصفها", "كبسولات نباتية من شركة سولجار العريقة"], "sizes": [{"label": "50 كبسولة", "price": 8900}, {"label": "100 كبسولة", "price": 15500}, {"label": "250 كبسولة", "price": 32000}]},
+      {"id": 75, "brand": "ناو فودز", "name": "إل-جلوتاثيون 500 ملجم لتفتيح ونقاء البشرة", "price": 14500, "category": "الجمال", "img": "", "features": ["مضاد الأكسدة الرئيسي لتوحيد لون البشرة", "ينقي الكبد والجسم من السموم والشوائب", "مدعم بحليب الشوك وحمض ألفا ليبويك"], "sizes": [{"label": "30 كبسولة", "price": 14500}, {"label": "60 كبسولة", "price": 26500}, {"label": "120 كبسولة", "price": 48000}]},
+      {"id": 76, "brand": "يوسيرين / فايتالي", "name": "ببتيدات الكولاجين البحري الصافي", "price": 12000, "category": "الجمال", "img": "", "features": ["مستخلص من أسماك برية نقية 100%", "سريع الذوبان في القهوة أو العصير بدون طعم", "يعيد الحيوية للبشرة والمفاصل"], "sizes": [{"label": "150 جم", "price": 12000}, {"label": "300 جم", "price": 21500}, {"label": "600 جم", "price": 38500}]},
+      {"id": 77, "brand": "ناو فودز", "name": "MSM ميثيل سلفونيل ميثان 1000 ملجم", "price": 7800, "category": "الجمال", "img": "", "features": ["مصدر طبيعي للكبريت العضوي لصحة الجلد والشعر", "يدعم مرونة المفاصل ويقلل الالتهابات", "عبوة اقتصادية كبيرة"], "sizes": [{"label": "120 كبسولة", "price": 7800}, {"label": "240 كبسولة", "price": 13800}, {"label": "480 كبسولة", "price": 24500}]},
+      {"id": 78, "brand": "دكتورز بيست", "name": "كولاجين الأنواع 1 و 3 مع ببتيدان", "price": 11200, "category": "الجمال", "img": "", "features": ["يوفر الأحماض الأمينية الأساسية لبناء البشرة", "يحسن مظهر الخطوط الدقيقة والتجاعيد", "خالٍ من الكائنات المعدلة وراثياً"], "sizes": [{"label": "180 قرص", "price": 11200}, {"label": "360 قرص", "price": 19800}, {"label": "540 قرص", "price": 27500}]},
+      {"id": 79, "brand": "كاليفورنيا غولد نيوتريشن", "name": "لوتين 20 ملجم مع زياكسانثين", "price": 8600, "category": "الجمال", "img": "", "features": ["يحمي العينين والجلد من الضوء الأزرق للشاشات", "يعزز ترطيب البشرة وإشراقتها الطبيعية", "مستخلص من زهرة القطيفة النقية"], "sizes": [{"label": "60 كبسولة", "price": 8600}, {"label": "120 كبسولة", "price": 15500}, {"label": "240 كبسولة", "price": 27800}]},
+      {"id": 80, "brand": "ناو فودز", "name": "زيت بذور الكتان العضوي 1000 ملجم", "price": 6900, "category": "الجمال", "img": "", "features": ["مصدر نباتي غني بأوميجا 3 لترطيب البشرة", "يمنح الشعر لمعاناً طبيعياً ويقلل الهيشان", "يدعم صحة القلب والهضم"], "sizes": [{"label": "100 كبسولة", "price": 6900}, {"label": "250 كبسولة", "price": 14200}, {"label": "500 كبسولة", "price": 25000}]},
+      {"id": 81, "brand": "ناتشورال فاكتورز", "name": "بيوسيل السيليكون النشط للشعر والبشرة", "price": 15500, "category": "الجمال", "img": "", "features": ["يحفز الجسم على إنتاج الكولاجين الطبيعي ذاتياً", "يزيد سمك الشعر وقوته بشكل ملحوظ", "قطرات مركزة سهلة الاستخدام"], "sizes": [{"label": "15 مل", "price": 15500}, {"label": "30 مل", "price": 27500}, {"label": "60 مل", "price": 48000}]},
+      {"id": 82, "brand": "ناو فودز", "name": "خميرة البيرة 650 ملجم الطبيعية", "price": 6500, "category": "الجمال", "img": "", "features": ["غنية بفيتامينات ب الطبيعية والأحماض الأمينية", "تدعم صحة الشعر والبشرة والشهية الصحية", "أقراص طبيعية خالية من الإضافات"], "sizes": [{"label": "200 قرص", "price": 6500}, {"label": "400 قرص", "price": 11500}, {"label": "600 قرص", "price": 15800}]},
+      {"id": 83, "brand": "سولجار", "name": "فيتامين هـ سائل نقي للبشرة", "price": 11000, "category": "الجمال", "img": "", "features": ["يستخدم موضعياً أو فموياً لترطيب وتجديد الجلد", "يخفف آثار الندبات والجفاف الشديد", "تركيبة مركزة وعالية النقاء"], "sizes": [{"label": "59 مل", "price": 11000}, {"label": "118 مل", "price": 19500}, {"label": "236 مل", "price": 34000}]},
+      {"id": 84, "brand": "كاليفورنيا غولد نيوتريشن", "name": "بيوتين 10000 مكجم كبسولات نباتية", "price": 6200, "category": "الجمال", "img": "", "features": ["تركيز عالٍ لعلاج ضعف وتساقط الشعر", "يدعم الأظافر الهشة ويقويها", "سعر منافس وجودة مضمونة"], "sizes": [{"label": "60 كبسولة", "price": 6200}, {"label": "120 كبسولة", "price": 10800}, {"label": "240 كبسولة", "price": 18900}]},
+      {"id": 85, "brand": "ناو فودز", "name": "زيت لسان الثور 1000 ملجم GLA", "price": 10800, "category": "الجمال", "img": "", "features": ["غني بحمض جاما لينولينيك لمرونة البشرة", "يهدئ البشرة الجافة والحساسة", "معصور على البارد عالي النقاء"], "sizes": [{"label": "60 كبسولة", "price": 10800}, {"label": "120 كبسولة", "price": 19500}, {"label": "240 كبسولة", "price": 34500}]},
+      {"id": 86, "brand": "كاليفورنيا غولد نيوتريشن", "name": "بروبيوتيك لاكتوبيف 30 مليار CFU", "price": 12500, "category": "الجهاز الهضمي", "img": "", "features": ["يحتوي على 8 سلالات نشطة لصحة القولون", "يخفف الانتفاخ والغازات وعسر الهضم", "مغلف فردياً ولا يحتاج إلى تبريد"], "sizes": [{"label": "60 كبسولة", "price": 12500}, {"label": "120 كبسولة", "price": 22500}, {"label": "180 كبسولة", "price": 31000}]},
+      {"id": 87, "brand": "ناو فودز", "name": "زيت النعناع الهضمي بالزنجبيل والشمر", "price": 8200, "category": "الجهاز الهضمي", "img": "", "features": ["يهدئ تقلصات القولون العصبي فوراً", "مغلف معوياً ليذوب في الأمعاء مباشرة", "يقلل الغازات والشعور بالامتلاء"], "sizes": [{"label": "90 كبسولة", "price": 8200}, {"label": "180 كبسولة", "price": 14800}, {"label": "360 كبسولة", "price": 26500}]},
+      {"id": 88, "brand": "ناو فودز", "name": "قشور السيليوم الكاملة ألياف طبيعية", "price": 7800, "category": "الجهاز الهضمي", "img": "", "features": ["ينظم حركة الأمعاء ويعالج الإمساك طبيعياً", "يدعم صحة القولون ويساعد على الشبع", "ألياف قابلة للذوبان نقية 100%"], "sizes": [{"label": "340 جم", "price": 7800}, {"label": "680 جم", "price": 13800}, {"label": "1.36 كجم", "price": 24000}]},
+      {"id": 89, "brand": "دكتورز بيست", "name": "بيبسين بيتاين هيدروكلوريد + جنتيان", "price": 11500, "category": "الجهاز الهضمي", "img": "", "features": ["يعزز حمض المعدة الصحي لهضم البروتينات", "يمنع الحموضة الناتجة عن ضعف الهضم", "يحسن امتصاص المعادن والفيتامينات"], "sizes": [{"label": "120 كبسولة", "price": 11500}, {"label": "240 كبسولة", "price": 20500}, {"label": "360 كبسولة", "price": 28500}]},
+      {"id": 90, "brand": "ناو فودز", "name": "إنزيمات البابايا للمضغ بعد الوجبات", "price": 6800, "category": "الجهاز الهضمي", "img": "", "features": ["طعم النعناع المنعش يزيل رائحة الفم", "تساعد في هضم الوجبات الدسمة بسرعة", "تخفف حرقة المعدة وعسر الهضم"], "sizes": [{"label": "180 قرص", "price": 6800}, {"label": "360 قرص", "price": 11800}, {"label": "540 قرص", "price": 16200}]},
+      {"id": 91, "brand": "ناو فودز", "name": "الفحم النشط 280 ملجم لامتصاص الغازات", "price": 6900, "category": "الجهاز الهضمي", "img": "", "features": ["يمتص الغازات والسموم من الجهاز الهضمي", "يريح البطن بسرعة بعد الوجبات الثقيلة", "مستخلص من قشور جوز الهند الطبيعية"], "sizes": [{"label": "100 كبسولة", "price": 6900}, {"label": "200 كبسولة", "price": 12200}, {"label": "400 كبسولة", "price": 21500}]},
+      {"id": 92, "brand": "ناو فودز", "name": "مستخلص جذر الزنجبيل 250 ملجم", "price": 6500, "category": "الجهاز الهضمي", "img": "", "features": ["يخفف الغثيان ودوار الحركة واضطراب المعدة", "يحفز حركة الأمعاء والهضم الصحي", "يدعم الراحة الهضمية اليومية"], "sizes": [{"label": "90 كبسولة", "price": 6500}, {"label": "180 كبسولة", "price": 11500}, {"label": "360 كبسولة", "price": 20200}]},
+      {"id": 93, "brand": "دكتورز بيست", "name": "بيبزين جي آي زنك إل-كارنوزين", "price": 14800, "category": "الجهاز الهضمي", "img": "", "features": ["يدعم التئام وحماية بطانة المعدة والاثني عشر", "يخفف آلام فم المعدة والحرقة", "تركيبة يابانية حاصلة على براءة اختراع"], "sizes": [{"label": "120 كبسولة", "price": 14800}, {"label": "240 كبسولة", "price": 26500}, {"label": "360 كبسولة", "price": 37500}]},
+      {"id": 94, "brand": "ناو فودز", "name": "جل الصبار العضوي 10000 ملجم", "price": 7600, "category": "الجهاز الهضمي", "img": "", "features": ["يلطف جدار المعدة والأمعاء المتهيج", "يدعم الهضم الصحي وتوازن البكتيريا النافعة", "كبسولات هلامية مركزة وسهلة البلع"], "sizes": [{"label": "100 كبسولة", "price": 7600}, {"label": "250 كبسولة", "price": 15800}, {"label": "500 كبسولة", "price": 28000}]},
+      {"id": 95, "brand": "ناو فودز", "name": "خل التفاح 450 ملجم كبسولات", "price": 7900, "category": "الجهاز الهضمي", "img": "", "features": ["يدعم الهضم الصحي ومستويات السكر الطبيعية", "بدون الطعم اللاذع أو الضرر على مينا الأسنان", "يساعد في التحكم بالشهية والوزن"], "sizes": [{"label": "180 كبسولة", "price": 7900}, {"label": "360 كبسولة", "price": 14200}, {"label": "540 كبسولة", "price": 19800}]},
+      {"id": 96, "brand": "إنزيميديكا", "name": "دايجست جولد أقوى إنزيمات هاضمة", "price": 15500, "category": "الجهاز الهضمي", "img": "", "features": ["الأقوى مبيعاً لهضم الكربوهيدرات والدهون والألياف", "يقضي على الانتفاخ والخمول بعد الأكل", "يعمل في جميع درجات حموضة المعدة"], "sizes": [{"label": "45 كبسولة", "price": 15500}, {"label": "90 كبسولة", "price": 27800}, {"label": "180 كبسولة", "price": 49500}]},
+      {"id": 97, "brand": "ناو فودز", "name": "الدردار الزلق 400 ملجم لتهدئة المعدة", "price": 7400, "category": "الجهاز الهضمي", "img": "", "features": ["يكوّن طبقة واقية مهدئة للمريء والمعدة", "ممتاز لحالات الارتجاع والحرقة", "عشبة تقليدية طبيعية 100%"], "sizes": [{"label": "100 كبسولة", "price": 7400}, {"label": "250 كبسولة", "price": 15200}, {"label": "500 كبسولة", "price": 27000}]},
+      {"id": 98, "brand": "جارو فورميولاز", "name": "ساكارومايسيس بولاردي + MOS", "price": 9500, "category": "الجهاز الهضمي", "img": "", "features": ["بروبيوتيك خميرة نافعة يحمي الأمعاء أثناء السفر", "يعيد توازن البكتيريا بعد المضادات الحيوية", "مقاوم لحمض المعدة ولا يحتاج تبريداً"], "sizes": [{"label": "30 كبسولة", "price": 9500}, {"label": "90 كبسولة", "price": 22500}, {"label": "180 كبسولة", "price": 39500}]},
+      {"id": 99, "brand": "ناو فودز", "name": "بروبيوتيك-10 25 مليار كائن حي", "price": 13200, "category": "الجهاز الهضمي", "img": "", "features": ["10 سلالات بروبيوتيك متوازنة لدعم القولون", "يعزز المناعة المعوية وامتصاص الغذاء", "كبسولات نباتية خالية من الألبان"], "sizes": [{"label": "50 كبسولة", "price": 13200}, {"label": "100 كبسولة", "price": 23500}, {"label": "200 كبسولة", "price": 42000}]},
+      {"id": 100, "brand": "كاليفورنيا غولد نيوتريشن", "name": "لاكتوبيف 5 مليار بروبيوتيك يومي", "price": 7500, "category": "الجهاز الهضمي", "img": "", "features": ["تركيبة لطيفة واقتصادية للعناية اليومية بالأمعاء", "مناسبة للكبار والصغار لتحسين الهضم", "مغلفة لحمايتها من الرطوبة والحرارة"], "sizes": [{"label": "60 كبسولة", "price": 7500}, {"label": "120 كبسولة", "price": 13200}, {"label": "240 كبسولة", "price": 23800}]},
+      {"id": 101, "brand": "ناو فودز", "name": "جذر عرق السوس منزوع الجليسيريزين DGL", "price": 8100, "category": "الجهاز الهضمي", "img": "", "features": ["يدعم صحة بطانة المعدة دون رفع ضغط الدم", "مدعم بالصبار لتهدئة مضاعفة", "أقراص استحلاب سريعة المفعول"], "sizes": [{"label": "100 قرص", "price": 8100}, {"label": "200 قرص", "price": 14500}, {"label": "300 قرص", "price": 20200}]},
+      {"id": 102, "brand": "نوتريكوست", "name": "إينولين ألياف البريبايوتك العضوية", "price": 8900, "category": "الجهاز الهضمي", "img": "", "features": ["غذاء للبكتيريا النافعة في الأمعاء", "يحسن الهضم ويعزز امتصاص الكالسيوم", "بودرة ناعمة تذوب بسهولة بدون طعم"], "sizes": [{"label": "454 جم", "price": 8900}, {"label": "908 جم", "price": 15800}, {"label": "1.8 كجم", "price": 27500}]},
+      {"id": 103, "brand": "ناو فودز", "name": "إنزيم اللاكتاز لهضم منتجات الألبان", "price": 8400, "category": "الجهاز الهضمي", "img": "", "features": ["يمنع الغازات والمغص الناتج عن شرب الحليب والأجبان", "يحتوي على إنزيم اللاكتاز عالي الفعالية", "يؤخذ مباشرة قبل تناول الألبان"], "sizes": [{"label": "60 كبسولة", "price": 8400}, {"label": "120 كبسولة", "price": 15000}, {"label": "240 كبسولة", "price": 26800}]},
+      {"id": 104, "brand": "ناو فودز", "name": "أشواغاندا 450 ملجم مستخلص موحد", "price": 8500, "category": "الصحة العامة", "img": "", "features": ["تقلل التوتر والقلق وتحسن المزاج", "تعزز النوم العميق والطاقة المتوازنة", "عشبة أدابتوجين طبيعية 100%"], "sizes": [{"label": "90 كبسولة", "price": 8500}, {"label": "180 كبسولة", "price": 15200}, {"label": "360 كبسولة", "price": 27000}]},
+      {"id": 105, "brand": "ناو فودز", "name": "ميلاتونين 3 ملجم لنوم هادئ ومنتظم", "price": 4500, "category": "الصحة العامة", "img": "", "features": ["يساعد على الاستغراق في النوم بسرعة", "ينظم الساعة البيولوجية ويخفف الأرق", "لا يسبب التعود أو الخمول الصباحي"], "sizes": [{"label": "60 كبسولة", "price": 4500}, {"label": "180 كبسولة", "price": 9200}, {"label": "360 كبسولة", "price": 15800}]},
+      {"id": 106, "brand": "ناو فودز", "name": "مستخلص حليب الشوك 300 ملجم لدعم الكبد", "price": 8800, "category": "الصحة العامة", "img": "", "features": ["ينظف الكبد ويجدد خلاياه بفضل السيليمارين", "مدعم بجذر الهندباء والخرشوف", "يحمي الكبد من الإجهاد والسموم"], "sizes": [{"label": "50 كبسولة", "price": 8800}, {"label": "100 كبسولة", "price": 15500}, {"label": "200 كبسولة", "price": 27800}]},
+      {"id": 107, "brand": "كاليفورنيا غولد نيوتريشن", "name": "أوميجا 800 زيت سمك فائق التركيز", "price": 9500, "category": "الصحة العامة", "img": "", "features": ["80% أحماض EPA و DHA في كبسولة واحدة", "يدعم صحة القلب والدماغ والمفاصل", "مقطر جزيئياً وخالي من الزئبق"], "sizes": [{"label": "30 كبسولة", "price": 9500}, {"label": "90 كبسولة", "price": 23500}, {"label": "180 كبسولة", "price": 42000}]},
+      {"id": 108, "brand": "ناو فودز", "name": "كركمين مستخلص الكركم 665 ملجم", "price": 11800, "category": "الصحة العامة", "img": "", "features": ["مضاد التهاب طبيعي قوي للمفاصل والجسم", "يحتوي على 95% كوركومينويدات نشطة", "يدعم مرونة الحركة وصحة الخلايا"], "sizes": [{"label": "60 كبسولة", "price": 11800}, {"label": "120 كبسولة", "price": 21000}, {"label": "240 كبسولة", "price": 37500}]},
+      {"id": 109, "brand": "ناو فودز", "name": "جلوكوزامين وكوندرويتين مع MSM", "price": 12500, "category": "الصحة العامة", "img": "", "features": ["يدعم بناء الغضاريف وليونة المفاصل", "يخفف تيبس الركبتين والظهر", "تركيبة ثلاثية متكاملة لصحة المفاصل"], "sizes": [{"label": "90 كبسولة", "price": 12500}, {"label": "180 كبسولة", "price": 22200}, {"label": "360 كبسولة", "price": 39500}]},
+      {"id": 110, "brand": "ناو فودز", "name": "مستخلص الثوم عديم الرائحة 5000", "price": 7900, "category": "الصحة العامة", "img": "", "features": ["يدعم صحة القلب وضغط الدم والكوليسترول", "يعزز المناعة بدون أي رائحة مزعجة", "أقراص مغلفة معوياً"], "sizes": [{"label": "90 قرص", "price": 7900}, {"label": "180 قرص", "price": 14200}, {"label": "360 قرص", "price": 25000}]},
+      {"id": 111, "brand": "ناو فودز", "name": "إل-ثيانين 200 ملجم للاسترخاء والتركيز", "price": 10500, "category": "الصحة العامة", "img": "", "features": ["يهدئ التوتر الذهني دون أن يسبب النعاس", "يزيد التركيز وصفاء الذهن مع القهوة", "مستخلص طبيعي من أوراق الشاي الأخضر"], "sizes": [{"label": "60 كبسولة", "price": 10500}, {"label": "120 كبسولة", "price": 18800}, {"label": "240 كبسولة", "price": 33500}]},
+      {"id": 112, "brand": "ناو فودز", "name": "جنكة بيلوبا 120 ملجم مزدوجة القوة", "price": 7500, "category": "الصحة العامة", "img": "", "features": ["تحسن الدورة الدموية في الدماغ والأطراف", "تعزز الذاكرة والانتباه والتركيز", "مدعمة بجذر الإليوثيرو"], "sizes": [{"label": "50 كبسولة", "price": 7500}, {"label": "100 كبسولة", "price": 13200}, {"label": "250 كبسولة", "price": 28500}]},
+      {"id": 113, "brand": "ناو فودز", "name": "البلميط المنشاري 320 ملجم لصحة الرجال", "price": 11200, "category": "الصحة العامة", "img": "", "features": ["يدعم صحة البروستاتا والمسالك البولية", "مدعم بزيت بذور اليقطين الطبيعي", "كبسولات هلامية عالية التركيز"], "sizes": [{"label": "90 كبسولة", "price": 11200}, {"label": "180 كبسولة", "price": 19800}, {"label": "360 كبسولة", "price": 35500}]},
+      {"id": 114, "brand": "ناو فودز", "name": "نايتشرز انسر / الخمان الأسود سامبوكوس", "price": 8900, "category": "الصحة العامة", "img": "", "features": ["دعم مناعي قوي ضد نزلات البرد والإنفلونزا", "غني بمضادات الأكسدة الطبيعية", "مناسب لجميع أفراد الأسرة"], "sizes": [{"label": "60 كبسولة", "price": 8900}, {"label": "120 كبسولة", "price": 15800}, {"label": "240 كبسولة", "price": 28000}]},
+      {"id": 115, "brand": "ناو فودز", "name": "كيرسيتين 800 ملجم مع بروميلين", "price": 11500, "category": "الصحة العامة", "img": "", "features": ["يدعم صحة الجهاز التنفسي ويخفف الحساسية الموسمية", "يعزز المناعة ويقلل الالتهابات", "تركيبة متآزرة عالية الامتصاص"], "sizes": [{"label": "60 كبسولة", "price": 11500}, {"label": "120 كبسولة", "price": 20500}, {"label": "240 كبسولة", "price": 36500}]},
+      {"id": 116, "brand": "ناو فودز", "name": "إن-أسيتيل سيستين NAC 600 ملجم", "price": 10200, "category": "الصحة العامة", "img": "", "features": ["يدعم صحة الرئتين والجهاز التنفسي", "يرفع مستويات الجلوتاثيون المضاد للأكسدة", "مدعم بالسيلينيوم والموليبدينوم"], "sizes": [{"label": "100 كبسولة", "price": 10200}, {"label": "250 كبسولة", "price": 21500}, {"label": "500 كبسولة", "price": 38000}]},
+      {"id": 117, "brand": "كاليفورنيا غولد نيوتريشن", "name": "بروبوليس العكبر المركز 2X", "price": 8200, "category": "الصحة العامة", "img": "", "features": ["مضاد حيوي طبيعي من خلايا النحل", "يعزز المناعة وصحة الحلق والجهاز التنفسي", "مستخلص نقي يعادل 1000 ملجم"], "sizes": [{"label": "90 كبسولة", "price": 8200}, {"label": "240 كبسولة", "price": 17800}, {"label": "360 كبسولة", "price": 24500}]},
+      {"id": 118, "brand": "ناو فودز", "name": "مستخلص الشاي الأخضر 400 ملجم", "price": 7200, "category": "الصحة العامة", "img": "", "features": ["غني بمضادات الأكسدة EGCG لحماية الخلايا", "يدعم الأيض وحرق الدهون بلطف", "يعزز صحة القلب والأوعية الدموية"], "sizes": [{"label": "100 كبسولة", "price": 7200}, {"label": "250 كبسولة", "price": 14800}, {"label": "500 كبسولة", "price": 26000}]},
+      {"id": 119, "brand": "ناو فودز", "name": "ليسيثين دوار الشمس 1200 ملجم", "price": 7600, "category": "الصحة العامة", "img": "", "features": ["يدعم صحة الدماغ والذاكرة والوظائف العصبية", "يساعد في استقلاب الدهون وصحة الكبد", "خالي من الصويا ومعدل وراثياً"], "sizes": [{"label": "100 كبسولة", "price": 7600}, {"label": "200 كبسولة", "price": 13500}, {"label": "400 كبسولة", "price": 24000}]},
+      {"id": 120, "brand": "21st سنشري", "name": "مكمل التوت البري بلس بروبيوتيك", "price": 5800, "category": "الصحة العامة", "img": "", "features": ["يحافظ على صحة ونظافة المسالك البولية", "مدعم بفيتامين C والبروبيوتيك", "عبوة اقتصادية سهلة البلع"], "sizes": [{"label": "60 قرص", "price": 5800}, {"label": "120 قرص", "price": 10200}, {"label": "240 قرص", "price": 18000}]}
+    ];
+    
+    let cart = [];
+    let currentCategory = 'الكل';
+    let selectedProd = null;
+    let selectedSizeIndex = 0;
+
+    function getCheapestPrice(p) {
+      if (Array.isArray(p.sizes) && p.sizes.length > 0) {
+        return Math.min(...p.sizes.map(s => Number(s.price)));
+      }
+      return Number(p.price) || 0;
+    }
+
+    function showToast(msg) {
+      const toast = document.getElementById('toastBox');
+      toast.innerText = msg;
+      toast.classList.add('show');
+      setTimeout(() => {
+        toast.classList.remove('show');
+      }, 2200);
+    }
+
+    function renderProducts(listToRender = products) {
+      const container = document.getElementById('productsList');
+      const counter = document.getElementById('productsCounter');
+      container.innerHTML = '';
+
+      const validList = listToRender.filter(p => p && p.name && p.name.trim() !== '');
+      if (counter) counter.innerText = `(${validList.length} مكمل)`;
+
+      if (validList.length === 0) {
+        container.innerHTML = `<div style="grid-column: 1 / -1; text-align:center; padding:40px 20px; color:#888;">عذراً، لم يتم العثور على مكمل مطابق لبحثك.</div>`;
+        return;
+      }
+
+      validList.forEach(p => {
+        const minPrice = getCheapestPrice(p);
+        const hasMultipleSizes = Array.isArray(p.sizes) && p.sizes.length > 1;
+        const firstSizeLabel = hasMultipleSizes ? p.sizes[0].label : '';
+
+        let imgTag = p.img && p.img.trim() !== ''
+          ? `<img src="${p.img}" alt="${p.name}" loading="lazy" onerror="this.onerror=null; this.parentElement.innerHTML='<div style=\'color:#777; font-size:0.75rem; text-align:center;\'><i class=\'fas fa-capsules\' style=\'font-size:1.6rem; margin-bottom:4px; color:#4caf50;\'></i><br>#${p.id}</div>';">`
+          : `<div style="color:#777; font-size:0.75rem; text-align:center;"><i class="fas fa-capsules" style="font-size:1.6rem; margin-bottom:5px; color:#4caf50;"></i><br><span style="color:#999;">مكمل #${p.id}</span></div>`;
+
+        container.innerHTML += `
+          <div class="product-card">
+            <div>
+              <div class="prod-brand">${p.brand || 'فايتالي'}</div>
+              <div class="prod-title" onclick="openDetail(${p.id})">${p.name}</div>
+            </div>
+
+            <div>
+              <div class="prod-img-box" onclick="openDetail(${p.id})">
+                <div class="img-actions" onclick="event.stopPropagation()">
+                  <i class="far fa-heart action-icon" onclick="this.classList.toggle('fas'); this.classList.toggle('far'); this.style.color = this.classList.contains('fas') ? '#ff5555' : '#fff';"></i>
+                  <i class="fas fa-share-alt action-icon" onclick="shareProduct(${p.id})" title="مشاركة المكمل"></i>
+                </div>
+                ${imgTag}
+              </div>
+
+              <div class="price-row">
+                <div class="prod-price">${minPrice.toLocaleString()} ر.ي</div>
+                ${hasMultipleSizes ? `<span class="price-from-tag">يبدأ من (${firstSizeLabel})</span>` : ''}
+              </div>
+
+              <button class="btn-add-cart" onclick="addCheapestToCart(${p.id})">
+                <i class="fas fa-cart-plus"></i> إضافة للسلة
+              </button>
+              <div class="more-options" onclick="openDetail(${p.id})">
+                <i class="fas fa-layer-group"></i> عرض 3 مقاسات والتفاصيل
+              </div>
+            </div>
+          </div>
+        `;
+      });
+    }
+
+    function filterCat(catName, el) {
+      currentCategory = catName;
+      document.querySelectorAll('.cat-item').forEach(c => c.classList.remove('active'));
+      el.classList.add('active');
+      document.getElementById('searchInput').value = '';
+
+      if (catName === 'الكل') {
+        renderProducts(products);
+      } else {
+        const filtered = products.filter(p => p.category && p.category.trim() === catName);
+        renderProducts(filtered);
+      }
+    }
+
+    function handleSearch() {
+      const query = document.getElementById('searchInput').value.trim().toLowerCase();
+
+      if (!query) {
+        if (currentCategory === 'الكل') {
+          renderProducts(products);
+        } else {
+          renderProducts(products.filter(p => p.category && p.category.trim() === currentCategory));
+        }
+        return;
+      }
+
+      const searched = products.filter(p => 
+        (p.name && p.name.toLowerCase().includes(query)) || 
+        (p.brand && p.brand.toLowerCase().includes(query)) || 
+        (p.category && p.category.toLowerCase().includes(query)) ||
+        String(p.id) === query
+      );
+      renderProducts(searched);
+    }
+
+    function shareProduct(id) {
+      const p = products.find(item => item.id === id);
+      if (!p) return;
+      const minPrice = getCheapestPrice(p);
+      const shareText = `اطلع على هذا المكمل في متجر مكملات فايتالي: ${p.name} يبدأ من ${minPrice.toLocaleString()} ر.ي`;
+      if (navigator.share) {
+        navigator.share({ title: 'مكملات فايتالي', text: shareText, url: window.location.href }).catch(() => {});
+      } else {
+        navigator.clipboard?.writeText(shareText);
+        showToast("تم نسخ تفاصيل المكمل للمشاركة!");
+      }
+    }
+
+    function addCheapestToCart(id) {
+      const p = products.find(item => item.id === id);
+      if (!p) return;
+
+      let chosenSize = null;
+      if (Array.isArray(p.sizes) && p.sizes.length > 0) {
+        chosenSize = p.sizes.reduce((minObj, curr) => Number(curr.price) < Number(minObj.price) ? curr : minObj, p.sizes[0]);
+      } else {
+        chosenSize = { label: 'حجم قياسي', price: Number(p.price) };
+      }
+
+      pushItemToCart(p, chosenSize.label, Number(chosenSize.price));
+    }
+
+    function pushItemToCart(prod, sizeLabel, unitPrice) {
+      const cartKey = `${prod.id}_${sizeLabel}`;
+      const existing = cart.find(item => item.cartKey === cartKey);
+      if (existing) {
+        existing.qty++;
+      } else {
+        cart.push({
+          cartKey: cartKey,
+          id: prod.id,
+          name: prod.name,
+          sizeLabel: sizeLabel,
+          price: unitPrice,
+          qty: 1
+        });
+      }
+      updateCartBadge();
+      showToast(`✓ أُضيف "${prod.name}" (${sizeLabel})`);
+    }
+
+    function updateCartBadge() {
+      const totalCount = cart.reduce((sum, item) => sum + item.qty, 0);
+      document.getElementById('cartCount').innerText = totalCount;
+    }
+
+    function openDetail(id) {
+      selectedProd = products.find(p => p.id === id);
+      if (!selectedProd) return;
+
+      // تحديد المقاس الأرخص افتراضياً عند فتح الصفحة
+      selectedSizeIndex = 0;
+      if (Array.isArray(selectedProd.sizes) && selectedProd.sizes.length > 0) {
+        let minIdx = 0;
+        selectedProd.sizes.forEach((s, idx) => {
+          if (Number(s.price) < Number(selectedProd.sizes[minIdx].price)) minIdx = idx;
+        });
+        selectedSizeIndex = minIdx;
+      }
+
+      const imgBox = document.getElementById('detImgBox');
+      const imgEl = document.getElementById('detImg');
+      if (selectedProd.img && selectedProd.img.trim() !== '') {
+        imgEl.src = selectedProd.img;
+        imgEl.style.display = 'block';
+      } else {
+        imgEl.style.display = 'none';
+      }
+
+      document.getElementById('detIdBadge').innerText = `رقم #${selectedProd.id}`;
+      document.getElementById('detBrand').innerText = selectedProd.brand || 'فايتالي';
+      document.getElementById('detTitle').innerText = selectedProd.name;
+
+      renderSizeCards();
+
+      const featUl = document.getElementById('detFeatures');
+      featUl.innerHTML = '';
+      if (Array.isArray(selectedProd.features)) {
+        selectedProd.features.forEach(f => {
+          if (f && f.trim() !== '') {
+            featUl.innerHTML += `<li>${f}</li>`;
+          }
+        });
+      }
+
+      document.getElementById('detailOverlay').classList.add('active');
+    }
+
+    function renderSizeCards() {
+      const sizesGrid = document.getElementById('detSizesGrid');
+      const priceDisplay = document.getElementById('detPrice');
+      const sizeNameDisplay = document.getElementById('selectedSizeName');
+
+      if (!selectedProd || !Array.isArray(selectedProd.sizes) || selectedProd.sizes.length === 0) {
+        sizesGrid.innerHTML = '';
+        priceDisplay.innerText = Number(selectedProd.price).toLocaleString() + ' ر.ي';
+        return;
+      }
+
+      const currentSize = selectedProd.sizes[selectedSizeIndex];
+      priceDisplay.innerText = Number(currentSize.price).toLocaleString() + ' ر.ي';
+      sizeNameDisplay.innerText = currentSize.label;
+
+      sizesGrid.innerHTML = '';
+      selectedProd.sizes.forEach((sz, idx) => {
+        const isSelected = idx === selectedSizeIndex;
+        const badgeHtml = idx === 0
+          ? `<span class="size-badge-best">الأوفر سعراً</span>`
+          : (idx === 2 ? `<span class="size-badge-best" style="background:#eab308; color:#000;">عبوة عائلية</span>` : '');
+
+        sizesGrid.innerHTML += `
+          <div class="size-card ${isSelected ? 'selected' : ''}" onclick="selectSize(${idx})">
+            ${badgeHtml}
+            <div class="size-label">${sz.label}</div>
+            <div class="size-price">${Number(sz.price).toLocaleString()} ر.ي</div>
+          </div>
+        `;
+      });
+    }
+
+    function selectSize(idx) {
+      selectedSizeIndex = idx;
+      renderSizeCards();
+    }
+
+    function closeDetail() {
+      document.getElementById('detailOverlay').classList.remove('active');
+    }
+
+    function addToCartFromDetail() {
+      if (!selectedProd) return;
+      if (Array.isArray(selectedProd.sizes) && selectedProd.sizes.length > 0) {
+        const chosen = selectedProd.sizes[selectedSizeIndex];
+        pushItemToCart(selectedProd, chosen.label, Number(chosen.price));
+      } else {
+        pushItemToCart(selectedProd, 'حجم قياسي', Number(selectedProd.price));
+      }
+      closeDetail();
+    }
+
+    function openCartScreen() {
+      const container = document.getElementById('cartItemsList');
+      container.innerHTML = '';
+
+      if (cart.length === 0) {
+        container.innerHTML = `<div style="text-align:center; color:#777; margin-top:40px;">سلة التسوق فارغة حالياً.</div>`;
+        document.getElementById('cartTotalPrice').innerText = '0 ر.ي';
+        document.getElementById('cartOverlay').classList.add('active');
+        return;
+      }
+
+      let totalPrice = 0;
+      cart.forEach((item, index) => {
+        totalPrice += (Number(item.price) * item.qty);
+        container.innerHTML += `
+          <div class="cart-item-card" style="display:flex; justify-content:space-between; align-items:center; background:#1e1e1e; padding:12px; border-radius:10px; margin-bottom:8px; border:1px solid #333;">
+            <div style="flex:1; padding-left:8px;">
+              <div style="font-weight:bold; font-size:0.88rem;">${item.name}</div>
+              <div style="font-size:0.75rem; color:#a1a1aa; margin-top:2px;">المقاس: <span style="color:#4ade80;">${item.sizeLabel}</span></div>
+              <div style="color:#4caf50; font-size:0.85rem; margin-top:4px; font-weight:bold;">${Number(item.price).toLocaleString()} ر.ي × ${item.qty}</div>
+            </div>
+            <div style="display:flex; align-items:center; gap:7px;">
+              <button onclick="changeQty(${index}, -1)" style="background:#333; color:#fff; border:none; width:26px; height:26px; border-radius:6px; cursor:pointer;">-</button>
+              <span style="font-weight:bold;">${item.qty}</span>
+              <button onclick="changeQty(${index}, 1)" style="background:#2e7d32; color:#fff; border:none; width:26px; height:26px; border-radius:6px; cursor:pointer;">+</button>
+              <i class="fas fa-trash" style="color:#ff5555; cursor:pointer; padding:6px;" onclick="removeFromCart(${index})"></i>
+            </div>
+          </div>
+        `;
+      });
+
+      document.getElementById('cartTotalPrice').innerText = totalPrice.toLocaleString() + ' ر.ي';
+      document.getElementById('cartOverlay').classList.add('active');
+    }
+
+    function changeQty(index, delta) {
+      if (!cart[index]) return;
+      cart[index].qty += delta;
+      if (cart[index].qty <= 0) {
+        cart.splice(index, 1);
+      }
+      updateCartBadge();
+      openCartScreen();
+    }
+
+    function closeCartScreen() {
+      document.getElementById('cartOverlay').classList.remove('active');
+    }
+
+    function removeFromCart(index) {
+      cart.splice(index, 1);
+      updateCartBadge();
+      openCartScreen();
+    }
+
+    function clearCart() {
+      cart = [];
+      updateCartBadge();
+      openCartScreen();
+    }
+
+    function checkoutToWhatsApp() {
+      if (cart.length === 0) {
+        showToast("السلة فارغة، اختر مكملات أولاً!");
+        return;
+      }
+
+      let message = "مرحباً، أود طلب المكملات التالية من متجر مكملات فايتالي:%0A%0A";
+      let total = 0;
+
+      cart.forEach((item, index) => {
+        let itemTotal = Number(item.price) * item.qty;
+        total += itemTotal;
+        message += `${index + 1}. *${item.name}* (المقاس: ${item.sizeLabel}) - الكمية: ${item.qty} - السعر: ${itemTotal.toLocaleString()} ر.ي%0A`;
+      });
+
+      message += `%0A*إجمالي المبلغ المطلوب:* ${total.toLocaleString()} ر.ي%0Aبانتظار تأكيد الطلب. شكراً لك!`;
+
+      const myWhatsAppNumber = "967777502849"; 
+      const whatsappUrl = `https://wa.me/${myWhatsAppNumber}?text=${message}`;
+      
+      window.open(whatsappUrl, '_blank');
+    }
+
+    function showHome() {
+      closeDetail();
+      closeCartScreen();
+    }
+
+    renderProducts();
+
+    const layouts = [
+      { cols: 2, icon: 'fas fa-th-large' },
+      { cols: 3, icon: 'fas fa-th' },
+      { cols: 4, icon: 'fas fa-grip-horizontal' }
+    ];
+
+    let currentLayoutIndex = 0;
+
+    function cycleLayout() {
+      currentLayoutIndex = (currentLayoutIndex + 1) % layouts.length;
+      const current = layouts[currentLayoutIndex];
+      
+      const grid = document.querySelector('.products-grid');
+      const iconElem = document.getElementById('layoutIcon');
+
+      if (grid) {
+        grid.style.gridTemplateColumns = `repeat(${current.cols}, 1fr)`;
+
+        if (current.cols === 4) {
+          grid.style.gap = '4px';
+          document.querySelectorAll('.product-card').forEach(card => {
+            card.style.padding = '5px';
+            card.style.fontSize = '0.65rem';
+          });
+        } else if (current.cols === 3) {
+          grid.style.gap = '6px';
+          document.querySelectorAll('.product-card').forEach(card => {
+            card.style.padding = '7px';
+            card.style.fontSize = '0.75rem';
+          });
+        } else {
+          grid.style.gap = '10px';
+          document.querySelectorAll('.product-card').forEach(card => {
+            card.style.padding = '10px';
+            card.style.fontSize = '0.85rem';
+          });
+        }
+      }
+
+      if (iconElem) {
+        iconElem.className = current.icon;
+      }
+    }
+  </script>
+</body>
+</html>
