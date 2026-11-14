@@ -1,0 +1,1087 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>متجر مكملات فايتالي (Vitali)</title>
+<style>
+  :root {
+    --bg-dark: #0e1113;
+    --card-dark: #181c20;
+    --card-hover: #20252b;
+    --primary: #22c55e;
+    --primary-dark: #16a34a;
+    --accent: #f59e0b;
+    --text-main: #f3f4f6;
+    --text-muted: #9ca3af;
+    --border-color: #2a3038;
+  }
+
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: system-ui, -apple-system, 'Segoe UI', Roboto, Tahoma, Arial, sans-serif;
+  }
+
+  body {
+    background-color: var(--bg-dark);
+    color: var(--text-main);
+    padding-bottom: 85px;
+    overflow-x: hidden;
+  }
+
+  /* Header */
+  header {
+    background-color: #13171a;
+    padding: 14px 16px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    border-bottom: 1px solid var(--border-color);
+  }
+
+  .top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+  }
+
+  .brand-title {
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: var(--primary);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .search-box {
+    position: relative;
+    width: 100%;
+  }
+
+  .search-box input {
+    width: 100%;
+    background-color: var(--card-dark);
+    border: 1px solid var(--border-color);
+    border-radius: 25px;
+    padding: 10px 40px 10px 16px;
+    color: var(--text-main);
+    font-size: 0.9rem;
+    outline: none;
+  }
+
+  .search-box input:focus {
+    border-color: var(--primary);
+  }
+
+  .search-icon {
+    position: absolute;
+    right: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--primary);
+  }
+
+  /* 4. البانر الإعلاني الاحترافي (الإشارة الزرقاء) */
+  .hero-slider {
+    padding: 16px;
+    overflow-x: auto;
+    display: flex;
+    gap: 14px;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+  }
+  .hero-slider::-webkit-scrollbar { display: none; }
+
+  .banner-card {
+    min-width: 92%;
+    scroll-snap-align: center;
+    border-radius: 20px;
+    padding: 22px 20px;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+  }
+
+  .banner-1 {
+    background: linear-gradient(135deg, #064e3b 0%, #10b981 100%);
+    border: 1px solid rgba(52, 211, 153, 0.3);
+  }
+
+  .banner-2 {
+    background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+    border: 1px solid rgba(96, 165, 250, 0.3);
+  }
+
+  .banner-3 {
+    background: linear-gradient(135deg, #78350f 0%, #f59e0b 100%);
+    border: 1px solid rgba(251, 191, 36, 0.3);
+  }
+
+  .banner-content {
+    z-index: 2;
+    max-width: 68%;
+  }
+
+  .banner-badge {
+    display: inline-block;
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(4px);
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: #fff;
+  }
+
+  .banner-title {
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: #fff;
+    margin-bottom: 6px;
+    line-height: 1.3;
+  }
+
+  .banner-desc {
+    font-size: 0.82rem;
+    color: rgba(255,255,255,0.9);
+    margin-bottom: 12px;
+  }
+
+  .banner-btn {
+    background: #fff;
+    color: #064e3b;
+    border: none;
+    padding: 6px 14px;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    cursor: pointer;
+  }
+
+  .banner-visual {
+    width: 75px;
+    height: 75px;
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.2rem;
+    z-index: 2;
+    box-shadow: 0 0 25px rgba(255,255,255,0.2);
+  }
+
+  /* Categories */
+  .categories {
+    display: flex;
+    gap: 10px;
+    padding: 4px 16px 16px;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .categories::-webkit-scrollbar { display: none; }
+
+  .cat-pill {
+    background-color: var(--card-dark);
+    color: var(--text-muted);
+    border: 1px solid var(--border-color);
+    padding: 8px 18px;
+    border-radius: 22px;
+    font-size: 0.88rem;
+    font-weight: 600;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: 0.2s;
+  }
+
+  .cat-pill.active {
+    background-color: var(--primary);
+    color: #000;
+    border-color: var(--primary);
+    font-weight: 700;
+  }
+
+  /* Section Header */
+  .section-title {
+    padding: 0 16px 12px;
+    font-size: 1.05rem;
+    font-weight: 700;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .section-title span {
+    color: var(--primary);
+  }
+
+  /* Product Grid */
+  .products-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    padding: 0 16px;
+  }
+
+  .product-card {
+    background-color: var(--card-dark);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: transform 0.2s;
+  }
+
+  .product-brand {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    margin-bottom: 4px;
+  }
+
+  .product-name {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--text-main);
+    margin-bottom: 10px;
+    line-height: 1.35;
+    cursor: pointer;
+  }
+
+  .product-img-box {
+    background-color: #131619;
+    border-radius: 12px;
+    height: 130px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 12px;
+    position: relative;
+    cursor: pointer;
+    font-size: 3rem;
+  }
+
+  /* 2. تم إخفاء نص "يبدأ من (60 كبسولة)" تماماً بناءً على طلبك */
+  .product-footer {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .product-price {
+    font-size: 1.05rem;
+    font-weight: 800;
+    color: var(--primary);
+    text-align: center;
+  }
+
+  .add-btn {
+    background-color: var(--primary-dark);
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    padding: 9px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+  }
+
+  .add-btn:active {
+    transform: scale(0.97);
+  }
+
+  /* Views Management */
+  .view-section {
+    display: none;
+  }
+  .view-section.active {
+    display: block;
+  }
+
+  /* 3. صفحة تفاصيل المنتج بنمط iHerb الاحترافي (الإشارة الصفراء) */
+  .iherb-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 16px;
+    background: #13171a;
+    border-bottom: 1px solid var(--border-color);
+  }
+
+  .back-btn {
+    background: var(--card-dark);
+    border: 1px solid var(--border-color);
+    color: var(--text-main);
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    font-size: 1.1rem;
+    cursor: pointer;
+  }
+
+  .iherb-hero {
+    padding: 16px;
+    background: var(--card-dark);
+    border-bottom: 1px solid var(--border-color);
+  }
+
+  .iherb-brand {
+    color: var(--primary);
+    font-weight: 700;
+    font-size: 0.85rem;
+    margin-bottom: 4px;
+  }
+
+  .iherb-title {
+    font-size: 1.2rem;
+    font-weight: 800;
+    margin-bottom: 8px;
+    line-height: 1.4;
+  }
+
+  .iherb-rating {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.85rem;
+    color: var(--accent);
+    margin-bottom: 14px;
+  }
+
+  .iherb-rating span {
+    color: var(--text-muted);
+  }
+
+  .iherb-image-showcase {
+    background: #131619;
+    border-radius: 16px;
+    height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 5rem;
+    margin-bottom: 16px;
+    border: 1px solid var(--border-color);
+  }
+
+  .iherb-meta-box {
+    background: #131619;
+    border-radius: 12px;
+    padding: 12px;
+    font-size: 0.82rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    border: 1px solid var(--border-color);
+  }
+
+  .meta-item {
+    color: var(--text-muted);
+  }
+  .meta-item strong {
+    color: var(--text-main);
+  }
+
+  .iherb-sizes {
+    padding: 16px;
+  }
+
+  .size-options {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-top: 10px;
+  }
+
+  .size-card {
+    background: var(--card-dark);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 10px 8px;
+    text-align: center;
+    cursor: pointer;
+    position: relative;
+  }
+
+  .size-card.selected {
+    border: 2px solid var(--primary);
+    background: rgba(34, 197, 94, 0.08);
+  }
+
+  .size-badge {
+    position: absolute;
+    top: -9px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--primary);
+    color: #000;
+    font-size: 0.65rem;
+    font-weight: 800;
+    padding: 2px 8px;
+    border-radius: 10px;
+    white-space: nowrap;
+  }
+
+  .size-name {
+    font-size: 0.85rem;
+    font-weight: 700;
+    margin-top: 4px;
+    margin-bottom: 4px;
+  }
+
+  .size-price {
+    font-size: 0.85rem;
+    color: var(--primary);
+    font-weight: 800;
+  }
+
+  /* iHerb Accordions */
+  .iherb-details {
+    padding: 0 16px 20px;
+  }
+
+  .accordion-item {
+    background: var(--card-dark);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    margin-bottom: 10px;
+    overflow: hidden;
+  }
+
+  .accordion-header {
+    padding: 14px;
+    font-weight: 700;
+    font-size: 0.92rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+  }
+
+  .accordion-body {
+    padding: 0 14px 14px;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+    border-top: 1px solid var(--border-color);
+    padding-top: 10px;
+  }
+
+  /* 1. تصميم صفحة السلة الأنيق والجذاب */
+  .cart-container {
+    padding: 16px;
+  }
+
+  .cart-header-banner {
+    background: linear-gradient(135deg, #181c20, #222830);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    padding: 16px;
+    margin-bottom: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .cart-item-card {
+    background: var(--card-dark);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    padding: 14px;
+    margin-bottom: 12px;
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  }
+
+  .cart-item-icon {
+    width: 60px;
+    height: 60px;
+    background: #131619;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8rem;
+    flex-shrink: 0;
+  }
+
+  .cart-item-info {
+    flex: 1;
+  }
+
+  .cart-item-title {
+    font-size: 0.92rem;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+
+  .cart-item-size {
+    font-size: 0.78rem;
+    color: var(--primary);
+    margin-bottom: 6px;
+  }
+
+  .cart-item-price {
+    font-size: 0.95rem;
+    font-weight: 800;
+  }
+
+  .qty-controls {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: #131619;
+    padding: 4px 8px;
+    border-radius: 10px;
+    border: 1px solid var(--border-color);
+  }
+
+  .qty-btn {
+    background: var(--card-dark);
+    color: #fff;
+    border: none;
+    width: 26px;
+    height: 26px;
+    border-radius: 8px;
+    font-weight: 800;
+    cursor: pointer;
+  }
+
+  .qty-btn.plus {
+    background: var(--primary-dark);
+  }
+
+  .cart-summary-box {
+    background: var(--card-dark);
+    border: 1px solid var(--border-color);
+    border-radius: 18px;
+    padding: 18px;
+    margin-top: 20px;
+  }
+
+  .summary-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    font-size: 0.9rem;
+    color: var(--text-muted);
+  }
+
+  .summary-row.total {
+    border-top: 1px dashed var(--border-color);
+    padding-top: 12px;
+    margin-top: 12px;
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: var(--text-main);
+  }
+
+  .summary-row.total span:last-child {
+    color: var(--primary);
+  }
+
+  .whatsapp-checkout-btn {
+    width: 100%;
+    background: linear-gradient(135deg, #22c55e, #16a34a);
+    color: #fff;
+    border: none;
+    border-radius: 14px;
+    padding: 15px;
+    font-size: 1rem;
+    font-weight: 800;
+    margin-top: 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    box-shadow: 0 6px 20px rgba(34, 197, 94, 0.3);
+  }
+
+  /* Bottom Navigation */
+  .bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: #13171a;
+    border-top: 1px solid var(--border-color);
+    display: flex;
+    justify-content: space-around;
+    padding: 10px 0;
+    z-index: 200;
+  }
+
+  .nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    color: var(--text-muted);
+    font-size: 0.78rem;
+    font-weight: 600;
+    cursor: pointer;
+    position: relative;
+  }
+
+  .nav-item.active {
+    color: var(--primary);
+  }
+
+  .cart-badge {
+    position: absolute;
+    top: -5px;
+    right: -8px;
+    background: #ef4444;
+    color: #fff;
+    font-size: 0.7rem;
+    font-weight: 800;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+</style>
+</head>
+<body>
+
+  <!-- VIEW 1: الصفحة الرئيسية -->
+  <div id="home-view" class="view-section active">
+    <header>
+      <div class="top-bar">
+        <div class="brand-title">🌿 متجر مكملات فايتالي</div>
+      </div>
+      <div class="search-box">
+        <input type="text" id="searchInput" placeholder="البحث باسم المكمل، الشركة، أو القسم..." onkeyup="filterProducts()">
+        <span class="search-icon">🔍</span>
+      </div>
+    </header>
+
+    <!-- البانرات الإعلانية الاحترافية -->
+    <div class="hero-slider">
+      <div class="banner-card banner-1">
+        <div class="banner-content">
+          <span class="banner-badge">🔥 الأكثر طلباً</span>
+          <div class="banner-title">فيتامينات الصحة العامة</div>
+          <div class="banner-desc">تركيبات عالمية أصلية لتعزيز المناعة والنشاط اليومي</div>
+          <button class="banner-btn" onclick="filterByCategory('الفيتامينات')">تسوق الآن ←</button>
+        </div>
+        <div class="banner-visual">💊</div>
+      </div>
+
+      <div class="banner-card banner-2">
+        <div class="banner-content">
+          <span class="banner-badge">✨ عناية متكاملة</span>
+          <div class="banner-title">صحة الجهاز الهضمي</div>
+          <div class="banner-desc">بروبيوتيك وإنزيمات هاضمة لراحة المعدة والقولون</div>
+          <button class="banner-btn" style="color:#1e3a8a" onclick="filterByCategory('الجهاز الهضمي')">استكشف القسم ←</button>
+        </div>
+        <div class="banner-visual">🌿</div>
+      </div>
+
+      <div class="banner-card banner-3">
+        <div class="banner-content">
+          <span class="banner-badge">⚡ عروض حصرية</span>
+          <div class="banner-title">عبوات اقتصادية وعائلية</div>
+          <div class="banner-desc">وفر حتى 30% عند اختيار المقاسات الكبيرة</div>
+          <button class="banner-btn" style="color:#78350f" onclick="filterByCategory('الكل')">تصفح العروض ←</button>
+        </div>
+        <div class="banner-visual">🎁</div>
+      </div>
+    </div>
+
+    <!-- الأقسام -->
+    <div class="categories">
+      <div class="cat-pill active" onclick="filterByCategory('الكل', this)">الكل</div>
+      <div class="cat-pill" onclick="filterByCategory('الجهاز الهضمي', this)">الجهاز الهضمي</div>
+      <div class="cat-pill" onclick="filterByCategory('الفيتامينات', this)">الفيتامينات</div>
+      <div class="cat-pill" onclick="filterByCategory('الجمال', this)">الجمال</div>
+    </div>
+
+    <div class="section-title">
+      <div>فَايْتَالِي (Vitali) <span id="productCount">(4 مكملات)</span></div>
+    </div>
+
+    <!-- شبكة المنتجات (بدون نص "يبدأ من 60 كبسولة") -->
+    <div class="products-grid" id="productsGrid"></div>
+  </div>
+
+  <!-- VIEW 2: صفحة تفاصيل المنتج على نمط iHerb -->
+  <div id="product-view" class="view-section">
+    <div class="iherb-header">
+      <button class="back-btn" onclick="switchView('home-view')">→</button>
+      <div style="font-weight:700;">تفاصيل المكمل والمقاسات</div>
+    </div>
+
+    <div class="iherb-hero">
+      <div class="iherb-brand" id="detailBrand">NOW Foods</div>
+      <div class="iherb-title" id="detailTitle">مكمل Repair Gold، عدد 60 كبسولة</div>
+      <div class="iherb-rating">
+        ★★★★★ <span>(4.9 • 1,240 تقييم موثق)</span>
+      </div>
+      <div class="iherb-image-showcase" id="detailIcon">💊</div>
+      <div class="iherb-meta-box">
+        <div class="meta-item">الحالة: <strong style="color:#22c55e;">✅ متوفر في المخزون</strong></div>
+        <div class="meta-item">الشحن: <strong>توصيل سريع ومضمون</strong></div>
+        <div class="meta-item">الأصالة: <strong>100% منتج أصلي مستورد</strong></div>
+        <div class="meta-item">رمز المنتج: <strong id="detailSku">VTL-101</strong></div>
+      </div>
+    </div>
+
+    <div class="iherb-sizes">
+      <div style="font-weight:700; font-size:0.95rem;">اختر حجم العبوة المناسب:</div>
+      <div class="size-options" id="detailSizes"></div>
+    </div>
+
+    <div class="iherb-details">
+      <div class="accordion-item">
+        <div class="accordion-header">📋 نظرة عامة ومميزات المكمل <span>▼</span></div>
+        <div class="accordion-body" id="detailDesc">
+          تركيبة متطورة مصممة لدعم وظائف الجسم الحيوية، خالية من المواد المعدلة وراثياً ومختبرة مخبرياً لضمان أعلى درجات النقاء والفعالية.
+        </div>
+      </div>
+      <div class="accordion-item">
+        <div class="accordion-header">🕒 طريقة الاستخدام المقترحة <span>▼</span></div>
+        <div class="accordion-body">
+          تناول كبسولة واحدة إلى كبسولتين يومياً مع كوب من الماء ويفضل مع الوجبة، أو حسب إرشادات أخصائي الرعاية الصحية.
+        </div>
+      </div>
+      <div class="accordion-item">
+        <div class="accordion-header">⚠️ تحذيرات وإرشادات التخزين <span>▼</span></div>
+        <div class="accordion-body">
+          للبالغين فقط. يُرجى استشارة الطبيب في حالة الحمل أو الرضاعة أو تناول أدوية أخرى. يُحفظ في مكان بارد وجاف بعيداً عن متناول الأطفال.
+        </div>
+      </div>
+
+      <button class="whatsapp-checkout-btn" onclick="addSelectedProductToCart()">
+        🛒 إضافة الحجم المختار إلى السلة
+      </button>
+    </div>
+  </div>
+
+  <!-- VIEW 3: صفحة عربة التسوق الأنيقة والجذابة -->
+  <div id="cart-view" class="view-section">
+    <div class="iherb-header">
+      <button class="back-btn" onclick="switchView('home-view')">→</button>
+      <div style="font-weight:700;">عربة التسوق الخاصة بك</div>
+    </div>
+
+    <div class="cart-container">
+      <div class="cart-header-banner">
+        <div>
+          <div style="font-weight:800; font-size:1rem;">🛍️ ملخص مشترياتك</div>
+          <div style="font-size:0.8rem; color:var(--text-muted); margin-top:4px;">راجع منتجاتك قبل إرسال الطلب عبر الواتساب</div>
+        </div>
+        <button onclick="clearCart()" style="background:rgba(239,68,68,0.15); color:#ef4444; border:none; padding:8px 12px; border-radius:10px; font-size:0.8rem; font-weight:700; cursor:pointer;">إفراغ السلة 🗑️</button>
+      </div>
+
+      <div id="cartItemsList"></div>
+
+      <div class="cart-summary-box" id="cartSummaryBox">
+        <div class="summary-row">
+          <span>عدد المنتجات:</span>
+          <span id="summaryCount">0</span>
+        </div>
+        <div class="summary-row">
+          <span>حالة التغليف والشحن:</span>
+          <span style="color:var(--primary);">تغليف آمن ومبرد ❄️</span>
+        </div>
+        <div class="summary-row total">
+          <span>الإجمالي النهائي:</span>
+          <span id="summaryTotal">0 ر.ي</span>
+        </div>
+
+        <button class="whatsapp-checkout-btn" onclick="sendOrderToWhatsApp()">
+          💬 إرسال الطلب وتأكيده عبر الواتساب
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- الشريط السفلي -->
+  <nav class="bottom-nav">
+    <div class="nav-item active" onclick="switchView('home-view', this)">
+      <span style="font-size:1.3rem;">🏠</span>
+      <span>الرئيسية</span>
+    </div>
+    <div class="nav-item" onclick="openDirectWhatsApp()">
+      <span style="font-size:1.3rem;">💬</span>
+      <span>الواتساب</span>
+    </div>
+    <div class="nav-item" onclick="switchView('cart-view', this)">
+      <span style="font-size:1.3rem;">🛒</span>
+      <span class="cart-badge" id="navCartBadge">0</span>
+      <span>السلة</span>
+    </div>
+  </nav>
+
+<script>
+  // قاعدة بيانات تجريبية للمنتجات (يمكنك إضافة باقي الـ 118 منتجاً بنفس التنسيق بسهولة)
+  const products = [
+    {
+      id: 1,
+      sku: "VTL-101",
+      brand: "NOW Foods",
+      name: "مكمل Repair Gold لدعم الهضم والعضلات",
+      category: "الجهاز الهضمي",
+      icon: "💊",
+      desc: "إنزيمات هاضمة متكاملة لتسريع الاستشفاء وتهدئة الجهاز الهضمي وتقليل الانتفاخ.",
+      sizes: [
+        { label: "60 كبسولة", price: 6796, badge: "الأوفر سعراً" },
+        { label: "120 كبسولة", price: 11500, badge: "" },
+        { label: "240 كبسولة", price: 21000, badge: "عبوة عائلية" }
+      ]
+    },
+    {
+      id: 2,
+      sku: "VTL-102",
+      brand: "NOW Foods",
+      name: "Biotin 10 mg بيوتين عالي التركيز للشعر والأظافر",
+      category: "الجمال",
+      icon: "✨",
+      desc: "يدعم صحة الشعر ونضارة البشرة وقوة الأظافر ويساهم في إنتاج الطاقة الخلوية.",
+      sizes: [
+        { label: "60 كبسولة", price: 6796, badge: "الأكثر طلباً" },
+        { label: "120 كبسولة", price: 11500, badge: "" }
+      ]
+    },
+    {
+      id: 3,
+      sku: "VTL-103",
+      brand: "Garden of Life",
+      name: "Raw Probiotics Once Daily بروبيوتيك يومي",
+      category: "الجهاز الهضمي",
+      icon: "🌿",
+      desc: "85 مليار وحدة بكتيريا نافعة لدعم توازن القولون وتقوية المناعة وتحسين الامتصاص.",
+      sizes: [
+        { label: "30 كبسولة", price: 14200, badge: "تركيبة مركزة" },
+        { label: "60 كبسولة", price: 26500, badge: "توفير 10%" }
+      ]
+    },
+    {
+      id: 4,
+      sku: "VTL-104",
+      brand: "Swanson",
+      name: "Sulforaphane مستخلص براعم البروكلي النقي",
+      category: "الفيتامينات",
+      icon: "🥦",
+      desc: "مضاد أكسدة قوي يدعم صحة الخلايا ويعزز وظائف الكبد والجهاز الهضمي.",
+      sizes: [
+        { label: "60 كبسولة", price: 8500, badge: "" },
+        { label: "120 كبسولة", price: 15800, badge: "عبوة اقتصادية" }
+      ]
+    }
+  ];
+
+  let cart = [];
+  let currentCategory = 'الكل';
+  let currentProduct = null;
+  let selectedSizeIndex = 0;
+
+  function renderProducts(list) {
+    const grid = document.getElementById('productsGrid');
+    document.getElementById('productCount').innerText = `(${list.length} مكمل)`;
+    grid.innerHTML = '';
+
+    list.forEach(p => {
+      const defaultPrice = p.sizes[0].price.toLocaleString();
+      grid.innerHTML += `
+        <div class="product-card">
+          <div>
+            <div class="product-brand">${p.brand}</div>
+            <div class="product-name" onclick="openProductDetail(${p.id})">${p.name}</div>
+          </div>
+          <div>
+            <div class="product-img-box" onclick="openProductDetail(${p.id})">${p.icon}</div>
+            <div class="product-footer">
+              <div class="product-price">${defaultPrice} ر.ي</div>
+              <button class="add-btn" onclick="quickAdd(${p.id})">🛒 إضافة للسلة</button>
+            </div>
+          </div>
+        </div>
+      `;
+    });
+  }
+
+  function filterByCategory(cat, el) {
+    currentCategory = cat;
+    if (el) {
+      document.querySelectorAll('.cat-pill').forEach(c => c.classList.remove('active'));
+      el.classList.add('active');
+    }
+    filterProducts();
+  }
+
+  function filterProducts() {
+    const query = document.getElementById('searchInput').value.toLowerCase();
+    const filtered = products.filter(p => {
+      const matchCat = currentCategory === 'الكل' || p.category === currentCategory;
+      const matchText = p.name.toLowerCase().includes(query) || p.brand.toLowerCase().includes(query) || p.category.includes(query);
+      return matchCat && matchText;
+    });
+    renderProducts(filtered);
+  }
+
+  function openProductDetail(id) {
+    currentProduct = products.find(p => p.id === id);
+    selectedSizeIndex = 0;
+    document.getElementById('detailBrand').innerText = currentProduct.brand;
+    document.getElementById('detailTitle').innerText = currentProduct.name;
+    document.getElementById('detailIcon').innerText = currentProduct.icon;
+    document.getElementById('detailSku').innerText = currentProduct.sku;
+    document.getElementById('detailDesc').innerText = currentProduct.desc;
+
+    renderSizeOptions();
+    switchView('product-view');
+    window.scrollTo(0, 0);
+  }
+
+  function renderSizeOptions() {
+    const container = document.getElementById('detailSizes');
+    container.innerHTML = '';
+    currentProduct.sizes.forEach((s, idx) => {
+      container.innerHTML += `
+        <div class="size-card ${idx === selectedSizeIndex ? 'selected' : ''}" onclick="selectSize(${idx})">
+          ${s.badge ? `<span class="size-badge">${s.badge}</span>` : ''}
+          <div class="size-name">${s.label}</div>
+          <div class="size-price">${s.price.toLocaleString()} ر.ي</div>
+        </div>
+      `;
+    });
+  }
+
+  function selectSize(idx) {
+    selectedSizeIndex = idx;
+    renderSizeOptions();
+  }
+
+  function quickAdd(id) {
+    const prod = products.find(p => p.id === id);
+    addToCart(prod, prod.sizes[0]);
+  }
+
+  function addSelectedProductToCart() {
+    if (!currentProduct) return;
+    addToCart(currentProduct, currentProduct.sizes[selectedSizeIndex]);
+    switchView('cart-view');
+  }
+
+  function addToCart(product, sizeObj) {
+    const existing = cart.find(item => item.id === product.id && item.size === sizeObj.label);
+    if (existing) {
+      existing.qty += 1;
+    } else {
+      cart.push({
+        id: product.id,
+        name: product.name,
+        icon: product.icon,
+        size: sizeObj.label,
+        price: sizeObj.price,
+        qty: 1
+      });
+    }
+    updateCartUI();
+  }
+
+  function updateQty(index, delta) {
+    cart[index].qty += delta;
+    if (cart[index].qty <= 0) {
+      cart.splice(index, 1);
+    }
+    updateCartUI();
+  }
+
+  function clearCart() {
+    cart = [];
+    updateCartUI();
+  }
+
+  function updateCartUI() {
+    const totalItems = cart.reduce((sum, item) => sum + item.qty, 0);
+    document.getElementById('navCartBadge').innerText = totalItems;
+    document.getElementById('summaryCount').innerText = totalItems + " منتجات";
+
+    const list = document.getElementById('cartItemsList');
+    if (cart.length === 0) {
+      list.innerHTML = `<div style="text-align:center; padding:40px 20px; color:var(--text-muted);">السلة فارغة حالياً 🛒<br><br><button class="add-btn" style="margin:auto; padding:10px 24px;" onclick="switchView('home-view')">تصفح المكملات</button></div>`;
+      document.getElementById('summaryTotal').innerText = "0 ر.ي";
+      return;
+    }
+
+    let totalAmount = 0;
+    list.innerHTML = '';
+    cart.forEach((item, index) => {
+      totalAmount += item.price * item.qty;
+      list.innerHTML += `
+        <div class="cart-item-card">
+          <div class="cart-item-icon">${item.icon}</div>
+          <div class="cart-item-info">
+            <div class="cart-item-title">${item.name}</div>
+            <div class="cart-item-size">المقاس: ${item.size}</div>
+            <div class="cart-item-price">${(item.price * item.qty).toLocaleString()} ر.ي</div>
+          </div>
+          <div class="qty-controls">
+            <button class="qty-btn plus" onclick="updateQty(${index}, 1)">+</button>
+            <span style="font-weight:700; min-width:18px; text-align:center;">${item.qty}</span>
+            <button class="qty-btn" onclick="updateQty(${index}, -1)">-</button>
+          </div>
+        </div>
+      `;
+    });
+
+    document.getElementById('summaryTotal').innerText = totalAmount.toLocaleString() + " ر.ي";
+  }
+
+  function switchView(viewId, navEl) {
+    document.querySelectorAll('.view-section').forEach(v => v.classList.remove('active'));
+    document.getElementById(viewId).classList.add('active');
+    if (navEl) {
+      document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+      navEl.classList.add('active');
+    }
+    window.scrollTo(0, 0);
+  }
+
+  function sendOrderToWhatsApp() {
+    if (cart.length === 0) {
+      alert("السلة فارغة! يرجى إضافة منتجات أولاً.");
+      return;
+    }
+    let msg = "مرحباً متجر فايتالي، أود طلب المكملات التالية:%0A%0A";
+    let total = 0;
+    cart.forEach((item, i) => {
+      const sub = item.price * item.qty;
+      total += sub;
+      msg += `${i+1}. ${item.name} (${item.size}) × ${item.qty} = ${sub.toLocaleString()} ر.ي%0A`;
+    });
+    msg += `%0A*الإجمالي النهائي: ${total.toLocaleString()} ر.ي*`;
+    window.open(`https://wa.me/?text=${msg}`, '_blank');
+  }
+
+  function openDirectWhatsApp() {
+    window.open(`https://wa.me/?text=مرحباً متجر فايتالي، لدي استفسار بخصوص المكملات.`, '_blank');
+  }
+
+  // تشغيل مبدئي
+  renderProducts(products);
+  updateCartUI();
+</script>
+</body>
+</html>
