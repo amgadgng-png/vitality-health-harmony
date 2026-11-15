@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>يمن كور | Yemen Core - وجهتك الأولى للمكملات الغذائية في اليمن</title>
+    <!-- استيراد خط تجوال العصري -->
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <!-- مكتبة أيقونات FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Tajawal', sans-serif;
+        }
+        body {
+            background-color: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
+        }
+        header {
+            background: #114b3e;
+            color: white;
+            padding: 15px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        .logo {
+            font-size: 24px;
+            font-weight: 900;
+            color: #4ade80;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin-left: 20px;
+            font-weight: 500;
+            transition: 0.3s;
+        }
+        nav a:hover {
+            color: #4ade80;
+        }
+        .hero {
+            background: linear-gradient(135deg, #114b3e, #1e3a8a);
+            color: white;
+            text-align: center;
+            padding: 60px 20px;
+        }
+        .hero h1 {
+            font-size: 38px;
+            margin-bottom: 15px;
+            font-weight: 900;
+        }
+        .hero p {
+            font-size: 18px;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+        .search-box {
+            max-width: 600px;
+            margin: 0 auto;
+            display: flex;
+            background: white;
+            border-radius: 50px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+        .search-box input {
+            flex: 1;
+            padding: 15px 25px;
+            border: none;
+            outline: none;
+            font-size: 16px;
+        }
+        .search-box button {
+            background: #10b981;
+            color: white;
+            border: none;
+            padding: 0 30px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .search-box button:hover {
+            background: #059669;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+        .section-title {
+            font-size: 26px;
+            font-weight: 700;
+            margin-bottom: 25px;
+            border-right: 5px solid #10b981;
+            padding-right: 15px;
+            color: #1f2937;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 25px;
+        }
+        .card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            transition: transform 0.3s, box-shadow 0.3s;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+        .card-img {
+            height: 200px;
+            background: #e5e7eb;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #9ca3af;
+            font-size: 14px;
+            position: relative;
+        }
+        .card-body {
+            padding: 20px;
+        }
+        .card-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: #1f2937;
+        }
+        .card-desc {
+            font-size: 14px;
+            color: #6b7280;
+            margin-bottom: 15px;
+        }
+        .card-footer {
+            padding: 15px 20px;
+            background: #f9fafb;
+            border-top: 1px solid #f3f4f6;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .price {
+            font-size: 18px;
+            font-weight: bold;
+            color: #10b981;
+        }
+        .btn-order {
+            background: #25d366;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 14px;
+            transition: 0.3s;
+        }
+        .btn-order:hover {
+            background: #1ebe5d;
+        }
+        .checkout-info {
+            background: #fff;
+            border-radius: 12px;
+            padding: 30px;
+            margin-top: 50px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            border: 1px solid #e5e7eb;
+        }
+        .checkout-info h3 {
+            margin-bottom: 15px;
+            color: #114b3e;
+        }
+        footer {
+            background: #114b3e;
+            color: white;
+            text-align: center;
+            padding: 30px 20px;
+            margin-top: 60px;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo">
+            <i class="fa-solid fa-leaf"></i> يمن كور (Yemen Core)
+        </div>
+        <nav>
+            <a href="#products">المنتجات</a>
+            <a href="#payment">طرق الدفع</a>
+            <a href="https://wa.me/967XXXXXXXXX" target="_blank"><i class="fa-brands fa-whatsapp"></i> تواصل معنا</a>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <h1>متجرك الأول للمكملات الغذائية في اليمن</h1>
+        <p>أكثر من 500 مكمل أصلي وموثوق للياقة البدنية، الصحة العامة، ودعم المناعة</p>
+        <div class="search-box">
+            <input type="text" placeholder="ابحث عن الفيتامينات، البروتينات، المكملات...">
+            <button><i class="fa-solid fa-search"></i> بحث</button>
+        </div>
+    </section>
+
+    <div class="container" id="products">
+        <h2 class="section-title">أبرز المنتجات الأكثر طلباً في اليمن</h2>
+        
+        <div class="grid">
+            <!-- منتج 1 -->
+            <div class="card">
+                <div>
+                    <div class="card-img">[ ضع صورة المنتج هنا ]</div>
+                    <div class="card-body">
+                        <div class="card-title">واي بروتين جولد استاندارد - Optimum Nutrition</div>
+                        <div class="card-desc">أفضل بروتين لبناء العضلات وزيادة القوة، نكهة الشوكولاتة (5 رطل).</div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <span class="price">يُحدد السعر</span>
+                    <a href="https://wa.me/967XXXXXXXXX?text=أريد%20الاستفسار%20عن%20طلب%20واي%20بروتين%20جولد%20ستاندارد" class="btn-order" target="_blank">
+                        <i class="fa-brands fa-whatsapp"></i> اطلب عبر الواتساب
+                    </a>
+                </div>
+            </div>
+
+            <!-- منتج 2 -->
+            <div class="card">
+                <div>
+                    <div class="card-img">[ ضع صورة المنتج هنا ]</div>
+                    <div class="card-body">
+                        <div class="card-title">كرياتين مونوهيدرات النقي - Optimum Nutrition</div>
+                        <div class="card-desc">زيادة الطاقة والأداء البدني أثناء التمارين (300 جرام).</div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <span class="price">يُحدد السعر</span>
+                    <a href="https://wa.me/967XXXXXXXXX?text=أريد%20الاستفسار%20عن%20طلب%20كرياتين%20مونوهيدرات" class="btn-order" target="_blank">
+                        <i class="fa-brands fa-whatsapp"></i> اطلب عبر الواتساب
+                    </a>
+                </div>
+            </div>
+
+            <!-- منتج 3 -->
+            <div class="card">
+                <div>
+                    <div class="card-img">[ ضع صورة المنتج هنا ]</div>
+                    <div class="card-body">
+                        <div class="card-title">فيتامين د3 (Vitamin D3 5000 IU) - Now Foods</div>
+                        <div class="card-desc">دعم المناعة وصحة العظام والمفاصل (240 كبسولة هلامية).</div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <span class="price">يُحدد السعر</span>
+                    <a href="https://wa.me/967XXXXXXXXX?text=أريد%20الاستفسار%20عن%20طلب%20فيتامين%20د3" class="btn-order" target="_blank">
+                        <i class="fa-brands fa-whatsapp"></i> اطلب عبر الواتساب
+                    </a>
+                </div>
+            </div>
+
+            <!-- منتج 4 -->
+            <div class="card">
+                <div>
+                    <div class="card-img">[ ضع صورة المنتج هنا ]</div>
+                    <div class="card-body">
+                        <div class="card-title">أوميغا 3 زيت السمك النقي - California Gold Nutrition</div>
+                        <div class="card-desc">لصحة القلب، الدماغ، والنظر (100 كبسولة).</div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <span class="price">يُحدد السعر</span>
+                    <a href="https://wa.me/967XXXXXXXXX?text=أريد%20الاستفسار%20عن%20طلب%20أوميغا%203" class="btn-order" target="_blank">
+                        <i class="fa-brands fa-whatsapp"></i> اطلب عبر الواتساب
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- معلومات الدفع والحسابات -->
+        <div class="checkout-info" id="payment">
+            <h3><i class="fa-solid fa-credit-card"></i> حسابات التحويل المالي والدفع المعتمدة في اليمن</h3>
+            <p>يمكنك تحويل قيمة الطلب بسهولة عبر شبكات الحوالات المعتمدة التالية، ثم إرسال إشعار الحوالة عبر زر الواتساب:</p>
+            <ul style="margin-top: 15px; padding-right: 20px;">
+                <li><strong>بنك الكريمي للتمويل الأصغر:</strong> رقم الحساب: (أدخل رقم الحساب هنا) - باسم: (اسم صاحب الحساب)</li>
+                <li><strong>شبكة جوالي / موني:</strong> رقم الحساب: (أدخل الرقم هنا)</li>
+                <li><strong>النجم / الامتياز / الحوالات السريعة:</strong> باسم المستلم الثلاثي ورقم الهاتف</li>
+            </ul>
+        </div>
+    </div>
+
+    <footer>
+        <p>جميع الحقوق محفوظة © 2026 - يمن كور (Yemen Core) | متجرك الأول للمكملات الغذائية في اليمن</p>
+    </footer>
+
+</body>
+</html>
