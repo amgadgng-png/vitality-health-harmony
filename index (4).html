@@ -1,0 +1,912 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>متجر مكملات فايتالي</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --bg-color: #121212;
+      --card-bg: #1e1e1e;
+      --text-color: #ffffff;
+      --accent-green: #2e7d32;
+      --accent-light: #4caf50;
+      --border-color: #333333;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Tahoma, sans-serif;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      padding-bottom: 80px;
+      scroll-behavior: smooth;
+    }
+
+    /* حركة العروض الترويجية */
+    @keyframes slideAnimation {
+      0%, 28% { transform: translateX(0%); }
+      33%, 61% { transform: translateX(33.333%); }
+      66%, 95% { transform: translateX(66.666%); }
+      100% { transform: translateX(0%); }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .header-container {
+      padding: 10px 15px;
+      background: rgba(24, 24, 24, 0.95);
+      backdrop-filter: blur(8px);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .search-box {
+      display: flex;
+      align-items: center;
+      background: #2a2a2a;
+      border-radius: 25px;
+      padding: 9px 15px;
+      border: 1px solid #444;
+      transition: border-color 0.2s;
+    }
+
+    .search-box:focus-within {
+      border-color: var(--accent-light);
+    }
+
+    .search-box input {
+      background: transparent;
+      border: none;
+      outline: none;
+      color: #fff;
+      width: 100%;
+      margin-right: 10px;
+      font-size: 0.95rem;
+      text-align: right;
+    }
+
+    .search-box i {
+      color: var(--accent-light);
+    }
+
+    .categories-bar {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding: 10px 15px;
+      scrollbar-width: none;
+    }
+    .categories-bar::-webkit-scrollbar { display: none; }
+
+    .cat-item {
+      background: #222;
+      color: #bbb;
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      white-space: nowrap;
+      cursor: pointer;
+      border: 1px solid #444;
+      transition: all 0.25s ease;
+    }
+    .cat-item.active {
+      background: #2e7d3233;
+      color: #fff;
+      border-color: var(--accent-light);
+      font-weight: bold;
+    }
+
+    /* شبكة المنتجات المتساوية بدون تداخل */
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      padding: 10px 15px;
+    }
+
+    .product-card {
+      background: var(--card-bg);
+      border-radius: 12px;
+      padding: 10px;
+      border: 1px solid var(--border-color);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      overflow: hidden;
+      animation: fadeIn 0.3s ease;
+      transition: transform 0.2s, border-color 0.2s;
+    }
+
+    .product-card:hover {
+      border-color: #4caf5066;
+    }
+
+    .prod-brand {
+      font-size: 0.72rem;
+      color: #aaa;
+      margin-bottom: 3px;
+    }
+
+    .prod-title {
+      font-size: 0.82rem;
+      font-weight: bold;
+      color: #fff;
+      margin-bottom: 8px;
+      height: 36px;
+      line-height: 1.3;
+      overflow: hidden;
+      cursor: pointer;
+    }
+
+    /* صندوق الصورة المتناسق */
+    .prod-img-box {
+      background: #18181d;
+      border-radius: 8px;
+      height: 155px;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      margin-bottom: 8px;
+      padding: 8px;
+      overflow: hidden;
+      cursor: pointer;
+    }
+
+    .prod-img-box img {
+      max-width: 100%;
+      max-height: 135px;
+      width: auto;
+      height: auto;
+      object-fit: contain;
+      transition: transform 0.25s ease;
+    }
+
+    .prod-img-box:hover img {
+      transform: scale(1.04);
+    }
+
+    .img-actions {
+      position: absolute;
+      top: 6px;
+      left: 6px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      z-index: 2;
+    }
+
+    .action-icon {
+      background: rgba(0, 0, 0, 0.65);
+      color: #fff;
+      width: 26px;
+      height: 26px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      font-size: 0.75rem;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .action-icon:active {
+      transform: scale(0.9);
+    }
+
+    .prod-price {
+      font-size: 0.9rem;
+      font-weight: bold;
+      color: var(--accent-light);
+      margin-bottom: 6px;
+    }
+
+    .btn-add-cart {
+      background: var(--accent-green);
+      color: white;
+      border: none;
+      width: 100%;
+      padding: 8px 6px;
+      border-radius: 8px;
+      font-size: 0.78rem;
+      cursor: pointer;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      touch-action: manipulation;
+      transition: background 0.2s, transform 0.15s;
+    }
+    .btn-add-cart:hover { background: #388e3c; }
+    .btn-add-cart:active { transform: scale(0.96); }
+
+    .more-options {
+      font-size: 0.72rem;
+      color: #888;
+      text-align: center;
+      margin-top: 6px;
+      cursor: pointer;
+    }
+
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background: rgba(24, 24, 24, 0.96);
+      backdrop-filter: blur(8px);
+      display: flex;
+      justify-content: space-around;
+      padding: 10px 0;
+      border-top: 1px solid var(--border-color);
+      z-index: 150;
+    }
+
+    .nav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      color: #aaa;
+      font-size: 0.75rem;
+      text-decoration: none;
+      cursor: pointer;
+    }
+    .nav-item i { font-size: 1.2rem; margin-bottom: 3px; }
+    .nav-item.active { color: var(--accent-light); }
+
+    .cart-badge {
+      background: #ff5555;
+      color: white;
+      font-size: 0.65rem;
+      padding: 2px 6px;
+      border-radius: 50%;
+      position: absolute;
+      top: -4px;
+      right: -8px;
+      font-weight: bold;
+    }
+
+    .overlay-screen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: var(--bg-color);
+      z-index: 200;
+      display: none;
+      flex-direction: column;
+      padding: 15px;
+      overflow-y: auto;
+      animation: fadeIn 0.2s ease;
+    }
+    .overlay-screen.active { display: flex; }
+
+    .top-bar-detail {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 15px;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 10px;
+    }
+
+    /* إشعار عائم سلس بدلاً من النوافذ المزعجة */
+    .toast-msg {
+      position: fixed;
+      bottom: 75px;
+      left: 50%;
+      transform: translateX(-50%) translateY(20px);
+      background: #2e7d32;
+      color: #fff;
+      padding: 10px 18px;
+      border-radius: 25px;
+      font-size: 0.85rem;
+      font-weight: bold;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+      z-index: 300;
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.3s ease;
+      white-space: nowrap;
+    }
+    .toast-msg.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- إشعار إضافة للسلة -->
+  <div id="toastBox" class="toast-msg"></div>
+
+  <!-- شريط البحث -->
+  <div class="header-container">
+    <div class="search-box">
+      <i class="fas fa-search"></i>
+      <input type="text" id="searchInput" placeholder="البحث في متجر مكملات فايتالي" oninput="handleSearch()">
+    </div>
+  </div>
+
+  <!-- قسم العروض المتحركة -->
+  <div style="margin: 10px 15px; overflow: hidden; border-radius: 12px; background: #18181b; border: 1px solid #27272a; box-shadow: 0 4px 12px rgba(0,0,0,0.4);">
+    <div class="slider-container" style="display: flex; width: 300%; animation: slideAnimation 12s infinite ease-in-out;">
+      
+      <!-- الشريحة الأولى -->
+      <div style="width: 33.333%; padding: 12px; display: flex; align-items: center; justify-content: space-between;">
+        <div style="flex: 1; padding-left: 10px;">
+          <span style="background: #4ade80; color: #000; font-size: 0.7rem; font-weight: bold; padding: 2px 6px; border-radius: 4px;">عروض حصرية</span>
+          <h3 style="color: #fff; font-size: 0.95rem; margin: 5px 0;">مكملات الطاقة والبناء</h3>
+          <p style="color: #a1a1aa; font-size: 0.75rem; margin: 0;">خصومات تصل إلى 30% لفترة محدودة</p>
+        </div>
+        <div style="width: 70px; height: 70px; border-radius: 8px; background: #22c55e20; display: flex; align-items: center; justify-content: center;">
+          <i class="fas fa-pills" style="font-size: 1.8rem; color: #4ade80;"></i>
+        </div>
+      </div>
+
+      <!-- الشريحة الثانية -->
+      <div style="width: 33.333%; padding: 12px; display: flex; align-items: center; justify-content: space-between;">
+        <div style="flex: 1; padding-left: 10px;">
+          <span style="background: #3b82f6; color: #fff; font-size: 0.7rem; font-weight: bold; padding: 2px 6px; border-radius: 4px;">الأكثر طلباً</span>
+          <h3 style="color: #fff; font-size: 0.95rem; margin: 5px 0;">فيتامينات الصحة العامة</h3>
+          <p style="color: #a1a1aa; font-size: 0.75rem; margin: 0;">دعم متكامل لجسمك وصحتك اليومية</p>
+        </div>
+        <div style="width: 70px; height: 70px; border-radius: 8px; background: #3b82f620; display: flex; align-items: center; justify-content: center;">
+          <i class="fas fa-capsules" style="font-size: 1.8rem; color: #60a5fa;"></i>
+        </div>
+      </div>
+
+      <!-- الشريحة الثالثة -->
+      <div style="width: 33.333%; padding: 12px; display: flex; align-items: center; justify-content: space-between;">
+        <div style="flex: 1; padding-left: 10px;">
+          <span style="background: #eab308; color: #000; font-size: 0.7rem; font-weight: bold; padding: 2px 6px; border-radius: 4px;">جديد فايتالي</span>
+          <h3 style="color: #fff; font-size: 0.95rem; margin: 5px 0;">بروتينات نقية 100%</h3>
+          <p style="color: #a1a1aa; font-size: 0.75rem; margin: 0;">ضمان الجودة والنتائج السريعة</p>
+        </div>
+        <div style="width: 70px; height: 70px; border-radius: 8px; background: #eab30820; display: flex; align-items: center; justify-content: center;">
+          <i class="fas fa-dumbbell" style="font-size: 1.8rem; color: #facc15;"></i>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- شريط الأقسام -->
+  <div class="categories-bar">
+    <div class="cat-item active" onclick="filterCat('الكل', this)">الكل</div>
+    <div class="cat-item" onclick="filterCat('الجهاز الهضمي', this)">الجهاز الهضمي</div>
+    <div class="cat-item" onclick="filterCat('الفيتامينات', this)">الفيتامينات</div>
+    <div class="cat-item" onclick="filterCat('الجمال', this)">الجمال</div>
+    <div class="cat-item" onclick="filterCat('الطاقة', this)">الطاقة</div>
+    <div class="cat-item" onclick="filterCat('الصحة العامة', this)">الصحة العامة</div>
+  </div>
+
+  <!-- حاوية اسم المتجر وأيقونة التخطيط -->
+  <div style="display: flex; justify-content: space-between; align-items: center; padding: 6px 15px; margin-bottom: 2px; width: 100%;">
+    <div style="color: #4ade80; font-weight: bold; font-size: 0.95rem;">
+      فَايْتَالِي (Vitali) <span id="productsCounter" style="font-size: 0.75rem; color: #888; font-weight: normal;"></span>
+    </div>
+    <button id="layoutToggleBtn" onclick="cycleLayout()" style="background: #18181b; border: 1px solid #333; border-radius: 8px; padding: 6px 10px; color: #4ade80; cursor: pointer; display: flex; align-items: center; justify-content: center;">
+      <i id="layoutIcon" class="fas fa-th-large" style="font-size: 1.1rem;"></i>
+    </button>
+  </div>
+
+  <!-- شبكة عرض المنتجات -->
+  <div class="products-grid" id="productsList"></div>
+
+  <!-- القائمة السفلية -->
+  <div class="bottom-nav">
+    <div class="nav-item active" onclick="showHome()">
+      <i class="fas fa-home"></i> الرئيسية
+    </div>
+    <a class="nav-item" href="https://wa.me/967777502849" target="_blank">
+      <i class="fab fa-whatsapp"></i> الواتساب
+    </a>
+    <div class="nav-item" onclick="openCartScreen()">
+      <div style="position: relative; display: inline-block;">
+        <i class="fas fa-shopping-cart"></i>
+        <span class="cart-badge" id="cartCount">0</span>
+      </div>
+      السلة
+    </div>
+  </div>
+
+  <!-- شاشة تفاصيل المنتج -->
+  <div class="overlay-screen" id="detailOverlay">
+    <div class="top-bar-detail">
+      <i class="fas fa-arrow-right" style="font-size: 1.2rem; cursor: pointer; padding: 5px;" onclick="closeDetail()"></i>
+      <span style="font-weight: bold;">تفاصيل المكمل</span>
+      <i class="far fa-heart" style="font-size: 1.2rem; cursor: pointer;"></i>
+    </div>
+    <div style="text-align: center; margin: 15px 0;">
+      <div id="detImgBox" style="background: #18181d; border-radius: 12px; padding: 15px; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 12px; min-width: 180px; min-height: 180px;">
+        <img id="detImg" src="" style="max-width: 200px; max-height: 200px; object-fit: contain; border-radius: 8px;">
+      </div>
+      <div id="detBrand" style="font-size: 0.85rem; color: #aaa; margin-bottom: 4px;"></div>
+      <h2 id="detTitle" style="font-size: 1.1rem; margin-bottom: 8px;"></h2>
+      <div id="detPrice" style="font-size: 1.2rem; color: var(--accent-light); font-weight: bold; margin-bottom: 15px;"></div>
+      <div style="background: #1e1e1e; padding: 12px; border-radius: 8px; text-align: right; border: 1px solid var(--border-color); margin-bottom: 15px;">
+        <div style="color: var(--accent-light); font-weight: bold; margin-bottom: 6px;">حالة المكمل:</div>
+        <div>✅ متوفر في المخزون</div>
+      </div>
+      <div style="background: #1e1e1e; padding: 12px; border-radius: 8px; text-align: right; border: 1px solid var(--border-color); margin-bottom: 20px;">
+        <div style="color: var(--accent-light); font-weight: bold; margin-bottom: 6px;">مميزات المكمل:</div>
+        <ul id="detFeatures" style="padding-right: 20px; font-size: 0.9rem; color: #ccc; line-height: 1.6;"></ul>
+      </div>
+      <button class="btn-add-cart" onclick="addToCartFromDetail()" style="padding: 12px; font-size: 0.9rem;">
+        <i class="fas fa-cart-plus"></i> إضافة إلى عربة التسوق
+      </button>
+    </div>
+  </div>
+
+  <!-- شاشة السلة -->
+  <div class="overlay-screen" id="cartOverlay">
+    <div class="top-bar-detail">
+      <i class="fas fa-arrow-right" style="font-size: 1.2rem; cursor: pointer; padding: 5px;" onclick="closeCartScreen()"></i>
+      <span style="font-weight: bold;">عربة التسوق</span>
+      <i class="fas fa-trash-alt" style="font-size: 1.1rem; cursor: pointer; color: #ff5555; padding: 5px;" onclick="clearCart()" title="إفراغ السلة"></i>
+    </div>
+    <div id="cartItemsList" style="flex: 1; overflow-y: auto;"></div>
+    <div style="border-top: 1px solid var(--border-color); padding-top: 15px; margin-top: 10px;">
+      <div style="display: flex; justify-content: space-between; margin-bottom: 12px; font-weight: bold;">
+        <span>إجمالي المبلغ:</span>
+        <span id="cartTotalPrice" style="color: var(--accent-light);">0 ر.ي</span>
+      </div>
+      <button class="btn-add-cart" onclick="checkoutToWhatsApp()" style="background: #25d366; padding: 12px; font-size: 0.9rem;">
+        <i class="fab fa-whatsapp"></i> إرسال الطلب عبر الواتساب
+      </button>
+    </div>
+  </div>
+
+  <script>
+    // =========================================================================
+    // قائمة المنتجات والمكملات (يمكنك تعبئة الخانات الفارغة من 29 إلى 120 بسهولة)
+    // ملاحظة هامة: اكتب النص دائماً بين علامتي التنصيص 'هنا' ولا تحذف الفاصلة ,
+    // الخانات الفارغة (التي اسمها '') تختفي تلقائياً من المتجر حتى تقوم بتعبئتها!
+    // =========================================================================
+    const products = [
+      { id: 1, brand: 'NOW Foods', name: 'Biotin 10 mg', price: 6796, category: 'الجمال', img: 'https://i.postimg.cc/HkttyrCt/Screenshot-20261101-035429-2.jpg', features: ['يدعم نمو الشعر وصحة البشرة والأظافر', 'يعزز عملية التمثيل الغذائي وإنتاج الطاقة', 'تركيبة نباتية عالية الجودة سريعة الامتصاص'] },
+      { id: 2, brand: 'NOW Foods', name: 'مكمل Repair Gold، عدد 60 كبسولة', price: 6796, category: 'الجهاز الهضمي', img: 'https://i.postimg.cc/MGrMVbvN/1000019123-Photoroom.png', features: ['يحتوي على إنزيمات هاضمة عالية القوة', 'يساعد في تخفيف وتسكين آلام العضلات والمفاصل', 'يعزز التعافي السريع للجسم بعد المجهود البدني'] },
+      { id: 3, brand: 'California Gold', name: 'Omega-3 Premium Fish Oil', price: 8500, category: 'الصحة العامة', img: 'https://i.postimg.cc/Hs4rBCJT/1000019125-Photoroom.png', features: ['يدعم صحة القلب والأوعية الدموية', 'يحسن وظائف الدماغ والتركيز والذاكرة', 'زيت سمك نقي مكرر ومقطر جزيئياً'] },
+      { id: 4, brand: 'Garden of Life', name: 'Raw Probiotics Once Daily', price: 14200, category: 'الجهاز الهضمي', img: 'https://i.postimg.cc/pLhBmTGm/1000019124-Photoroom.png', features: ['يدعم صحة الجهاز الهضمي والمناعة', 'يحتوي على بكتيريا نافعة حية ومتنوعة', 'كبسولة واحدة يومياً لسهولة الاستخدام'] },
+      { id: 5, brand: "Nature's Bounty", name: 'Vitamin D3 5000 IU', price: 4500, category: 'الفيتامينات', img: 'https://i.postimg.cc/x16S16ZY/1000019126-Photoroom.png', features: ['يعزز امتصاص الكالسيوم لصحة العظام والأسنان', 'يدعم الجهاز المناعي ووظائف الأعصاب', 'سهل البلع وسريع الذوبان'] },
+      { id: 6, brand: 'Solgar', name: 'Skin, Nails & Hair Advanced', price: 11200, category: 'الجمال', img: 'https://i.postimg.cc/JnfQ1H9x/1000019127-Photoroom.png', features: ['تركيبة متقدمة لتغذية الجمال الداخلي', 'يحتوي على الزنك والنحاس وفيتامين سي', 'يحفز إنتاج الكولاجين الطبيعي'] },
+      { id: 7, brand: 'Optimum Nutrition', name: 'Gold Standard BCAA Energy', price: 13500, category: 'الطاقة', img: 'https://i.postimg.cc/c4QXkbJy/1000019605-Photoroom.png', features: ['يعزز طاقة الجسم والتركيز الذهني', 'يمنع هدم العضلات أثناء التمارين', 'مزيج منعش ولذيذ الطعم'] },
+      { id: 8, brand: 'Life Extension', name: 'Two-Per-Day Multivitamin', price: 9800, category: 'الصحة العامة', img: 'https://i.postimg.cc/yxRvHfXZ/1000019606-Photoroom.png', features: ['فيتامينات متعددة عالية الفعالية', 'مضادات أكسدة قوية لصحة الخلايا', 'يدعم الحيوية والنشاط اليومي العام'] },
+      { id: 9, brand: "Doctor's Best", name: 'High Absorption Magnesium 100%', price: 7900, category: 'الصحة العامة', img: 'https://i.postimg.cc/5tPPqQ2W/1000019608-Photoroom.png', features: ['يدعم استرخاء العضلات والجهاز العصبي', 'يحسن جودة النوم ويقلل الإجهاد', 'شكل عالي الامتصاص وغير مزعج للمعدة'] },
+      { id: 10, brand: 'NOW Foods', name: 'Super Enzymes Digest Formula', price: 6200, category: 'الجهاز الهضمي', img: 'https://i.postimg.cc/sfMLmmSR/1000019607-Photoroom.png', features: ['يحتوي على البيتين والبانكرياتين', 'يحسن هضم البروتينات والدهون والكربوهيدرات', 'يخفف الانتفاخ والغازات بعد الوجبات'] },
+      { id: 11, brand: 'California Gold', name: 'Vitamin C Gummies 250mg', price: 5500, category: 'الفيتامينات', img: 'https://i.postimg.cc/90srHbXY/1000019613-Photoroom.png', features: ['مضاد أكسدة قوي يدعم المناعة', 'مضغوطات هلامية بنكهة الفواكه الطبيعية', 'مناسب للكبار والصغار'] },
+      { id: 12, brand: 'Jarrow Formulas', name: 'Jarro-Dophilus EPS 5 Billion', price: 12500, category: 'الجهاز الهضمي', img: '', features: ['بروبيوتيك مستقر في درجة حرارة الغرفة', 'يحافظ على توازن فلورا الأمعاء', 'مغلف بطبقة معوية حية لحمايتها من حمض المعدة'] },
+      { id: 13, brand: 'Source Naturals', name: 'Wellness Formula, Bio-Aligned', price: 10500, category: 'الصحة العامة', img: 'https://i.postimg.cc/VLYY52p9/1000019615-Photoroom.png', features: ['دعم مناعي شامل متعدد الأعشاب', 'يحتوي على الفيتامينات والمعادن ومستخلصات نباتية', 'يحمي الجسم في مواسم تغير الطقس'] },
+      { id: 14, brand: 'Vital Proteins', name: 'Collagen Peptides Powder', price: 18000, category: 'الجمال', img: 'https://i.postimg.cc/6328jFtJ/1000019614-Photoroom.png', features: ['يدعم مرونة البشرة وشبابها', 'يقوي الأظافر والشعر والمفاصل', 'سهل الذوبان في السوائل الباردة أو الساخنة'] },
+      { id: 15, brand: 'Nutricost', name: 'B-Complex 100 mg', price: 7200, category: 'الطاقة', img: 'https://i.postimg.cc/rFLDjhbt/1000019617-Photoroom.png', features: ['مجموعة فيتامينات ب الكاملة لإنتاج الطاقة', 'يدعم صحة الجهاز العصبي وخلايا الدم الحمراء', 'يقلل الشعور بالإرهاق والتعب'] },
+      { id: 16, brand: 'NOW Foods', name: 'CoQ10 100 mg with Hawthorn', price: 14900, category: 'الطاقة', img: 'https://i.postimg.cc/sfWBpFTb/1000019616-Photoroom.png', features: ['يدعم صحة عضلة القلب وإنتاج الطاقة الخلوية', 'مضاد أكسدة قوي يحارب الشيخوخة المبكرة', 'مدعم بخلاصة الزعرور لفائدة مضاعفة'] },
+      { id: 17, brand: 'MegaFood', name: 'Blood Builder Iron Supplement', price: 11900, category: 'الفيتامينات', img: 'https://i.postimg.cc/2Stmcy6v/1000019619-Photoroom.png', features: ['يعالج نقص الحديد دون الإمساك المعتاد', 'مصنوع من طعام حقيقي كامل المغذيات', 'يزيد من مستويات الطاقة والحيوية'] },
+      { id: 18, brand: 'Sports Research', name: 'Keto Plus MCT Oil', price: 16500, category: 'الطاقة', img: 'https://i.postimg.cc/zDkNm0vB/1000019618-Photoroom.png', features: ['يعزز طاقة الكيتو والتركيز الذهني السريع', 'مستخلص من جوز الهند النقي 100%', 'يدعم حرق الدهون وصحة الأنسجة'] },
+      { id: 19, brand: 'Now Foods', name: 'L-Glutamine 500mg Powder', price: 9100, category: 'الجهاز الهضمي', img: 'https://i.postimg.cc/x8Q9vZCT/1000019621-Photoroom.png', features: ['يدعم صحة بطانة الأمعاء وجدار الجهاز الهضمي', 'يساعد في استشفاء العضلات الرياضية', 'حمض أميني نقي وسريع الامتصاص'] },
+      { id: 20, brand: '', name: '', price: 0, category: '', img: '', features: ['', ''] },
+      { id: 21, brand: '', name: '', price: 0, category: '', img: '', features: ['', ''] },
+      { id: 22, brand: 'نوتريوكست', name: 'الاداء كرياتين احادي الهيدرات بدون نكهات', price: 20000, category: 'الطاقة', img: 'https://i.postimg.cc/vHf4kB2C/1000019826-Photoroom.png', features: ['دعم الطاقة السريعة أثناء التمارين القصيرة والعالية الشدة', 'قدرة التحمل'] },
+      { id: 23, brand: 'كاليفورنيا غولد نيوتريشن', name: 'خلاصة البوسويليا مسحوق الكركم', price: 15, category: 'الصحة العامة', img: 'https://i.postimg.cc/RFQ8WPty/1000020177-Photoroom.png', features: ['راحة المفاصل ووظيفة الحركة', 'توازن الاستجابة الالتهابية', 'مضادات أكسدة نباتية'] },
+      { id: 24, brand: 'ناو فودز', name: 'سلسلة المنتجات الرياضية كرياتين مونوهايدريت', price: 11, category: 'الطاقة', img: 'https://i.postimg.cc/L58ynm2X/1000020180-Photoroom.png', features: ['دعم الطاقة القصيرة المدى', 'الأداء أثناء التدريب عالي الشدة', 'قوة وكتلة عضلية خالية من الدهون'] },
+      { id: 25, brand: 'دكتورزبيست', name: 'سيرين الفوسفاتيديل، 100ملجم، 120 كبسولة نباتية', price: 22, category: 'الصحة العامة', img: 'https://i.postimg.cc/mrpLHbFX/1000020196-Photoroom.png', features: ['الذاكرة والتركيز', 'الوظيفة الإدراكية العامة', 'التكيف مع الإجهاد الذهني'] },
+      { id: 26, brand: 'ناو فودز', name: 'استيل-ل-كارنيتين، 500ملجم، 100 كبسولة نباتية', price: 15000, category: 'الطاقة', img: 'https://i.postimg.cc/rp99qjyY/1000020216-cutout.png', features: ['طاقة خلوية', 'دعم إدراكي عصبي', 'استقلاب الدهون'] },
+      { id: 27, brand: 'سورس ناتورالز', name: 'دعم المناعة المتطور، 120 كبسولة', price: 14500, category: 'الصحة العامة', img: 'https://i.postimg.cc/SQwdmJ7b/1000020218-cutout.png', features: ['دعم المناعة العامة', 'مضادات أكسدة', 'دعم الحواجز المخاطية والتناغم المناعي'] },
+      { id: 28, brand: 'لايف اكستانشن', name: 'يوبيكوينول فائق انزيم 100ملجم، 30 كبسولة هلامية', price: 24000, category: 'الطاقة', img: 'https://i.postimg.cc/zftw6BGv/1000020219-cutout.png', features: ['طاقة خلوية وميتوكندريا', 'صحة القلب', 'مضادات أكسدة'] },
+      { id: 29, brand: '', name: '', price: 0, category: '', img: '', features: ['', ''] },
+      { id: 30, brand: '', name: '', price: 0, category: '', img: '', features: ['', ''] },
+      { id: 31, brand: '', name: '', price: 0, category: '', img: '', features: ['', ''] },
+      { id: 32, brand: '', name: '', price: 0, category: '', img: '', features: ['', ''] },
+      { id: 33, brand: '', name: '', price: 0, category: '', img: '', features: ['', ''] },
+      { id: 34, brand: '', name: '', price: 0, category: '', img: '', features: ['', ''] },
+      { id: 35, brand: '', name: '', price: 0, category: '', img: '', features: ['', ''] },
+      { id: 36, brand: '', name: '', price: 0, category: '', img: '', features: ['', ''] },
+      { id: 37, brand: '', name: '', price: 0, category: '', img: '', features: ['', ''] },
+      { id: 38, brand: '', name: '', price: 0, category: '', img: '', features: ['', ''] },
+      { id: 39, brand: '', name: '', price: 0, category: '', img: '', features: ['', ''] },
+      { id: 40, brand: '', name: '', price: 0, category: '', img: '', features: ['', ''] },
+      { id: 41, brand: '', name: '', price: 0, category: '', img: '', features: ['', ''] },
+      { id: 42, brand: '', name: '', price: 0, category: '', img: '', features: ['', ''] },
+      { id: 43, brand: '', name: '', price: 0, category: '', img: '', features: ['', ''] },
+      { id: 44, brand: '', name: '', price: 0, category: '', img: '', features: ['', ''] },
+      { id: 45, brand: '', name: '', price: 0, category: '', img: '', features: ['', ''] },
+      { id: 46, brand: '', name: '', price: 0, category: '', img: '', features: ['', ''] },
+      { id: 47, brand: '', name: '', price: 0, category: '', img: '', features: ['', ''] },
+      { id: 48, brand: '', name: '', price: 0, category: '', img: '', features: ['', ''] },
+      { id: 49, brand: '', name: '', price: 0, category: '', img: '', features: ['', ''] },
+      { id: 50, brand: '', name: '', price: 0, category: '', img: '', features: ['', ''] },
+      { id: 51, brand: '', name: '', price: 0, category: '', img: '', features: ['', ''] },
+      { id: 52, brand: '', name: '', price: 0, category: '', img: '', features: ['', ''] },
+      { id: 53, brand: '', name: '', price: 0, category: '', img: '', features: ['', ''] },
+      { id: 54, brand: '', name: '', price: 0, category: '', img: '', features: ['', ''] },
+      { id: 55, brand: '', name: '', price: 0, category: '', img: '', features: ['', ''] },
+      { id: 56, brand: '', name: '', price: 0, category: '', img: '', features: ['', ''] },
+      { id: 57, brand: '', name: '', price: 0, category: '', img: '', features: ['', ''] },
+      { id: 58, brand: '', name: '', price: 0, category: '', img: '', features: ['', ''] },
+      { id: 59, brand: '', name: '', price: 0, category: '', img: '', features: ['', ''] },
+      { id: 60, brand: '', name: '', price: 0, category: '', img: '', features: ['', ''] },
+      { id: 61, brand: '', name: '', price: 0, category: '', img: '', features: ['', ''] },
+      { id: 62, brand: '', name: '', price: 0, category: '', img: '', features: ['', ''] },
+      { id: 63, brand: '', name: '', price: 0, category: '', img: '', features: ['', ''] },
+      { id: 64, brand: '', name: '', price: 0, category: '', img: '', features: ['', ''] },
+      { id: 65, brand: '', name: '', price: 0, category: '', img: '', features: ['', ''] },
+      { id: 66, brand: '', name: '', price: 0, category: '', img: '', features: ['', ''] },
+      { id: 67, brand: '', name: '', price: 0, category: '', img: '', features: ['', ''] },
+      { id: 68, brand: '', name: '', price: 0, category: '', img: '', features: ['', ''] },
+      { id: 69, brand: '', name: '', price: 0, category: '', img: '', features: ['', ''] },
+      { id: 70, brand: '', name: '', price: 0, category: '', img: '', features: ['', ''] },
+      { id: 71, brand: '', name: '', price: 0, category: '', img: '', features: ['', ''] },
+      { id: 72, brand: '', name: '', price: 0, category: '', img: '', features: ['', ''] },
+      { id: 73, brand: '', name: '', price: 0, category: '', img: '', features: ['', ''] },
+      { id: 74, brand: '', name: '', price: 0, category: '', img: '', features: ['', ''] },
+      { id: 75, brand: '', name: '', price: 0, category: '', img: '', features: ['', ''] },
+      { id: 76, brand: '', name: '', price: 0, category: '', img: '', features: ['', ''] },
+      { id: 77, brand: '', name: '', price: 0, category: '', img: '', features: ['', ''] },
+      { id: 78, brand: '', name: '', price: 0, category: '', img: '', features: ['', ''] },
+      { id: 79, brand: '', name: '', price: 0, category: '', img: '', features: ['', ''] },
+      { id: 80, brand: '', name: '', price: 0, category: '', img: '', features: ['', ''] },
+      { id: 81, brand: '', name: '', price: 0, category: '', img: '', features: ['', ''] },
+      { id: 82, brand: '', name: '', price: 0, category: '', img: '', features: ['', ''] },
+      { id: 83, brand: '', name: '', price: 0, category: '', img: '', features: ['', ''] },
+      { id: 84, brand: '', name: '', price: 0, category: '', img: '', features: ['', ''] },
+      { id: 85, brand: '', name: '', price: 0, category: '', img: '', features: ['', ''] },
+      { id: 86, brand: '', name: '', price: 0, category: '', img: '', features: ['', ''] },
+      { id: 87, brand: '', name: '', price: 0, category: '', img: '', features: ['', ''] },
+      { id: 88, brand: '', name: '', price: 0, category: '', img: '', features: ['', ''] },
+      { id: 89, brand: '', name: '', price: 0, category: '', img: '', features: ['', ''] },
+      { id: 90, brand: '', name: '', price: 0, category: '', img: '', features: ['', ''] },
+      { id: 91, brand: '', name: '', price: 0, category: '', img: '', features: ['', ''] },
+      { id: 92, brand: '', name: '', price: 0, category: '', img: '', features: ['', ''] },
+      { id: 93, brand: '', name: '', price: 0, category: '', img: '', features: ['', ''] },
+      { id: 94, brand: '', name: '', price: 0, category: '', img: '', features: ['', ''] },
+      { id: 95, brand: '', name: '', price: 0, category: '', img: '', features: ['', ''] },
+      { id: 96, brand: '', name: '', price: 0, category: '', img: '', features: ['', ''] },
+      { id: 97, brand: '', name: '', price: 0, category: '', img: '', features: ['', ''] },
+      { id: 98, brand: '', name: '', price: 0, category: '', img: '', features: ['', ''] },
+      { id: 99, brand: '', name: '', price: 0, category: '', img: '', features: ['', ''] },
+      { id: 100, brand: '', name: '', price: 0, category: '', img: '', features: ['', ''] },
+      { id: 101, brand: '', name: '', price: 0, category: '', img: '', features: ['', ''] },
+      { id: 102, brand: '', name: '', price: 0, category: '', img: '', features: ['', ''] },
+      { id: 103, brand: '', name: '', price: 0, category: '', img: '', features: ['', ''] },
+      { id: 104, brand: '', name: '', price: 0, category: '', img: '', features: ['', ''] },
+      { id: 105, brand: '', name: '', price: 0, category: '', img: '', features: ['', ''] },
+      { id: 106, brand: '', name: '', price: 0, category: '', img: '', features: ['', ''] },
+      { id: 107, brand: '', name: '', price: 0, category: '', img: '', features: ['', ''] },
+      { id: 108, brand: '', name: '', price: 0, category: '', img: '', features: ['', ''] },
+      { id: 109, brand: '', name: '', price: 0, category: '', img: '', features: ['', ''] },
+      { id: 110, brand: '', name: '', price: 0, category: '', img: '', features: ['', ''] },
+      { id: 111, brand: '', name: '', price: 0, category: '', img: '', features: ['', ''] },
+      { id: 112, brand: '', name: '', price: 0, category: '', img: '', features: ['', ''] },
+      { id: 113, brand: '', name: '', price: 0, category: '', img: '', features: ['', ''] },
+      { id: 114, brand: '', name: '', price: 0, category: '', img: '', features: ['', ''] },
+      { id: 115, brand: '', name: '', price: 0, category: '', img: '', features: ['', ''] },
+      { id: 116, brand: '', name: '', price: 0, category: '', img: '', features: ['', ''] },
+      { id: 117, brand: '', name: '', price: 0, category: '', img: '', features: ['', ''] },
+      { id: 118, brand: '', name: '', price: 0, category: '', img: '', features: ['', ''] },
+      { id: 119, brand: '', name: '', price: 0, category: '', img: '', features: ['', ''] },
+      { id: 120, brand: '', name: '', price: 0, category: '', img: '', features: ['', ''] }
+    ];
+    
+    let cart = [];
+    let currentCategory = 'الكل';
+    let selectedProd = null;
+
+    // تصفية الخانات الفارغة تلقائياً حتى لا تظهر بطاقات فارغة أو تسبب أي مشكلة
+    function getValidProducts() {
+      return products.filter(p => p && p.name && p.name.trim() !== '');
+    }
+
+    function showToast(msg) {
+      const toast = document.getElementById('toastBox');
+      toast.innerText = msg;
+      toast.classList.add('show');
+      setTimeout(() => {
+        toast.classList.remove('show');
+      }, 2200);
+    }
+
+    function renderProducts(listToRender = getValidProducts()) {
+      const container = document.getElementById('productsList');
+      const counter = document.getElementById('productsCounter');
+      container.innerHTML = '';
+
+      const validList = listToRender.filter(p => p && p.name && p.name.trim() !== '');
+      if (counter) counter.innerText = `(${validList.length} منتج)`;
+
+      if (validList.length === 0) {
+        container.innerHTML = `<div style="grid-column: 1 / -1; text-align:center; padding:40px 20px; color:#888;">عذراً، لم يتم العثور على مكمل مطابق لبحثك.</div>`;
+        return;
+      }
+
+      validList.forEach(p => {
+        let imgTag = p.img && p.img.trim() !== ''
+          ? `<img src="${p.img}" alt="${p.name}" onerror="this.onerror=null; this.parentElement.innerHTML='<div style=\'color:#777; font-size:0.75rem; text-align:center;\'><i class=\'fas fa-capsules\' style=\'font-size:1.5rem; margin-bottom:4px; color:#4caf50;\'></i><br>صورة المكمل</div>';">`
+          : `<div style="color:#777; font-size:0.75rem; text-align:center;"><i class="fas fa-capsules" style="font-size:1.5rem; margin-bottom:4px; color:#4caf50;"></i><br>صورة المكمل</div>`;
+
+        container.innerHTML += `
+          <div class="product-card">
+            <div>
+              <div class="prod-brand">${p.brand || 'فايتالي'}</div>
+              <div class="prod-title" onclick="openDetail(${p.id})">${p.name}</div>
+            </div>
+
+            <div>
+              <div class="prod-img-box" onclick="openDetail(${p.id})">
+                <div class="img-actions" onclick="event.stopPropagation()">
+                  <i class="far fa-heart action-icon" onclick="this.classList.toggle('fas'); this.classList.toggle('far'); this.style.color = this.classList.contains('fas') ? '#ff5555' : '#fff';"></i>
+                  <i class="fas fa-share-alt action-icon" onclick="shareProduct(${p.id})" title="مشاركة المكمل"></i>
+                </div>
+                ${imgTag}
+              </div>
+
+              <div class="prod-price">${Number(p.price).toLocaleString()} ر.ي</div>
+              <button class="btn-add-cart" onclick="addToCart(${p.id})">
+                <i class="fas fa-cart-plus"></i> إضافة للسلة
+              </button>
+              <div class="more-options" onclick="openDetail(${p.id})">+ التفاصيل والمميزات</div>
+            </div>
+          </div>
+        `;
+      });
+    }
+
+    function filterCat(catName, el) {
+      currentCategory = catName;
+      document.querySelectorAll('.cat-item').forEach(c => c.classList.remove('active'));
+      el.classList.add('active');
+      document.getElementById('searchInput').value = '';
+
+      const allValid = getValidProducts();
+      if (catName === 'الكل') {
+        renderProducts(allValid);
+      } else {
+        const filtered = allValid.filter(p => p.category && p.category.trim() === catName);
+        renderProducts(filtered);
+      }
+    }
+
+    function handleSearch() {
+      const query = document.getElementById('searchInput').value.trim().toLowerCase();
+      const allValid = getValidProducts();
+
+      if (!query) {
+        if (currentCategory === 'الكل') {
+          renderProducts(allValid);
+        } else {
+          renderProducts(allValid.filter(p => p.category && p.category.trim() === currentCategory));
+        }
+        return;
+      }
+
+      const searched = allValid.filter(p => 
+        (p.name && p.name.toLowerCase().includes(query)) || 
+        (p.brand && p.brand.toLowerCase().includes(query)) || 
+        (p.category && p.category.toLowerCase().includes(query))
+      );
+      renderProducts(searched);
+    }
+
+    function shareProduct(id) {
+      const p = products.find(item => item.id === id);
+      if (!p) return;
+      const shareText = `اطلع على هذا المكمل الرائع في متجر مكملات فايتالي: ${p.name} بسعر ${Number(p.price).toLocaleString()} ر.ي`;
+      if (navigator.share) {
+        navigator.share({ title: 'مكملات فايتالي', text: shareText, url: window.location.href }).catch(() => {});
+      } else {
+        navigator.clipboard?.writeText(shareText);
+        showToast("تم نسخ تفاصيل المكمل للمشاركة!");
+      }
+    }
+
+    function addToCart(id) {
+      const p = products.find(item => item.id === id);
+      if (!p) return;
+      const existing = cart.find(item => item.id === id);
+      if (existing) {
+        existing.qty++;
+      } else {
+        cart.push({ ...p, qty: 1 });
+      }
+      updateCartBadge();
+      showToast(`✓ تمت إضافة "${p.name}" للسلة`);
+    }
+
+    function updateCartBadge() {
+      const totalCount = cart.reduce((sum, item) => sum + item.qty, 0);
+      document.getElementById('cartCount').innerText = totalCount;
+    }
+
+    function openDetail(id) {
+      selectedProd = products.find(p => p.id === id);
+      if (!selectedProd) return;
+
+      const imgEl = document.getElementById('detImg');
+      if (selectedProd.img && selectedProd.img.trim() !== '') {
+        imgEl.src = selectedProd.img;
+        imgEl.style.display = 'block';
+      } else {
+        imgEl.style.display = 'none';
+      }
+
+      document.getElementById('detBrand').innerText = selectedProd.brand || 'فايتالي';
+      document.getElementById('detTitle').innerText = selectedProd.name;
+      document.getElementById('detPrice').innerText = Number(selectedProd.price).toLocaleString() + ' ر.ي';
+
+      const featUl = document.getElementById('detFeatures');
+      featUl.innerHTML = '';
+      if (Array.isArray(selectedProd.features)) {
+        selectedProd.features.forEach(f => {
+          if (f && f.trim() !== '') {
+            featUl.innerHTML += `<li>${f}</li>`;
+          }
+        });
+      }
+
+      document.getElementById('detailOverlay').classList.add('active');
+    }
+
+    function closeDetail() {
+      document.getElementById('detailOverlay').classList.remove('active');
+    }
+
+    function addToCartFromDetail() {
+      if (selectedProd) {
+        addToCart(selectedProd.id);
+        closeDetail();
+      }
+    }
+
+    function openCartScreen() {
+      const container = document.getElementById('cartItemsList');
+      container.innerHTML = '';
+
+      if (cart.length === 0) {
+        container.innerHTML = `<div style="text-align:center; color:#777; margin-top:40px;">سلة التسوق فارغة حالياً.</div>`;
+        document.getElementById('cartTotalPrice').innerText = '0 ر.ي';
+        document.getElementById('cartOverlay').classList.add('active');
+        return;
+      }
+
+      let totalPrice = 0;
+      cart.forEach(item => {
+        totalPrice += (Number(item.price) * item.qty);
+        container.innerHTML += `
+          <div class="cart-item-card" style="display:flex; justify-content:space-between; align-items:center; background:#1e1e1e; padding:12px; border-radius:10px; margin-bottom:8px; border:1px solid #333;">
+            <div style="flex:1;">
+              <div style="font-weight:bold; font-size:0.9rem;">${item.name}</div>
+              <div style="color:#4caf50; font-size:0.85rem; margin-top:4px;">${Number(item.price).toLocaleString()} ر.ي × ${item.qty}</div>
+            </div>
+            <div style="display:flex; align-items:center; gap:8px;">
+              <button onclick="changeQty(${item.id}, -1)" style="background:#333; color:#fff; border:none; width:26px; height:26px; border-radius:6px; cursor:pointer;">-</button>
+              <span style="font-weight:bold;">${item.qty}</span>
+              <button onclick="changeQty(${item.id}, 1)" style="background:#2e7d32; color:#fff; border:none; width:26px; height:26px; border-radius:6px; cursor:pointer;">+</button>
+              <i class="fas fa-trash" style="color:#ff5555; cursor:pointer; padding:6px; margin-right:4px;" onclick="removeFromCart(${item.id})"></i>
+            </div>
+          </div>
+        `;
+      });
+
+      document.getElementById('cartTotalPrice').innerText = totalPrice.toLocaleString() + ' ر.ي';
+      document.getElementById('cartOverlay').classList.add('active');
+    }
+
+    function changeQty(id, delta) {
+      const item = cart.find(i => i.id === id);
+      if (!item) return;
+      item.qty += delta;
+      if (item.qty <= 0) {
+        cart = cart.filter(i => i.id !== id);
+      }
+      updateCartBadge();
+      openCartScreen();
+    }
+
+    function closeCartScreen() {
+      document.getElementById('cartOverlay').classList.remove('active');
+    }
+
+    function removeFromCart(id) {
+      cart = cart.filter(item => item.id !== id);
+      updateCartBadge();
+      openCartScreen();
+    }
+
+    function clearCart() {
+      cart = [];
+      updateCartBadge();
+      openCartScreen();
+    }
+
+    function checkoutToWhatsApp() {
+      if (cart.length === 0) {
+        showToast("السلة فارغة، اختر مكملات أولاً!");
+        return;
+      }
+
+      let message = "مرحباً، أود طلب المكملات التالية من متجر مكملات فايتالي:%0A%0A";
+      let total = 0;
+
+      cart.forEach((item, index) => {
+        let itemTotal = Number(item.price) * item.qty;
+        total += itemTotal;
+        message += `${index + 1}. *${item.name}* - الكمية: ${item.qty} - السعر: ${itemTotal.toLocaleString()} ر.ي%0A`;
+      });
+
+      message += `%0A*إجمالي المبلغ المطلوب:* ${total.toLocaleString()} ر.ي%0Aبانتظار تأكيد الطلب. شكراً لك!`;
+
+      const myWhatsAppNumber = "967777502849"; 
+      const whatsappUrl = `https://wa.me/${myWhatsAppNumber}?text=${message}`;
+      
+      window.open(whatsappUrl, '_blank');
+    }
+
+    function showHome() {
+      closeDetail();
+      closeCartScreen();
+    }
+
+    // تشغيل المتجر عند فتح الصفحة
+    renderProducts();
+
+    const layouts = [
+      { cols: 2, icon: 'fas fa-th-large' },
+      { cols: 3, icon: 'fas fa-th' },
+      { cols: 4, icon: 'fas fa-grip-horizontal' }
+    ];
+
+    let currentLayoutIndex = 0;
+
+    function cycleLayout() {
+      currentLayoutIndex = (currentLayoutIndex + 1) % layouts.length;
+      const current = layouts[currentLayoutIndex];
+      
+      const grid = document.querySelector('.products-grid');
+      const iconElem = document.getElementById('layoutIcon');
+
+      if (grid) {
+        grid.style.gridTemplateColumns = `repeat(${current.cols}, 1fr)`;
+
+        if (current.cols === 4) {
+          grid.style.gap = '4px';
+          document.querySelectorAll('.product-card').forEach(card => {
+            card.style.padding = '5px';
+            card.style.fontSize = '0.65rem';
+          });
+        } else if (current.cols === 3) {
+          grid.style.gap = '6px';
+          document.querySelectorAll('.product-card').forEach(card => {
+            card.style.padding = '7px';
+            card.style.fontSize = '0.75rem';
+          });
+        } else {
+          grid.style.gap = '10px';
+          document.querySelectorAll('.product-card').forEach(card => {
+            card.style.padding = '10px';
+            card.style.fontSize = '0.85rem';
+          });
+        }
+      }
+
+      if (iconElem) {
+        iconElem.className = current.icon;
+      }
+    }
+  </script>
+</body>
+</html>
